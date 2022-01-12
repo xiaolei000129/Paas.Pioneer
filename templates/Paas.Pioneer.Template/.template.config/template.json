@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    // 作者
+    "author": "Paas.Pioneer",
+    // 对应模板Tags
+    "classifications": ["Template"],
+    // 对应模板的名称
+    "name": "Paas.Pioneer.Template",
+    // 模板唯一的名称
+    "identity": "Paas.Pioneer.Template",
+    // 对应模板的排序名称
+    "shortName": "Paas.Pioneer.Template",
+    // 标签
+    "tags": {
+        "language": "C#"
+    },
+    // 要更替的名字
+    "sourceName": "Template"
+}

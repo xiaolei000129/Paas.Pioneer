@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<PackageType>Paas.Pioneer.Template.Application</PackageType>
+		<PackageId>Paas.Pioneer.Template.Application</PackageId>
+		<Title>Paas.Pioneer.Template.Application</Title>
+		<Authors>Paas.Pioneer</Authors>
+		<Description>Paas.Pioneer.Template.Application</Description>
+		<TargetFramework>net6.0</TargetFramework>
+		<IncludeBuildOutput>true</IncludeBuildOutput>
+		<NoWarn>$(NoWarn);NU5128</NoWarn>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Paas.Pioneer.Template.Application.Contracts\Paas.Pioneer.Template.Application.Contracts.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.Template.Domain\Paas.Pioneer.Template.Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Volo.Abp.TenantManagement.Application" Version="5.0.1" />
+	</ItemGroup>
+
+</Project>

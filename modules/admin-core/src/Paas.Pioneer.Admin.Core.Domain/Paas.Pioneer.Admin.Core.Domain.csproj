@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<PackageType>Paas.Pioneer.Admin.Core.Domain</PackageType>
+		<PackageId>Paas.Pioneer.Admin.Core.Domain</PackageId>
+		<Title>Paas.Pioneer.Admin.Core.Domain</Title>
+		<Authors>Paas.Pioneer</Authors>
+		<Description>Paas.Pioneer.Admin.Core.Domain</Description>
+		<TargetFramework>net6.0</TargetFramework>
+		<IncludeBuildOutput>true</IncludeBuildOutput>
+		<NoWarn>$(NoWarn);NU5128</NoWarn>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Version>1.5.0</Version>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="5.0.1" />
+		<PackageReference Include="Paas.Pioneer.Domain" Version="4.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Paas.Pioneer.Admin.Core.Application.Contracts\Paas.Pioneer.Admin.Core.Application.Contracts.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.Admin.Core.Domain.Shared\Paas.Pioneer.Admin.Core.Domain.Shared.csproj" />
+	</ItemGroup>
+
+</Project>

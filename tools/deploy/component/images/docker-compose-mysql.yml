@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  mysql:
+    image: "mysql:latest"
+    # 容器名称
+    container_name: mysql
+    # 端口号
+    ports:
+      - 3306:3306
+    # 容器内部参数
+    environment:
+      MYSQL_ROOT_PASSWORD: Xiaolei@520.com
+    # 挂载数据卷
+    volumes:
+      - /home/docker/mysql/data:/var/lib/mysql
+      - /home/docker/mysql/confg/my.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    # 容器意外关闭进行重启操作
+    restart: always 

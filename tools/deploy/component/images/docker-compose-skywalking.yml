@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  skywalking-oap-server: 
+    image: "apache/skywalking-oap-server:latest"
+    # 容器名称
+    container_name: skywalking-oap-server
+    volumes: 
+      - /home/docker/skywalking/application.yml:/app/skywalking/config/application.yml
+      # 容器内部参数
+    environment:
+      TZ: Asia/Shanghai
+    restart: always 
+
+  skywalking-ui: 
+    image: "apache/skywalking-ui:latest"
+    # 容器名称
+    container_name: skywalking-ui
+    # 容器内部参数
+    environment:
+      SW_OAP_ADDRESS: skywalking-oap-server:12800
+      TZ: Asia/Shanghai
+    restart: always 
+  

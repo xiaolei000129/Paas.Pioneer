@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  reids:
+    # 镜像名称
+    image: "redis:latest"
+    # 容器名称
+    container_name: redis
+    # 地址名称
+    hostname: redis
+    # # redis启动的配置文件
+    # command:       
+    #   redis-server /home/docker/redis/confg/redis.conf --appendonly yes
+    # 端口号
+    ports:
+      - 6379:6379
+    # 挂载数据卷
+    volumes:
+      - /home/docker/redis/confg/redis.conf:/etc/redis/redis.conf
+      - /home/docker/redis/data:/data:rw
+    # 容器意外关闭进行重启操作
+    restart: always 

@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<PackageType>Paas.Pioneer.Hangfire.Domain.Shared</PackageType>
+		<PackageId>Paas.Pioneer.Hangfire.Domain.Shared</PackageId>
+		<Title>Paas.Pioneer.Hangfire.Domain.Shared</Title>
+		<Authors>Paas.Pioneer</Authors>
+		<Description>Paas.Pioneer.Hangfire.Domain.Shared</Description>
+		<TargetFramework>net6.0</TargetFramework>
+		<IncludeBuildOutput>true</IncludeBuildOutput>
+		<NoWarn>$(NoWarn);NU5128</NoWarn>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Hangfire.MySqlStorage" Version="2.0.3" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Domain.Shared" Version="5.0.1" />
+		<PackageReference Include="Volo.Abp.BackgroundJobs.Domain.Shared" Version="5.0.1" />
+		<PackageReference Include="Volo.Abp.BackgroundWorkers.Hangfire" Version="5.0.1" />
+		<PackageReference Include="Volo.Abp.BackgroundJobs.HangFire" Version="5.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Paas.Pioneer.Domain.Shared" Version="4.1.0" />
+	</ItemGroup>
+
+</Project>

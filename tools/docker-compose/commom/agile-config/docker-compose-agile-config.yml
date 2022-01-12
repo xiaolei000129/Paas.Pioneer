@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  agile_config: 
+    image: "kklldog/agile_config:latest"
+    # 容器名称
+    container_name: agile_config
+    volumes: 
+      - /home/docker/agile_config/localtime:/etc/localtime
+      # 容器内部参数
+    environment:
+      # 设置数据库类型
+      db:provider: "mysql"
+      # 显示控制面板
+      adminConsole: "true"
+      # 数据库链接
+      db:conn: "Server=www.haosay.com;Port=3306;Database=Com.Morning.Application.Qu;Uid=root;Pwd=xiaolei@520.com;"
+      # 设置自动重启
+    restart: always 
+      # 端口号
+    ports:
+        - 5100:5000

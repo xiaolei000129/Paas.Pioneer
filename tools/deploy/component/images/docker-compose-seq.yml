@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  seq-latest: 
+    image: "datalust/seq:latest"
+    # 容器名称
+    container_name: seq
+    # 端口号
+    ports:
+      - 8081:8081
+      - 5341:5341
+    # 容器内部参数
+    environment:
+     ACCEPT_EULA: 'Y'
+    # 挂载数据卷
+    volumes:
+      - /home/docker/seq-latest/data:/data 
+    # 容器意外关闭进行重启操作
+    restart: always 

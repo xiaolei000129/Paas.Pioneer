@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<PackageType>Paas.Pioneer.Hangfire.HttpApi.Client</PackageType>
+		<PackageId>Paas.Pioneer.Hangfire.HttpApi.Client</PackageId>
+		<Title>Paas.Pioneer.Hangfire.HttpApi.Client</Title>
+		<Authors>Paas.Pioneer</Authors>
+		<Description>Paas.Pioneer.Hangfire.HttpApi.Client</Description>
+		<TargetFramework>net6.0</TargetFramework>
+		<IncludeBuildOutput>true</IncludeBuildOutput>
+		<NoWarn>$(NoWarn);NU5128</NoWarn>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Paas.Pioneer.Hangfire.Application.Contracts\Paas.Pioneer.Hangfire.Application.Contracts.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi.Client" Version="5.0.1" />
+	</ItemGroup>
+
+</Project>

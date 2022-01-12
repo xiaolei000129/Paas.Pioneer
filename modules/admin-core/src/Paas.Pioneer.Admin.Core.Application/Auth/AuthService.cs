@@ -1,0 +1,222 @@
+using Microsoft.Extensions.Options;
+using Paas.Pioneer.Admin.Core.Application.Contracts.Auth;
+using Paas.Pioneer.Admin.Core.Application.Contracts.Auth.Dto.Input;
+using Paas.Pioneer.Admin.Core.Application.Contracts.Auth.Dto.Output;
+using Paas.Pioneer.Admin.Core.Domain.Permission;
+using Paas.Pioneer.Admin.Core.Domain.Shared.Captcha;
+using Paas.Pioneer.Admin.Core.Domain.Shared.Enum;
+using Paas.Pioneer.Admin.Core.Domain.Shared.RedisKey;
+using Paas.Pioneer.Admin.Core.Domain.Tenant;
+using Paas.Pioneer.Admin.Core.Domain.User;
+using Paas.Pioneer.Admin.Core.Domain.View;
+using Paas.Pioneer.Domain.Shared.Auth;
+using Paas.Pioneer.Domain.Shared.Configs;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.Domain.Shared.Extensions;
+using Paas.Pioneer.Domain.Shared.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic.Core;
+using System.Threading.Tasks;
+using Volo.Abp.Application.Services;
+using Volo.Abp.Data;
+
+namespace Paas.Pioneer.Admin.Core.Application.Auth
+{
+    public class AuthService : ApplicationService, IAuthService
+    {
+        private readonly IUserRepository _userRepository;
+        private readonly AppConfig _appConfig;
+        private readonly IPermissionRepository _permissionRepository;
+        private readonly VerifyCodeHelper _verifyCodeHelper;
+        private readonly ITenantRepository _tenantRepository;
+        private readonly ICaptcha _captcha;
+        private readonly IViewRepository _viewRepository;
+        private readonly RedisAdminKeys _redisAdminKeys;
+
+        public AuthService(IOptions<AppConfig> appConfig,
+            VerifyCodeHelper verifyCodeHelper,
+            IUserRepository userRepository,
+            IPermissionRepository permissionRepository,
+            ITenantRepository tenantRepository,
+            ICaptcha captcha,
+            IViewRepository viewRepository,
+            RedisAdminKeys redisAdminKeys)
+        {
+            _appConfig = appConfig.Value;
+            _verifyCodeHelper = verifyCodeHelper;
+            _userRepository = userRepository;
+            _permissionRepository = permissionRepository;
+            _tenantRepository = tenantRepository;
+            _captcha = captcha;
+            _viewRepository = viewRepository;
+            _redisAdminKeys = redisAdminKeys;
+        }
+
+        public async Task<ResponseOutput<GetPassWordEncryptKeyOutput>> GetPassWordEncryptKeyAsync()
+        {
+            //写入Redis
+            var guid = Guid.NewGuid().ToString("N");
+            var key = string.Format(_redisAdminKeys.PassWordEncryptKey, guid);
+            var encyptKey = StringHelper.GenerateRandom(8);
+            await RedisHelper.SetAsync(key, encyptKey, TimeSpan.FromMinutes(5));
+            var data = new GetPassWordEncryptKeyOutput
+            {
+                Key = guid,
+                EncyptKey = encyptKey
+            };
+            return ResponseOutput.Succees(data);
+        }
+
+        public async Task<ResponseOutput<AuthUserInfoOutput>> GetUserInfoAsync()
+        {
+            var authUserInfoOutput = new AuthUserInfoOutput();
+
+            //用户信息
+            authUserInfoOutput.User = await _userRepository.GetAsync(expression: x => x.Id == CurrentUser.Id, selector: x => new AuthUserProfileDto
+            {
+                Avatar = x.Avatar,
+                NickName = x.NickName,
+                UserName = x.UserName
+            });
+
+            //用户菜单
+            var viewList = await _viewRepository.GetListAsync();
+            bool isTenant = false;
+            if (_appConfig.Tenant && CurrentUser.FindClaim(ClaimAttributes.TenantType).Value == ((int)ETenantType.Tenant).ToString())
+            {
+                isTenant = true;
+            }
+            var menu = await _permissionRepository.GetPermissionsMenuAsync(CurrentUser.Id, isTenant);
+
+            authUserInfoOutput.Menus = new List<AuthUserMenuDto>();
+
+            foreach (var m in menu)
+            {
+                AuthUserMenuDto authUserMenuModel = new AuthUserMenuDto()
+                {
+                    Id = m.Id,
+                    Closable = m.Closable,
+                    External = m.External,
+                    Hidden = m.Hidden,
+                    Icon = m.Icon,
+                    Label = m.Label,
+                    NewWindow = m.NewWindow,
+                    Opened = m.Opened,
+                    ParentId = m.ParentId,
+                    Path = m.Path,
+                    ViewPath = viewList.Where(a => a.Id == m.ViewId).Select(a => a.Path).FirstOrDefault()
+                };
+                authUserInfoOutput.Menus.Add(authUserMenuModel);
+            }
+
+            ////用户权限点
+            authUserInfoOutput.Permissions = await _permissionRepository.GetPermissionsCodeListAsync(CurrentUser.Id, isTenant);
+
+            return ResponseOutput.Succees(authUserInfoOutput);
+        }
+
+        /// <summary>
+        /// 用户权限点
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<string>> GetPermissionsCodeListAsync(Guid? userId)
+        {
+            bool isTenant = false;
+            if (_appConfig.Tenant && CurrentUser.FindClaim(ClaimAttributes.TenantType).Value == ((int)ETenantType.Tenant).ToString())
+            {
+                isTenant = true;
+            }
+            return await _permissionRepository.GetPermissionsCodeListAsync(userId, isTenant);
+        }
+
+        public async Task<ResponseOutput<AuthGetVerifyCodeOutput>> GetVerifyCodeAsync(string lastKey)
+        {
+            var img = _verifyCodeHelper.GetBase64String(out string code);
+            //删除上次缓存的验证码
+            if (lastKey.NotNull())
+            {
+                await RedisHelper.DelAsync(lastKey);
+            }
+            //写入Redis
+            var guid = Guid.NewGuid().ToString("N");
+            var key = string.Format(_redisAdminKeys.VerifyCodeKey, guid);
+            await RedisHelper.SetAsync(key, code, TimeSpan.FromMinutes(5));
+            var data = new AuthGetVerifyCodeOutput
+            {
+                Key = guid,
+                Img = img
+            };
+            return ResponseOutput.Succees(data);
+        }
+
+        public async Task<ResponseOutput<AuthLoginOutput>> LoginAsync(AuthLoginInput input)
+        {
+            #region 验证码校验
+            if (_appConfig.VarifyCode.Enable)
+            {
+                input.Captcha.DeleteCache = true;
+                var isSuccees = await _captcha.CheckAsync(input.Captcha);
+                if (!isSuccees)
+                {
+                    return ResponseOutput.Error<AuthLoginOutput>("安全验证不通过，请重新登录！");
+                }
+            }
+            #endregion 验证码校验
+            var user = await _userRepository.GetAsync(expression: x => x.UserName == input.UserName);
+            if (user == null)
+            {
+                return ResponseOutput.Error<AuthLoginOutput>("账号输入有误!");
+            }
+            if (!user.Enabled)
+            {
+                return ResponseOutput.Error<AuthLoginOutput>("账号已被禁用");
+            }
+            #region 解密
+            if (input.PasswordKey.NotNull())
+            {
+                var passwordEncryptKey = string.Format(_redisAdminKeys.PassWordEncryptKey, input.PasswordKey);
+                var existsPasswordKey = await RedisHelper.ExistsAsync(passwordEncryptKey);
+                if (existsPasswordKey)
+                {
+                    var secretKey = await RedisHelper.GetAsync(passwordEncryptKey);
+                    if (secretKey.IsNull())
+                    {
+                        return ResponseOutput.Error<AuthLoginOutput>("解密失败！");
+                    }
+                    input.Password = DesEncrypt.Decrypt(input.Password, secretKey);
+                    await RedisHelper.DelAsync(passwordEncryptKey);
+                }
+                else
+                {
+                    return ResponseOutput.Error<AuthLoginOutput>("解密失败！");
+                }
+            }
+            #endregion 解密
+
+            var password = MD5Encrypt.Encrypt32(input.Password);
+            if (user.Password != password)
+            {
+                return ResponseOutput.Error<AuthLoginOutput>("密码输入有误！");
+            }
+
+            var authLoginOutput = ObjectMapper.Map<Ad_UserEntity, AuthLoginOutput>(user);
+
+            if (_appConfig.Tenant)
+            {
+                var tenant = await _tenantRepository.GetAsync(expression: x => x.Id == user.TenantId, isTracking: true);
+                if (tenant == null)
+                {
+                    return ResponseOutput.Error<AuthLoginOutput>("平台信息为空");
+                }
+                if (!tenant.GetProperty<bool>("Enabled"))
+                {
+                    return ResponseOutput.Error<AuthLoginOutput>("平台已被禁用");
+                }
+                authLoginOutput.TenantType = tenant.GetProperty<ETenantType>("TenantType");
+            }
+            return ResponseOutput.Succees(authLoginOutput);
+        }
+    }
+}

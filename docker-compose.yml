@@ -1,0 +1,19 @@
+version: "3.1"
+services:
+  paas.pioneer.admincore:
+    image: paas.pioneer.admincore
+    build: 
+        context: ./modules/admin-core/
+        dockerfile: Dockerfile
+    volumes: 
+        - /home/docker/paasPioneer/adminCore/logs:/app/Logs/
+        - /home/docker/paasPioneer/adminCore/wwwroot:/app/wwwroot/
+        - /home/docker/paasPioneer/adminCore/appsettings/appsettings.json:/app/appsettings.json
+    environment:
+        - Service__Port=9099
+    ports: 
+        - 9099:9099
+    restart: always
+    container_name:  paas.pioneer.admincore
+    hostname: paas.pioneer.admincore
+    privileged: true  

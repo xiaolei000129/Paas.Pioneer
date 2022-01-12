@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  jenkins: 
+    # 镜像名称
+    image: "jenkins/jenkins"
+    # 容器名称
+    container_name: jenkins
+    # 用户映射
+    user: jenkins:995
+    # 映射配置
+    volumes: 
+      # 添加docker 发布权限
+      - /var/run/docker.sock:/var/run/docker.sock
+      # 添加docker 访问权限
+      - /usr/bin/docker:/bin/docker
+      # 映射jenkins目录
+      - /home/docker/jenkins:/var/jenkins_home
+      # 映射时间
+      - /etc/localtime:/etc/localtime 
+      # 需要提前在宿主机设置 echo 'Asia/Shanghai' > /etc/timezone
+      # 否则会报错: timezone is a directory
+      - /etc/timezone:/etc/timezone
+      # 映射docker目录
+      - /usr/bin/docker:/usr/bin/docker
+      # 映射docker-compose
+      - /usr/local/bin/docker-compose:/usr/local/bin/docker-compose
+      # 映射nginx
+      - /home/docker/nginx/www:/bin/docker/nginx
+    privileged: true
+    # 端口映射
+    ports: 
+      - 8080:8080 
+      - 50000:50000
+    # 自动重启
+    restart: always 
+  

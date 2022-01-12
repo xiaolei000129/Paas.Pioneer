@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  jenkins: 
+    # 镜像名称
+    image: "nginx"
+    # 容器名称
+    container_name: nginx
+    # 映射配置
+    volumes: 
+      - /home/docker/nginx/config:/etc/nginx:rw
+      - /home/docker/nginx/log:/var/log/nginx:rw
+      - /home/docker/nginx/www:/usr/share/nginx/html:rw
+      - /home/docker/nginx/ssl:/etc/ssl:rw
+    # 端口映射
+    ports: 
+      - 80:80 
+      - 443:443
+    # 自动重启
+    restart: always 
+  

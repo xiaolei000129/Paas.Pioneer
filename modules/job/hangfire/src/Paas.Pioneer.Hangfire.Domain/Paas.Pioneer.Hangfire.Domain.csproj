@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<PackageType>Paas.Pioneer.Hangfire.Domain</PackageType>
+		<PackageId>Paas.Pioneer.Hangfire.Domain</PackageId>
+		<Title>Paas.Pioneer.Hangfire.Domain</Title>
+		<Authors>Paas.Pioneer</Authors>
+		<Description>Paas.Pioneer.Hangfire.Domain</Description>
+		<TargetFramework>net6.0</TargetFramework>
+		<IncludeBuildOutput>true</IncludeBuildOutput>
+		<NoWarn>$(NoWarn);NU5128</NoWarn>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Paas.Pioneer.Domain" Version="4.1.0" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="5.0.1" />
+		<PackageReference Include="Paas.Pioneer.Admin.Core.Domain" Version="4.1.0" />
+		<PackageReference Include="Volo.Abp.BackgroundJobs.Domain" Version="5.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Paas.Pioneer.Hangfire.Domain.Shared\Paas.Pioneer.Hangfire.Domain.Shared.csproj" />
+	</ItemGroup>
+
+</Project>

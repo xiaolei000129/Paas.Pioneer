@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<PackageType>Paas.Pioneer.Redis</PackageType>
+		<PackageId>Paas.Pioneer.Redis</PackageId>
+		<Title>Paas.Pioneer.Redis</Title>
+		<Authors>Paas.Pioneer</Authors>
+		<Description>Paas.Pioneer.Redis</Description>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<IncludeBuildOutput>true</IncludeBuildOutput>
+		<NoWarn>$(NoWarn);NU5128</NoWarn>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CSRedisCore" Version="3.6.8" />
+		<PackageReference Include="Volo.Abp.Caching" Version="5.0.1" />
+	</ItemGroup>
+
+</Project>

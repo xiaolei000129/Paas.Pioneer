@@ -1,0 +1,32 @@
+CREATE TABLE `__EFMigrationsHistory` 
+ (
+ `MigrationId` nvarchar(150) NOT NULL,
+ `ProductVersion` nvarchar(32) NOT NULL,
+  PRIMARY KEY(`MigrationId`)
+);
+
+1、常用指令介绍
+   get-help entityframework 查看所有可执行的命令
+   
+1、Add-Migration -Name 
+    在指定的项目中增加一个迁移点，此命令后会要求输入一个 Name 参数，此参数的值为迁移点名称
+    假设输入的迁移点名称为 MyFirstTest 则会生成一个类似如下的文件 201202290718442_MyTestFirst.cs，其包含两个方法 Up() 和 Down()，分别用于此迁移点的升级和降级
+    
+2、Update-Database -Name （将指定的项目的数据库结构升级到最新）
+    Update-Database -TargetMigration:"201202290718442_MyTestFirst"，将当前数据库结构升级到此迁移点（无参数 -TargetMigration 则为升级到最新）
+    Update-Database -SourceMigration:"aaa" -TargetMigration:"bbb"，将迁移点“aaa”升/降级到迁移点“bbb”
+    Update-Database -SourceMigration:"aaa" -TargetMigration:"bbb" -script，将迁移点“aaa”升/降级到迁移点“bbb”     
+    Update-Database -Script，显示用于更新数据库结构的相关 sql 代码
+   
+
+
+Add-Migration               Adds a new migration.
+Drop-Database               Drops the database.
+Get-DbContext               Gets information about a DbContext type.
+Remove-Migration            Removes the last migration.
+Scaffold-DbContext          Scaffolds a DbContext and entity types for a database.
+Script-Migration            Generates a SQL script from migrations.
+Update-Database             Updates the database to a specified migration.
+
+   注意：命令依赖工具
+         Microsoft.EntityFrameworkCore.Tools

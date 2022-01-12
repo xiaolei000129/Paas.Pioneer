@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<PackageType>Paas.Pioneer.Hangfire.EntityFrameworkCore</PackageType>
+		<PackageId>Paas.Pioneer.Hangfire.EntityFrameworkCore</PackageId>
+		<Title>Paas.Pioneer.Hangfire.EntityFrameworkCore</Title>
+		<Authors>Paas.Pioneer</Authors>
+		<Description>Paas.Pioneer.Hangfire.EntityFrameworkCore</Description>
+		<TargetFramework>net6.0</TargetFramework>
+		<IncludeBuildOutput>true</IncludeBuildOutput>
+		<NoWarn>$(NoWarn);NU5128</NoWarn>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Paas.Pioneer.Hangfire.Domain\Paas.Pioneer.Hangfire.Domain.csproj" />
+		<PackageReference Include="Volo.Abp.EntityFrameworkCore.MySQL" Version="5.0.1" />
+		<PackageReference Include="Volo.Abp.TenantManagement.EntityFrameworkCore" Version="5.0.1" />
+		<PackageReference Include="Volo.Abp.BackgroundJobs.EntityFrameworkCore" Version="5.0.1" />
+		<PackageReference Include="Paas.Pioneer.Admin.Core.EntityFrameworkCore" Version="4.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.1">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+			<PrivateAssets>compile; build; native; contentfiles; analyzers; buildtransitive</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
+
+</Project>

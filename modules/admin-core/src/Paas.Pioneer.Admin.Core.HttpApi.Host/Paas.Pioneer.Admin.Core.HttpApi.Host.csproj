@@ -1,0 +1,146 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<PackageType>Paas.Pioneer.Admin.Core.HttpApi.Host</PackageType>
+		<PackageId>Paas.Pioneer.Admin.Core.HttpApi.Host</PackageId>
+		<Title>Paas.Pioneer.Admin.Core.HttpApi.Host</Title>
+		<Authors>Paas.Pioneer</Authors>
+		<Description>Paas.Pioneer.Admin.Core.HttpApi.Host</Description>
+		<TargetFramework>net6.0</TargetFramework>
+		<IncludeBuildOutput>true</IncludeBuildOutput>
+		<NoWarn>$(NoWarn);NU5128</NoWarn>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<PreserveCompilationReferences>true</PreserveCompilationReferences>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Remove="Configs\appconfig.json" />
+		<Content Remove="Configs\dbconfig.json" />
+		<Content Remove="Configs\jwtconfig.json" />
+		<Content Remove="Configs\uploadconfig.json" />
+		<Content Remove="NLog.config" />
+		<Content Remove="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Domain\IRepository.tpl" />
+		<Content Remove="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.EntityFrameworkCore\Repository.tpl" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+		<PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="5.0.1" />
+		<PackageReference Include="Volo.Abp.Autofac" Version="5.0.1" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="5.0.1" />
+		<PackageReference Include="Paas.Pioneer.Knife4jUI.Swagger" Version="4.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Paas.Pioneer.Admin.Core.Application\Paas.Pioneer.Admin.Core.Application.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.Admin.Core.EntityFrameworkCore\Paas.Pioneer.Admin.Core.EntityFrameworkCore.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.Admin.Core.HttpApi\Paas.Pioneer.Admin.Core.HttpApi.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="Configs\appconfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="Configs\dbconfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="Configs\jwtconfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="Configs\uploadconfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="NLog.config">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<EmbeddedResource Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application.Contracts\Contracts\Dto\Input\AddInput.tpl">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application.Contracts\Contracts\Dto\Input\GetPageListInput.tpl">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application.Contracts\Contracts\Dto\Input\UpdateInput.tpl">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application.Contracts\Contracts\Dto\Output\GetOutput.tpl">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application.Contracts\Contracts\Dto\Output\GetPageListOutput.tpl">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application.Contracts\Contracts\IService.tpl">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application\Application\Service.tpl">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application\Application\_MapConfig.tpl">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Domain\IRepository.tpl">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.EntityFrameworkCore\Repository.tpl">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.HttpApi\Controllers\Controllers.tpl">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="wwwroot\TextTemplating\Paas.Pioneer\Web\Vue\Js\Js.tpl">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="wwwroot\TextTemplating\Paas.Pioneer\Web\Vue\Html\Html.tpl">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<None Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application.Contracts\Contracts\Dto\Input\AddInput.tpl" />
+		<None Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application.Contracts\Contracts\Dto\Input\GetPageListInput.tpl" />
+		<None Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application.Contracts\Contracts\Dto\Input\UpdateInput.tpl" />
+		<None Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application.Contracts\Contracts\Dto\Output\GetOutput.tpl" />
+		<None Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application.Contracts\Contracts\Dto\Output\GetPageListOutput.tpl" />
+		<None Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application.Contracts\Contracts\IService.tpl" />
+		<None Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application\Application\Service.tpl" />
+		<None Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.Application\Application\_MapConfig.tpl" />
+		<None Include="wwwroot\TextTemplating\Paas.Pioneer\Paas.Pioneer.HttpApi\Controllers\Controllers.tpl" />
+		<None Include="wwwroot\TextTemplating\Paas.Pioneer\Web\Vue\Js\Js.tpl" />
+		<None Include="wwwroot\TextTemplating\Paas.Pioneer\Web\Vue\Html\Html.tpl" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="wwwroot\upload\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Update="wwwroot\captcha\jigsaw\1.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="wwwroot\captcha\jigsaw\2.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="wwwroot\captcha\jigsaw\3.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="wwwroot\captcha\jigsaw\templates\1.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="wwwroot\captcha\jigsaw\templates\2.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="wwwroot\captcha\jigsaw\templates\3.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="wwwroot\captcha\jigsaw\templates\4.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="wwwroot\captcha\jigsaw\templates\5.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="wwwroot\captcha\jigsaw\templates\6.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties appsettings_1json__JsonSchema="" />
+		</VisualStudio>
+	</ProjectExtensions>
+</Project>
