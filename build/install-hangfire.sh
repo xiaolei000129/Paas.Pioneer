@@ -8,7 +8,7 @@ path_current="$PWD"
 source "../$path_current/helper.sh"
 
 # 变量区
-path_appsettings="/home/docker/paasPioneerHangfire/adminCore/appsettings"
+path_appsettings="/home/docker/paasPioneer/paasPioneerHangfire/appsettings"
 
 # 初始化appsettings
 fun_init_appsettings()
