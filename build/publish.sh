@@ -7,6 +7,12 @@
 # 当前目录
 path_current="$PWD"
 
+sed -i 's/\r$//' $path_current/helper.sh
+
+sed -i 's/\r$//' $path_current/install-admin-core.sh
+
+sed -i 's/\r$//' $path_current/install-hangfire.sh
+
 source $path_current/helper.sh
 
 echo 
