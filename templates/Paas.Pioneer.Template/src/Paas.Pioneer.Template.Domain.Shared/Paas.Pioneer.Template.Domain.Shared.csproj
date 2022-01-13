@@ -21,7 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Paas.Pioneer.Domain.Shared" Version="4.1.0" />
+		<PackageReference Include="Paas.Pioneer.Domain.Shared" Version="4.2.0" />
 	</ItemGroup>
 
 </Project>
