@@ -18,6 +18,9 @@ fun_init_appsettings()
 
   path_file_appsettings="$path_appsettings/appsettings.json" 
 
+  # 创建文件
+  touch $path_file_appsettings
+
   cat <<EOT > ${path_file_appsettings}
   {
     "urls": "http://*:9099",
