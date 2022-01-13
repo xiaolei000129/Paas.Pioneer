@@ -12,12 +12,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Paas.Pioneer.Middleware" Version="4.2.0" />
+		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.1.1" />
 		<ProjectReference Include="..\Paas.Pioneer.Template.Application.Contracts\Paas.Pioneer.Template.Application.Contracts.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="5.0.1" />
+		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="5.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>

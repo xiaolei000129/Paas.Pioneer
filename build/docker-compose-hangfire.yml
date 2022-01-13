@@ -1,0 +1,19 @@
+version: "3.1"
+services:
+  paas.pioneer.hangfire:
+    image: paas.pioneer.hangfire
+    build: 
+        context: ../modules/job/hangfire
+        dockerfile: Dockerfile
+    volumes: 
+        - /home/docker/paasPioneer/paasPioneerHangfire/logs:/app/Logs/
+        - /home/docker/paasPioneer/paasPioneerHangfire/wwwroot:/app/wwwroot/
+        - /home/docker/paasPioneer/paasPioneerHangfire/appsettings/appsettings.json:/app/appsettings.json
+    environment:
+        - Service__Port=9100
+    ports: 
+        - 9100:9100
+    restart: always
+    container_name: paas.pioneer.hangfire
+    hostname: paas.pioneer.hangfire
+    privileged: true  

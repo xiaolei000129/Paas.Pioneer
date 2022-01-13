@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Paas.Pioneer.Admin.Core.Application.Contracts.Cache.Dto.Input
+﻿namespace Paas.Pioneer.Admin.Core.Application.Contracts.Cache.Dto.Input
 {
     /// <summary>
     /// 缓存删除

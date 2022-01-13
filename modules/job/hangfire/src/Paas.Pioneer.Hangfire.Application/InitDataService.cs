@@ -38,7 +38,7 @@ namespace Paas.Pioneer.Hangfire.Application
     {
 
         #region ¹¹Ôìº¯Êý
-        private readonly string filename = "Data/initData.josn";
+        private readonly string filename = "wwwroot/data/initData.josn";
 
         private readonly IApiRepository _apiRepository;
         private readonly IDictionaryRepository _dictionaryRepository;

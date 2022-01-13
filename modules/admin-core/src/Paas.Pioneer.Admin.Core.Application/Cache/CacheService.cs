@@ -36,10 +36,12 @@ namespace Paas.Pioneer.Admin.Core.Application.Cache
             foreach (var propertie in properties)
             {
                 var descriptionAttribute = propertie.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute;
+
+                string value = string.Format(propertie.GetGetMethod()?.Invoke(_redisAdminKeys, null)?.ToString() ?? "", "");
                 list.Add(new
                 {
                     propertie.Name,
-                    Value = string.Format(propertie.GetGetMethod()?.Invoke(_redisAdminKeys, null)?.ToString() ?? "", ""),
+                    Value = value.Replace($"{CurrentTenant.Id}:", ""),
                     descriptionAttribute?.Description
                 });
             }
@@ -53,6 +55,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Cache
         /// <returns></returns>
         public async Task<IResponseOutput> ClearAsync(CacheDeleteInput model)
         {
+            model.cacheKey = $"{CurrentTenant.Id}:{model.cacheKey}";
             _logger.LogWarning($"{CurrentUser.Id}.{CurrentUser.Name}清除缓存[{model.cacheKey}]");
             await DelByPatternAsync(model.cacheKey);
             return ResponseOutput.Succees("操作成功");

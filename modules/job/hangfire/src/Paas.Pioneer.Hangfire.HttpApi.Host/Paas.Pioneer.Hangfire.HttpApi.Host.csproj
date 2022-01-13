@@ -22,10 +22,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="5.0.1" />
-		<PackageReference Include="Volo.Abp.Autofac" Version="5.0.1" />
-		<PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="5.0.1" />
-		<PackageReference Include="Paas.Pioneer.Knife4jUI.Swagger" Version="4.1.0" />
+		<PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="5.1.1" />
+		<PackageReference Include="Volo.Abp.Autofac" Version="5.1.1" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="5.1.1" />
+		<PackageReference Include="Paas.Pioneer.Knife4jUI.Swagger" Version="5.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -54,5 +54,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Controllers\" />
+	  <Folder Include="wwwroot\data\" />
 	</ItemGroup>
 </Project>

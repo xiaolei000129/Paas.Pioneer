@@ -1,4 +1,3 @@
-using Elastic.Apm.NetCoreAll;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Paas.Pioneer.Admin.Core.Application;
 using Paas.Pioneer.Admin.Core.Domain.Shared.MultiTenancy;
 using Paas.Pioneer.Admin.Core.EntityFrameworkCore.EntityFrameworkCore;
+using Paas.Pioneer.Admin.Core.HttpApi.Host.Filter;
 using Paas.Pioneer.Domain.Shared.Auth;
 using Paas.Pioneer.Knife4jUI.Swagger;
 using Paas.Pioneer.Middleware.Middleware.Extensions;
@@ -48,7 +48,6 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Host
             var configuration = Configuration = context.Services.GetConfiguration();
             var hostingEnvironment = context.Services.GetHostingEnvironment();
 
-
             ConfigureUrls(configuration);
 
             ConfigureCors(context, configuration);
@@ -56,6 +55,13 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Host
             ConfigureAuthentication(context, configuration);
 
             TextTemplatingScriban();
+
+            // 设置模型验证
+            context.Services.AddControllers(options =>
+            {
+                // -1 为过滤器的优先级
+                options.Filters.Add<ModelValidAttribute>(-1);
+            });
         }
 
         private void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)

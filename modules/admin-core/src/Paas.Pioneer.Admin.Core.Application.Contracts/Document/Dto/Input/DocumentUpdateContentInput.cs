@@ -9,8 +9,8 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Document.Dto.Input
         /// <summary>
         /// 编号
         /// </summary>
-        [Required(ErrorMessage = "请输入正确文章信息")]
-        [NotEqual("00000000-0000-0000-0000-000000000000", ErrorMessage = "请输入正确id")]
+        [Required(ErrorMessage = "请选择文档菜单")]
+        [NotEqual("00000000-0000-0000-0000-000000000000", ErrorMessage = "请选择文档菜单")]
         public Guid Id { get; set; }
 
         /// <summary>

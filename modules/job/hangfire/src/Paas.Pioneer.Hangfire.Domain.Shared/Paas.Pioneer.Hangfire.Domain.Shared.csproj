@@ -13,10 +13,10 @@
 
 	<ItemGroup>
 		<PackageReference Include="Hangfire.MySqlStorage" Version="2.0.3" />
-		<PackageReference Include="Volo.Abp.TenantManagement.Domain.Shared" Version="5.0.1" />
-		<PackageReference Include="Volo.Abp.BackgroundJobs.Domain.Shared" Version="5.0.1" />
-		<PackageReference Include="Volo.Abp.BackgroundWorkers.Hangfire" Version="5.0.1" />
-		<PackageReference Include="Volo.Abp.BackgroundJobs.HangFire" Version="5.0.1" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Domain.Shared" Version="5.1.1" />
+		<PackageReference Include="Volo.Abp.BackgroundJobs.Domain.Shared" Version="5.1.1" />
+		<PackageReference Include="Volo.Abp.BackgroundWorkers.Hangfire" Version="5.1.1" />
+		<PackageReference Include="Volo.Abp.BackgroundJobs.HangFire" Version="5.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -24,7 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Paas.Pioneer.Domain.Shared" Version="4.1.0" />
+		<PackageReference Include="Paas.Pioneer.Domain.Shared" Version="5.1.1" />
 	</ItemGroup>
 
 </Project>

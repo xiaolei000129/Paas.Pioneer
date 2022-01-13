@@ -5,10 +5,10 @@
 
 path_current="$PWD"
 
-source "$path_current/tools/deploy/helper.sh"
+source "../$path_current/helper.sh"
 
 # 变量区
-path_appsettings="/home/docker/paasPioneer/adminCore/appsettings"
+path_appsettings="/home/docker/paasPioneerHangfire/adminCore/appsettings"
 
 # 初始化appsettings
 fun_init_appsettings()
@@ -53,10 +53,6 @@ if [ $? -eq 1 ] ;then
 fi
 
 # 启动项目
-docker-compose up -d --build  --force-recreate
+docker-compose -f docker-compose-hangfire.yml  up -d --build  --force-recreate
 
-success "发布镜像成功，镜像Tag为lastest"
-
-docker images|grep none|awk '{print $3}'|xargs docker rmi
-
-success "删除所有为none的镜像"
+success "paasPioneerHangfire发布镜像成功，镜像Tag为lastest"

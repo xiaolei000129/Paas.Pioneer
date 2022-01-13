@@ -23,8 +23,8 @@ namespace Paas.Pioneer.Hangfire.HttpApi
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
-            context.AddBackgroundWorker<GenerateJsonWorker>();
-            context.AddBackgroundWorker<InitDataWorker>();
+            context.AddBackgroundWorkerAsync<GenerateJsonWorker>();
+            context.AddBackgroundWorkerAsync<InitDataWorker>();
         }
 
         private void ConfigureLocalization()
