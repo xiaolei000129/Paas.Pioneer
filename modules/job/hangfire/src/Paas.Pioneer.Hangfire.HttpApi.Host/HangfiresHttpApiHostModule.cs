@@ -25,7 +25,6 @@ using Volo.Abp.AspNetCore.Authentication.JwtBearer;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.Autofac;
 using Volo.Abp.BackgroundJobs.Hangfire;
-using Volo.Abp.Hangfire;
 using Volo.Abp.Modularity;
 
 namespace Paas.Pioneer.Hangfire.HttpApi.Host
