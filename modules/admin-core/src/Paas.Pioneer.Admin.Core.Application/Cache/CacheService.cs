@@ -1,7 +1,9 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Cache;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Cache.Dto.Input;
 using Paas.Pioneer.Admin.Core.Domain.Shared.RedisKey;
+using Paas.Pioneer.Domain.Shared.Configs;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System.Collections.Generic;
@@ -17,11 +19,14 @@ namespace Paas.Pioneer.Admin.Core.Application.Cache
     {
         private readonly ILogger<CacheService> _logger;
         private readonly RedisAdminKeys _redisAdminKeys;
+        private readonly AppConfig _appConfig;
         public CacheService(ILogger<CacheService> logger,
-             RedisAdminKeys redisAdminKeys)
+             RedisAdminKeys redisAdminKeys,
+             IOptions<AppConfig> appConfig)
         {
             _logger = logger;
             _redisAdminKeys = redisAdminKeys;
+            _appConfig = appConfig.Value;
         }
 
         /// <summary>
@@ -38,10 +43,14 @@ namespace Paas.Pioneer.Admin.Core.Application.Cache
                 var descriptionAttribute = propertie.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute;
 
                 string value = string.Format(propertie.GetGetMethod()?.Invoke(_redisAdminKeys, null)?.ToString() ?? "", "");
+                if (_appConfig.Tenant)
+                {
+                    value = value.Replace($"{CurrentTenant.Id}:", "");
+                }
                 list.Add(new
                 {
                     propertie.Name,
-                    Value = value.Replace($"{CurrentTenant.Id}:", ""),
+                    Value = value,
                     descriptionAttribute?.Description
                 });
             }
@@ -55,7 +64,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Cache
         /// <returns></returns>
         public async Task<IResponseOutput> ClearAsync(CacheDeleteInput model)
         {
-            model.cacheKey = $"{CurrentTenant.Id}:{model.cacheKey}";
+            if (_appConfig.Tenant)
+            {
+                model.cacheKey = $"{CurrentTenant.Id}:{model.cacheKey}";
+            }
             _logger.LogWarning($"{CurrentUser.Id}.{CurrentUser.Name}清除缓存[{model.cacheKey}]");
             await DelByPatternAsync(model.cacheKey);
             return ResponseOutput.Succees("操作成功");

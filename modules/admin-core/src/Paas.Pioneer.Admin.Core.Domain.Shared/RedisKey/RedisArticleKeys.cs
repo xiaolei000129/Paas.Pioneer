@@ -1,4 +1,6 @@
-﻿using Volo.Abp.DependencyInjection;
+﻿using Microsoft.Extensions.Options;
+using Paas.Pioneer.Domain.Shared.Configs;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.MultiTenancy;
 
 namespace Paas.Pioneer.Admin.Core.Domain.Shared.RedisKey
@@ -9,30 +11,40 @@ namespace Paas.Pioneer.Admin.Core.Domain.Shared.RedisKey
     public class RedisArticleKeys : ISingletonDependency
     {
         private readonly ICurrentTenant _currentTenant;
+        private readonly AppConfig _appConfig;
 
-        public RedisArticleKeys(ICurrentTenant currentTenant)
+        public RedisArticleKeys(ICurrentTenant currentTenant,
+            IOptions<AppConfig> appConfig)
         {
             _currentTenant = currentTenant;
+            _appConfig = appConfig.Value;
         }
 
         /// <summary>
         /// 根目录
         /// </summary>
-        private string Article => $"{_currentTenant.Id}:Article";
+        private string article()
+        {
+            if (_appConfig.Tenant)
+            {
+                return $"{_currentTenant.Id}:Article";
+            }
+            return "Article";
+        }
 
         /// <summary>
         /// ArticleSlideshow
         /// </summary>
-        public string Slideshow => $"{Article}:Slideshow:";
+        public string Slideshow => $"{article}:Slideshow:";
 
         /// <summary>
         /// ArticleType
         /// </summary>
-        public string Type => $"{Article}:Type";
+        public string Type => $"{article}:Type";
 
         /// <summary>
         /// ArticleArticle
         /// </summary>
-        public string Articles => $"{Article}:Article:";
+        public string Articles => $"{article}:Article:";
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Options;
+using Paas.Pioneer.Domain.Shared.Configs;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.MultiTenancy;
 
@@ -13,16 +11,26 @@ namespace Paas.Pioneer.Admin.Core.Domain.Shared.RedisKey
     public class RedisWeChatKeys : ISingletonDependency
     {
         private readonly ICurrentTenant _currentTenant;
+        private readonly AppConfig _appConfig;
 
-        public RedisWeChatKeys(ICurrentTenant currentTenant)
+        public RedisWeChatKeys(ICurrentTenant currentTenant,
+            IOptions<AppConfig> appConfig)
         {
             _currentTenant = currentTenant;
+            _appConfig = appConfig.Value;
         }
 
         /// <summary>
         /// 根目录
         /// </summary>
-        private string redisWeChat => $"{_currentTenant.Id}:WeChat";
+        private string redisWeChat()
+        {
+            if (_appConfig.Tenant)
+            {
+                return $"{_currentTenant.Id}:WeChat";
+            }
+            return $"WeChat";
+        }
 
         /// <summary>
         /// OAuth目录
@@ -32,11 +40,11 @@ namespace Paas.Pioneer.Admin.Core.Domain.Shared.RedisKey
         /// <summary>
         /// accessToken （OAuth模式）
         /// </summary>
-        public string accessToken => $"{redisWeChat}:{redisOAuthWeChat}:accessToken:";
+        public string accessToken => $"{redisWeChat}:{redisOAuthWeChat}:AccessToken:";
 
         /// <summary>
         /// refreshToken （OAuth模式）
         /// </summary>
-        public string refreshToken => $"{redisWeChat}:{redisOAuthWeChat}:refreshToken:";
+        public string refreshToken => $"{redisWeChat}:{redisOAuthWeChat}:RefreshToken:";
     }
 }
