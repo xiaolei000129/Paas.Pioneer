@@ -10,13 +10,13 @@ source "../$path_current/helper.sh"
 # 变量区
 path_appsettings="/home/docker/paasPioneer/adminCore/appsettings"
 
+path_file_appsettings="$path_appsettings/appsettings.json"
+
 # 初始化appsettings
 fun_init_appsettings()
 {
   # 创建配置文件
   mkdir -p $path_appsettings
-
-  path_file_appsettings="$path_appsettings/appsettings.json" 
 
   # 创建文件
   touch $path_file_appsettings
@@ -47,12 +47,12 @@ EOT
 
 }
 
-fun_check_file $path_appsettings
+fun_check_file $path_file_appsettings
     
 if [ $? -eq 1 ] ;then
   info "appsettings文件不存在，准备初始化appsettings文件"
 	fun_init_appsettings
-  success "appsettings文件创建成功,文件路径：$path_appsettings"
+  success "appsettings文件创建成功,文件路径：$path_file_appsettings"
 fi
 
 # 启动项目
