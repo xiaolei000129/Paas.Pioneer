@@ -5,7 +5,7 @@
 
 path_current="$PWD"
 
-source "../$path_current/helper.sh"
+source "$path_current/helper.sh"
 
 # 变量区
 path_appsettings="/home/docker/paasPioneer/paasPioneerHangfire/appsettings"
