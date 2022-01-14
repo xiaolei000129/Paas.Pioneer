@@ -9,7 +9,7 @@ namespace Paas.Pioneer.Hangfire.Domain.Shared
     [DependsOn(
         typeof(AbpTenantManagementDomainSharedModule),
         typeof(AbpBackgroundJobsDomainSharedModule),
-        typeof(AbpBackgroundWorkerHangfireModule)
+        typeof(AbpBackgroundWorkersHangfireModule)
         )]
     public class HangfiresDomainSharedModule : AbpModule
     {
