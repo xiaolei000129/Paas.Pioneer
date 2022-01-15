@@ -12,6 +12,7 @@ using Paas.Pioneer.Domain.Shared.Auth;
 using Paas.Pioneer.Hangfire.Application;
 using Paas.Pioneer.Hangfire.Domain.Shared.MultiTenancy;
 using Paas.Pioneer.Hangfire.EntityFrameworkCore.EntityFrameworkCore;
+using Paas.Pioneer.Hangfire.HttpApi.Host.Filter;
 using Paas.Pioneer.Knife4jUI.Swagger;
 using Paas.Pioneer.Middleware.Middleware.Extensions;
 using System;
@@ -135,7 +136,10 @@ namespace Paas.Pioneer.Hangfire.HttpApi.Host
             app.UseAuthorization();
 
             // Ìí¼ÓÒÇ±í°å
-            app.UseHangfireDashboard("/job");
+            app.UseHangfireDashboard("/job", new DashboardOptions()
+            {
+                Authorization = new[] { new CustomAuthorizeFilter() }
+            });
 
             // ÅäÖÃÄ©¶Ëµã
             app.UseConfiguredEndpoints(endpoints =>

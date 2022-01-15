@@ -1,4 +1,3 @@
-using Elastic.Apm.NetCoreAll;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +12,7 @@ using Paas.Pioneer.Middleware.Middleware.Extensions;
 using Paas.Pioneer.Template.Application;
 using Paas.Pioneer.Template.Domain.Shared.MultiTenancy;
 using Paas.Pioneer.Template.EntityFrameworkCore.EntityFrameworkCore;
+using Paas.Pioneer.Template.HttpApi.Host.Filter;
 using System;
 using System.Linq;
 using System.Text;
@@ -20,7 +20,6 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
 using Volo.Abp.AspNetCore.MultiTenancy;
-using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Autofac;
 using Volo.Abp.Modularity;
 
@@ -48,6 +47,13 @@ namespace Paas.Pioneer.Template.HttpApi.Host
             ConfigureCors(context, configuration);
 
             ConfigureAuthentication(context, configuration);
+
+            // 设置模型验证
+            context.Services.AddControllers(options =>
+            {
+                // -1 为过滤器的优先级
+                options.Filters.Add<ModelValidAttribute>(-1);
+            });
         }
 
         private void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)

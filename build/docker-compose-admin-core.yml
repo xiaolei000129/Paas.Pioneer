@@ -3,7 +3,7 @@ services:
   paas.pioneer.admincore:
     image: paas.pioneer.admincore
     build: 
-        context: ./modules/admin-core/
+        context: ../modules/admin-core/
         dockerfile: Dockerfile
     volumes: 
         - /home/docker/paasPioneer/adminCore/logs:/app/Logs/

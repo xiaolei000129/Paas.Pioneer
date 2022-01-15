@@ -3,35 +3,26 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Paas.Pioneer.Domain.Shared.ModelValidation
 {
-	/// <summary>
-	/// 不等于模型验证
-	/// </summary>
-	[AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]
-	public class NotEqual : ValidationAttribute
-	{
-		private readonly object _value;
-		public NotEqual(object value)
-		{
-			if (value == null)
-			{
-				throw new Exception("参数错误");
-			}
-			_value = value;
-		}
+    /// <summary>
+    /// 不等于模型验证
+    /// </summary>
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]
+    public class NotEqual : ValidationAttribute
+    {
+        private readonly string _value;
 
-		protected override ValidationResult IsValid(
-		object value, ValidationContext validationContext)
-		{
-			if (value.Equals(_value))
-			{
-				return new ValidationResult(GetErrorMessage());
-			}
-			return ValidationResult.Success;
-		}
+        public NotEqual(string value)
+        {
+            _value = value;
+        }
 
-		public string GetErrorMessage()
-		{
-			return ErrorMessage;
-		}
-	}
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            if (string.Compare(value.ToString(), _value, true) == 0)
+            {
+                return new ValidationResult(base.ErrorMessage);
+            }
+            return ValidationResult.Success;
+        }
+    }
 }

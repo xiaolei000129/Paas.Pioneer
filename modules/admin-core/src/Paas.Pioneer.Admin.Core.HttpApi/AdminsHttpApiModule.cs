@@ -17,7 +17,6 @@ namespace Paas.Pioneer.Admin.Core.HttpApi
         {
             ConfigureLocalization();
         }
-
         private void ConfigureLocalization()
         {
             Configure<AbpLocalizationOptions>(options =>

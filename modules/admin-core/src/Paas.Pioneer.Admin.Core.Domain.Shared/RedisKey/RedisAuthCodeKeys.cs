@@ -1,4 +1,6 @@
-﻿using Volo.Abp.DependencyInjection;
+﻿using Microsoft.Extensions.Options;
+using Paas.Pioneer.Domain.Shared.Configs;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.MultiTenancy;
 
 namespace Paas.Pioneer.Admin.Core.Domain.Shared.RedisKey
@@ -9,16 +11,26 @@ namespace Paas.Pioneer.Admin.Core.Domain.Shared.RedisKey
     public class RedisAuthCodeKeys : ISingletonDependency
     {
         private readonly ICurrentTenant _currentTenant;
+        private readonly AppConfig _appConfig;
 
-        public RedisAuthCodeKeys(ICurrentTenant currentTenant)
+        public RedisAuthCodeKeys(ICurrentTenant currentTenant,
+            IOptions<AppConfig> appConfig)
         {
             _currentTenant = currentTenant;
+            _appConfig = appConfig.Value;
         }
 
         /// <summary>
         /// 根目录
         /// </summary>
-        private string redisAuth => $"{_currentTenant.Id}:redisAuth";
+        private string redisAuth()
+        {
+            if (_appConfig.Tenant)
+            {
+                return $"{_currentTenant.Id}:RedisAuth";
+            }
+            return "RedisAuth";
+        }
 
         /// <summary>
         /// 注册
