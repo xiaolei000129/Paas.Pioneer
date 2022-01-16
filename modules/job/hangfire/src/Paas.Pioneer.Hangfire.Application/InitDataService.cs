@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Paas.Pioneer.Admin.Core.Domain.Api;
 using Paas.Pioneer.Admin.Core.Domain.Dictionary;
@@ -131,7 +132,10 @@ namespace Paas.Pioneer.Hangfire.Application
             await _roleRepository.HardDeleteAsync(x => true, true);
             await _rolePermissionRepository.HardDeleteAsync(x => true, true);
             await _tenantPermissionRepository.HardDeleteAsync(x => true, true);
-            await _userRepository.HardDeleteAsync(x => true, true);
+            if (await _userRepository.AnyAsync())
+            {
+                await _userRepository.HardDeleteAsync(x => true, true);
+            }
             await _userRoleRepository.HardDeleteAsync(x => true, true);
             await _viewRepository.HardDeleteAsync(x => true, true);
             return true;
