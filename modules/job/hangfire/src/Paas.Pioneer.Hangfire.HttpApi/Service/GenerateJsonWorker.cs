@@ -2,6 +2,8 @@
 using Paas.Pioneer.Hangfire.Application.Contracts;
 using System.Threading.Tasks;
 using Volo.Abp.BackgroundWorkers.Hangfire;
+using Volo.Abp.Data;
+using Volo.Abp.MultiTenancy;
 
 namespace Paas.Pioneer.Hangfire.HttpApi.Service
 {
@@ -11,17 +13,23 @@ namespace Paas.Pioneer.Hangfire.HttpApi.Service
     public class GenerateJsonWorker : HangfireBackgroundWorkerBase
     {
         private readonly IInitDataService _initDataService;
+        private readonly IDataFilter _dataFilter;
 
-        public GenerateJsonWorker(IInitDataService initDataService)
+        public GenerateJsonWorker(IInitDataService initDataService,
+            IDataFilter dataFilter)
         {
             _initDataService = initDataService;
             RecurringJobId = nameof(GenerateJsonWorker);
             CronExpression = Cron.Yearly();
+            _dataFilter = dataFilter;
         }
 
         public override async Task DoWorkAsync()
         {
-            await _initDataService.GenerateDataAsync();
+            using (_dataFilter.Disable<IMultiTenant>())
+            {
+                await _initDataService.GenerateDataAsync();
+            }
         }
     }
 }
