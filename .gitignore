@@ -252,6 +252,5 @@ paket-files/
 *.sln.iml
 
 # 屏蔽不提交的项目
-**/modules/information/**
 **/modules/mission/**
 **/modules/user/**
