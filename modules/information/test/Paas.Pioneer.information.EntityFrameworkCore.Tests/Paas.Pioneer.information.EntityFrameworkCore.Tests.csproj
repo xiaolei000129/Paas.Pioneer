@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Paas.Pioneer.information.EntityFrameworkCore\Paas.Pioneer.information.EntityFrameworkCore.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.information.TestBase\Paas.Pioneer.information.TestBase.csproj" />
+		<PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="5.1.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+	</ItemGroup>
+
+</Project>
