@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<PackageType>Paas.Pioneer.information.Domain.Shared</PackageType>
-		<PackageId>Paas.Pioneer.information.Domain.Shared</PackageId>
-		<Title>Paas.Pioneer.information.Domain.Shared</Title>
+		<PackageType>Paas.Pioneer.Information.Domain.Shared</PackageType>
+		<PackageId>Paas.Pioneer.Information.Domain.Shared</PackageId>
+		<Title>Paas.Pioneer.Information.Domain.Shared</Title>
 		<Authors>Paas.Pioneer</Authors>
-		<Description>Paas.Pioneer.information.Domain.Shared</Description>
+		<Description>Paas.Pioneer.Information.Domain.Shared</Description>
 		<TargetFramework>net6.0</TargetFramework>
 		<IncludeBuildOutput>true</IncludeBuildOutput>
 		<NoWarn>$(NoWarn);NU5128</NoWarn>

@@ -1,6 +1,6 @@
-﻿namespace Paas.Pioneer.information.Domain
+﻿namespace Paas.Pioneer.Information.Domain
 {
-    public static class informationsConsts
+    public static class InformationsConsts
     {
         public const string DbTablePrefix = "App";
 

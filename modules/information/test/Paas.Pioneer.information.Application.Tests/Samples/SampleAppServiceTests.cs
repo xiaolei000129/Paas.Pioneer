@@ -1,15 +1,15 @@
-﻿using Paas.Pioneer.information.Application.Tests;
+﻿using Paas.Pioneer.Information.Application.Tests;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Paas.Pioneer.information.Application.Tests.Samples
+namespace Paas.Pioneer.Information.Application.Tests.Samples
 {
     /* This is just an example test class.
      * Normally, you don't test code of the modules you are using
      * (like IIdentityUserAppService here).
      * Only test your own application services.
      */
-    public class SampleAppServiceTests : informationsApplicationTestBase
+    public class SampleAppServiceTests : InformationsApplicationTestBase
     {
         public SampleAppServiceTests()
         {

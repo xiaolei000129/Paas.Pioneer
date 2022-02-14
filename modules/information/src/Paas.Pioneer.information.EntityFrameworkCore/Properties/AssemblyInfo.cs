@@ -1,2 +1,2 @@
 ﻿using System.Runtime.CompilerServices;
-[assembly:InternalsVisibleToAttribute("Paas.Pioneer.information.EntityFrameworkCore.Tests")]
+[assembly:InternalsVisibleToAttribute("Paas.Pioneer.Information.EntityFrameworkCore.Tests")]

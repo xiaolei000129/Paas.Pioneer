@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Extensions;
-using Paas.Pioneer.information.Domain.BaseExtensions;
-using Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore;
+using Paas.Pioneer.Information.Domain.BaseExtensions;
+using Paas.Pioneer.Information.EntityFrameworkCore.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +19,13 @@ using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 
-namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
+namespace Paas.Pioneer.Information.EntityFrameworkCore.BaseExtensions
 {
-    public class BaseExtensionsRepository<TEntity> : EfCoreRepository<informationsDbContext, TEntity, Guid>, IBaseExtensionRepository<TEntity> where TEntity : Entity<Guid>, ISoftDelete
+    public class BaseExtensionsRepository<TEntity> : EfCoreRepository<InformationsDbContext, TEntity, Guid>, IBaseExtensionRepository<TEntity> where TEntity : Entity<Guid>, ISoftDelete
     {
-        private readonly IDbContextProvider<informationsDbContext> _dbContextProvider;
+        private readonly IDbContextProvider<InformationsDbContext> _dbContextProvider;
 
-        public BaseExtensionsRepository(IDbContextProvider<informationsDbContext> dbContextProvider)
+        public BaseExtensionsRepository(IDbContextProvider<InformationsDbContext> dbContextProvider)
          : base(dbContextProvider)
         {
             _dbContextProvider = dbContextProvider;

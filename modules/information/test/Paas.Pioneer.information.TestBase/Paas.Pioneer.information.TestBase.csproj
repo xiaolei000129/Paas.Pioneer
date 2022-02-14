@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
-		<RootNamespace>Paas.Pioneer.informations</RootNamespace>
+		<RootNamespace>Paas.Pioneer.Informations</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Volo.Abp.TestBase" Version="5.1.1" />
 		<PackageReference Include="Volo.Abp.Autofac" Version="5.1.1" />
 		<PackageReference Include="Volo.Abp.Authorization" Version="5.1.1" />
-		<ProjectReference Include="..\..\src\Paas.Pioneer.information.Domain\Paas.Pioneer.information.Domain.csproj" />
+		<ProjectReference Include="..\..\src\Paas.Pioneer.Information.Domain\Paas.Pioneer.Information.Domain.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

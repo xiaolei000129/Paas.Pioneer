@@ -1,4 +1,4 @@
-﻿namespace Paas.Pioneer.information.Domain.Shared.MultiTenancy
+﻿namespace Paas.Pioneer.Information.Domain.Shared.MultiTenancy
 {
     public static class MultiTenancyConsts
     {

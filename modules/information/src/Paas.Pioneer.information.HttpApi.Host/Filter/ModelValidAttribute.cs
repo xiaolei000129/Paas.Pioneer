@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
 using System.Linq;
 
-namespace Paas.Pioneer.information.HttpApi.Host.Filter
+namespace Paas.Pioneer.Information.HttpApi.Host.Filter
 {
     public class ModelValidAttribute : ActionFilterAttribute
     {

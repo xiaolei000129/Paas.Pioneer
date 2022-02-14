@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<PackageType>Paas.Pioneer.information.EntityFrameworkCore</PackageType>
-		<PackageId>Paas.Pioneer.information.EntityFrameworkCore</PackageId>
-		<Title>Paas.Pioneer.information.EntityFrameworkCore</Title>
+		<PackageType>Paas.Pioneer.Information.EntityFrameworkCore</PackageType>
+		<PackageId>Paas.Pioneer.Information.EntityFrameworkCore</PackageId>
+		<Title>Paas.Pioneer.Information.EntityFrameworkCore</Title>
 		<Authors>Paas.Pioneer</Authors>
-		<Description>Paas.Pioneer.information.EntityFrameworkCore</Description>
+		<Description>Paas.Pioneer.Information.EntityFrameworkCore</Description>
 		<TargetFramework>net6.0</TargetFramework>
 		<IncludeBuildOutput>true</IncludeBuildOutput>
 		<NoWarn>$(NoWarn);NU5128</NoWarn>
@@ -12,7 +12,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Paas.Pioneer.information.Domain\Paas.Pioneer.information.Domain.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.Information.Domain\Paas.Pioneer.Information.Domain.csproj" />
 		<PackageReference Include="Volo.Abp.EntityFrameworkCore.MySQL" Version="5.1.1" />
 		<PackageReference Include="Volo.Abp.TenantManagement.EntityFrameworkCore" Version="5.1.1" />
 	</ItemGroup>

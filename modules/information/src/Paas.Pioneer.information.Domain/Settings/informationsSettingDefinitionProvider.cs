@@ -1,13 +1,13 @@
 ﻿using Volo.Abp.Settings;
 
-namespace Paas.Pioneer.information.Domain.Settings
+namespace Paas.Pioneer.Information.Domain.Settings
 {
-    public class informationsSettingDefinitionProvider : SettingDefinitionProvider
+    public class InformationsSettingDefinitionProvider : SettingDefinitionProvider
     {
         public override void Define(ISettingDefinitionContext context)
         {
             //Define your own settings here. Example:
-            //context.Add(new SettingDefinition(informationsSettings.MySetting1));
+            //context.Add(new SettingDefinition(InformationsSettings.MySetting1));
         }
     }
 }

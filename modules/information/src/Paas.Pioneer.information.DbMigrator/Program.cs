@@ -8,7 +8,7 @@ using NLog;
 using NLog.Web;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
-namespace Paas.Pioneer.information.DbMigrator
+namespace Paas.Pioneer.Information.DbMigrator
 {
 	class Program
     {

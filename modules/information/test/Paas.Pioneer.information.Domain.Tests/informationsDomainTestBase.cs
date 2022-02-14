@@ -1,8 +1,8 @@
-﻿using Paas.Pioneer.informations;
+﻿using Paas.Pioneer.Informations;
 
-namespace Paas.Pioneer.information.Domain.Tests
+namespace Paas.Pioneer.Information.Domain.Tests
 {
-    public abstract class informationsDomainTestBase : informationsTestBase<informationsDomainTestModule>
+    public abstract class InformationsDomainTestBase : InformationsTestBase<InformationsDomainTestModule>
     {
 
     }

@@ -2,9 +2,9 @@
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 
-namespace Paas.Pioneer.informations
+namespace Paas.Pioneer.Informations
 {
-    public class informationsTestDataSeedContributor : IDataSeedContributor, ITransientDependency
+    public class InformationsTestDataSeedContributor : IDataSeedContributor, ITransientDependency
     {
         public Task SeedAsync(DataSeedContext context)
         {

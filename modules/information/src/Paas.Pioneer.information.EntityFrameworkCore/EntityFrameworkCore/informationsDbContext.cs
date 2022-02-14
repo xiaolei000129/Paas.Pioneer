@@ -1,21 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Paas.Pioneer.Information.Domain.Grid;
+using Paas.Pioneer.Information.Domain.News;
+using Paas.Pioneer.Information.Domain.Slideshow;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 
-namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
+namespace Paas.Pioneer.Information.EntityFrameworkCore.EntityFrameworkCore
 {
     [ReplaceDbContext(typeof(ITenantManagementDbContext))]
     [ConnectionStringName("Default")]
-    public class informationsDbContext :
-        AbpDbContext<informationsDbContext>,
+    public class InformationsDbContext :
+        AbpDbContext<InformationsDbContext>,
         ITenantManagementDbContext
     {
         /* Add DbSet properties for your Aggregate Roots / Entities here. */
 
         #region Entities from the modules
+        public DbSet<Information_SlideshowEntity> Information_SlideshowEntitys { get; set; }
+        public DbSet<Information_NewsEntity> Information_NewsEntitys { get; set; }
+        public DbSet<Information_GridEntity> Information_GridEntitys { get; set; }
 
         // Tenant Management
         public DbSet<Tenant> Tenants { get; set; }
@@ -23,7 +29,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
 
         #endregion
 
-        public informationsDbContext(DbContextOptions<informationsDbContext> options)
+        public InformationsDbContext(DbContextOptions<InformationsDbContext> options)
             : base(options)
         {
 
@@ -41,7 +47,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
 
             //builder.Entity<YourEntity>(b =>
             //{
-            //    b.ToTable(informationsConsts.DbTablePrefix + "YourEntities", informationsConsts.DbSchema);
+            //    b.ToTable(InformationsConsts.DbTablePrefix + "YourEntities", InformationsConsts.DbSchema);
             //    b.ConfigureByConvention(); //auto configure for the base class props
             //    //...
             //});

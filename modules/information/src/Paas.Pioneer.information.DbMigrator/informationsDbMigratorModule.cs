@@ -1,16 +1,16 @@
-﻿using Paas.Pioneer.information.Application.Contracts;
-using Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore;
+﻿using Paas.Pioneer.Information.Application.Contracts;
+using Paas.Pioneer.Information.EntityFrameworkCore.EntityFrameworkCore;
 using Volo.Abp.Autofac;
 using Volo.Abp.Modularity;
 
-namespace Paas.Pioneer.information.DbMigrator
+namespace Paas.Pioneer.Information.DbMigrator
 {
     [DependsOn(
         typeof(AbpAutofacModule),
-        typeof(informationsEntityFrameworkCoreModule),
-        typeof(informationsApplicationContractsModule)
+        typeof(InformationsEntityFrameworkCoreModule),
+        typeof(InformationsApplicationContractsModule)
         )]
-    public class informationsDbMigratorModule : AbpModule
+    public class InformationsDbMigratorModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {

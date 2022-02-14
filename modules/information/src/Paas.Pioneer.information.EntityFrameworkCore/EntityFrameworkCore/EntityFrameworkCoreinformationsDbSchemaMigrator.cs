@@ -2,17 +2,17 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Paas.Pioneer.information.Domain.Data;
+using Paas.Pioneer.Information.Domain.Data;
 using Volo.Abp.DependencyInjection;
 
-namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
+namespace Paas.Pioneer.Information.EntityFrameworkCore.EntityFrameworkCore
 {
-    public class EntityFrameworkCoreinformationsDbSchemaMigrator
-        : IinformationsDbSchemaMigrator, ITransientDependency
+    public class EntityFrameworkCoreInformationsDbSchemaMigrator
+        : IInformationsDbSchemaMigrator, ITransientDependency
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public EntityFrameworkCoreinformationsDbSchemaMigrator(
+        public EntityFrameworkCoreInformationsDbSchemaMigrator(
             IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
@@ -20,14 +20,14 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
 
         public async Task MigrateAsync()
         {
-            /* We intentionally resolving the informationsDbContext
+            /* We intentionally resolving the InformationsDbContext
              * from IServiceProvider (instead of directly injecting it)
              * to properly get the connection string of the current tenant in the
              * current scope.
              */
 
             await _serviceProvider
-                .GetRequiredService<informationsDbContext>()
+                .GetRequiredService<InformationsDbContext>()
                 .Database
                 .MigrateAsync();
         }

@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Paas.Pioneer.information.Domain.Data
+namespace Paas.Pioneer.Information.Domain.Data
 {
-    public interface IinformationsDbSchemaMigrator
+    public interface IInformationsDbSchemaMigrator
     {
         Task MigrateAsync();
     }

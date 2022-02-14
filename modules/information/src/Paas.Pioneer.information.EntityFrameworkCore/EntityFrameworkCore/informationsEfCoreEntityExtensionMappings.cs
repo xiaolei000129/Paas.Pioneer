@@ -1,16 +1,16 @@
-﻿using Paas.Pioneer.information.Domain.Shared;
+﻿using Paas.Pioneer.Information.Domain.Shared;
 using Volo.Abp.Threading;
 
-namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
+namespace Paas.Pioneer.Information.EntityFrameworkCore.EntityFrameworkCore
 {
-    public static class informationsEfCoreEntityExtensionMappings
+    public static class InformationsEfCoreEntityExtensionMappings
     {
         private static readonly OneTimeRunner OneTimeRunner = new OneTimeRunner();
 
         public static void Configure()
         {
-            informationsGlobalFeatureConfigurator.Configure();
-            informationsModuleExtensionConfigurator.Configure();
+            InformationsGlobalFeatureConfigurator.Configure();
+            InformationsModuleExtensionConfigurator.Configure();
 
             OneTimeRunner.Run(() =>
             {
@@ -20,7 +20,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
                  * This class can be used to map these extra properties to table fields in the database.
                  *
                  * USE THIS CLASS ONLY TO CONFIGURE EF CORE RELATED MAPPING.
-                 * USE informationsModuleExtensionConfigurator CLASS (in the Domain.Shared project)
+                 * USE InformationsModuleExtensionConfigurator CLASS (in the Domain.Shared project)
                  * FOR A HIGH LEVEL API TO DEFINE EXTRA PROPERTIES TO ENTITIES OF THE USED MODULES
                  *
                  * Example: Map a property to a table field:

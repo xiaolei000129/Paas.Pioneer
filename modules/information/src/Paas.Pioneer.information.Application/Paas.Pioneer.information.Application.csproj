@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<PackageType>Paas.Pioneer.information.Application</PackageType>
-		<PackageId>Paas.Pioneer.information.Application</PackageId>
-		<Title>Paas.Pioneer.information.Application</Title>
+		<PackageType>Paas.Pioneer.Information.Application</PackageType>
+		<PackageId>Paas.Pioneer.Information.Application</PackageId>
+		<Title>Paas.Pioneer.Information.Application</Title>
 		<Authors>Paas.Pioneer</Authors>
-		<Description>Paas.Pioneer.information.Application</Description>
+		<Description>Paas.Pioneer.Information.Application</Description>
 		<TargetFramework>net6.0</TargetFramework>
 		<IncludeBuildOutput>true</IncludeBuildOutput>
 		<NoWarn>$(NoWarn);NU5128</NoWarn>
@@ -12,8 +12,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Paas.Pioneer.information.Application.Contracts\Paas.Pioneer.information.Application.Contracts.csproj" />
-		<ProjectReference Include="..\Paas.Pioneer.information.Domain\Paas.Pioneer.information.Domain.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.Information.Application.Contracts\Paas.Pioneer.Information.Application.Contracts.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.Information.Domain\Paas.Pioneer.Information.Domain.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

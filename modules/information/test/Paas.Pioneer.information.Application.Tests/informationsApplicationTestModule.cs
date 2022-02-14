@@ -1,14 +1,14 @@
-﻿using Paas.Pioneer.information.Application;
-using Paas.Pioneer.information.Domain.Tests;
+﻿using Paas.Pioneer.Information.Application;
+using Paas.Pioneer.Information.Domain.Tests;
 using Volo.Abp.Modularity;
 
-namespace Paas.Pioneer.information.Application.Tests
+namespace Paas.Pioneer.Information.Application.Tests
 {
     [DependsOn(
-        typeof(informationsApplicationModule),
-        typeof(informationsDomainTestModule)
+        typeof(InformationsApplicationModule),
+        typeof(InformationsDomainTestModule)
         )]
-    public class informationsApplicationTestModule : AbpModule
+    public class InformationsApplicationTestModule : AbpModule
     {
 
     }
