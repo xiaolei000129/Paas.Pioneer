@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Auth;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Auth.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Auth.Dto.Output;
@@ -39,6 +40,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         private readonly ILoginLogService _loginLogService;
         private readonly ICaptcha _captcha;
         private readonly IDataFilter _dataFilter;
+        private readonly ILogger<AuthController> _logger;
 
         /// <summary>
         /// 构造函数
@@ -49,13 +51,15 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="loginLogService"></param>
         /// <param name="captcha"></param>
         /// <param name="dataFilter"></param>
+        /// <param name="logger"></param>
         public AuthController(
             IUserToken userToken,
             IAuthService authService,
             IUserService userService,
             ILoginLogService loginLogService,
             ICaptcha captcha,
-            IDataFilter dataFilter)
+            IDataFilter dataFilter,
+            ILogger<AuthController> logger)
         {
             _userToken = userToken;
             _authService = authService;
@@ -63,6 +67,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
             _loginLogService = loginLogService;
             _captcha = captcha;
             _dataFilter = dataFilter;
+            _logger = logger;
         }
 
         /// <summary>

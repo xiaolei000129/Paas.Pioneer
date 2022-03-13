@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
 using Paas.Pioneer.Admin.Core.Domain.Api;
 using Paas.Pioneer.Admin.Core.Domain.Dictionary;
 using Paas.Pioneer.Admin.Core.Domain.DictionaryType;
@@ -19,6 +21,7 @@ using Paas.Pioneer.Admin.Core.Domain.TenantPermission;
 using Paas.Pioneer.Admin.Core.Domain.User;
 using Paas.Pioneer.Admin.Core.Domain.UserRole;
 using Paas.Pioneer.Admin.Core.Domain.View;
+using System;
 using Volo.Abp;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
@@ -71,6 +74,12 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.EntityFrameworkCore
         {
 
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder
+            .ConfigureWarnings(b => b.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
+            .LogTo(Console.WriteLine, LogLevel.Information, DbContextLoggerOptions.Level)
+           .EnableDetailedErrors();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
