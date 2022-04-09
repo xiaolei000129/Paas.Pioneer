@@ -376,7 +376,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.Shared.Captcha
             //Bitmap baseImage = new Bitmap(oriImage);
             //oriImage.Dispose();
 
-            var oriTemplate = Image.FromFile($@"{Directory.GetCurrentDirectory()}\wwwroot\captcha\jigsaw\templates\{new Random().Next(1, 7)}.png".ToPath());
+            var oriTemplate = Image.FromFile($@"{Directory.GetCurrentDirectory()}\wwwroot\captcha\jigsaw\templates\{new Random().Next(1, 7)}.png".Replace("\\", @"\"));
 
             Bitmap templateImage = new Bitmap(oriTemplate);
             oriTemplate.Dispose();
@@ -426,7 +426,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.Shared.Captcha
         /// <returns></returns>
         public async Task<bool> CheckAsync(CaptchaInput input)
         {
-            if (input == null || input.Data.IsNull())
+            if (input == null || input.Data.IsNullOrEmpty())
             {
                 return false;
             }

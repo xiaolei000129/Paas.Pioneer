@@ -35,14 +35,14 @@ namespace Paas.Pioneer.Domain.Shared.Configs
 		{
 			get
 			{
-				if (_uploadPath.IsNull())
+				if (_uploadPath.IsNullOrEmpty())
 				{
-					_uploadPath = Path.Combine(AppContext.BaseDirectory, "upload").ToPath();
+					_uploadPath = Path.Combine(AppContext.BaseDirectory, "upload").Replace(@"\", "/");
 				}
 
 				if (!Path.IsPathRooted(_uploadPath))
 				{
-					_uploadPath = Path.Combine(AppContext.BaseDirectory, _uploadPath).ToPath();
+					_uploadPath = Path.Combine(AppContext.BaseDirectory, _uploadPath).Replace(@"\", "/");
 				}
 
 				return _uploadPath;

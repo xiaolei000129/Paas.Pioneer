@@ -1,13 +1,13 @@
-﻿using Paas.Pioneer.Domain.Shared.Extensions;
+﻿using System;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace Paas.Pioneer.Domain.Shared.Helpers
 {
-	/// <summary>
-	/// MD5加密
-	/// </summary>
-	public class MD5Encrypt
+    /// <summary>
+    /// MD5加密
+    /// </summary>
+    public class MD5Encrypt
 	{
 		/// <summary>
 		/// 16位MD5加密
@@ -16,7 +16,7 @@ namespace Paas.Pioneer.Domain.Shared.Helpers
 		/// <returns></returns>
 		public static string Encrypt16(string password)
 		{
-			if (password.IsNull())
+			if (password.IsNullOrEmpty())
 				return null;
 
 			using (var md5 = MD5.Create())
@@ -32,7 +32,7 @@ namespace Paas.Pioneer.Domain.Shared.Helpers
 		/// <returns></returns>
 		public static string Encrypt32(string password = "")
 		{
-			if (password.IsNull())
+			if (password.IsNullOrEmpty())
 				return null;
 
 			using (var md5 = MD5.Create())
@@ -54,7 +54,7 @@ namespace Paas.Pioneer.Domain.Shared.Helpers
 		/// <returns></returns>
 		public static string Encrypt64(string password)
 		{
-			if (password.IsNull())
+			if (password.IsNullOrEmpty())
 				return null;
 
 			using (var md5 = MD5.Create())

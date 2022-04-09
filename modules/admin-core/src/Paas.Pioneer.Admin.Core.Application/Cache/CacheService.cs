@@ -6,6 +6,7 @@ using Paas.Pioneer.Admin.Core.Domain.Shared.RedisKey;
 using Paas.Pioneer.Domain.Shared.Configs;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -80,7 +81,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Cache
         /// <returns></returns>
         private async Task<long> DelByPatternAsync(string pattern)
         {
-            if (pattern.IsNull())
+            if (pattern.IsNullOrEmpty())
                 return default;
             pattern = Regex.Replace(pattern, @"\{.*\}", "*");
             var keys = await RedisHelper.KeysAsync(pattern);

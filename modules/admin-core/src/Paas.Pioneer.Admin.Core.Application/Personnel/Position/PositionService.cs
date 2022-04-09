@@ -46,7 +46,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Personnel.Position
             var key = input.Filter?.Name;
 
             Expression<Func<Pe_PositionEntity, bool>> predicate = x => true;
-            if (key.NotNull())
+            if (!key.IsNullOrEmpty())
             {
                 predicate = predicate.And(a => a.Name.Contains(key));
             }

@@ -184,7 +184,7 @@ namespace Paas.Pioneer.Domain.Shared.Helpers
 		/// <returns></returns>
 		public static byte[] HexToBytes(this string s)
 		{
-			if (s.IsNull())
+			if (s.IsNullOrEmpty())
 				return null;
 			var bytes = new byte[s.Length / 2];
 

@@ -6,8 +6,7 @@ namespace Paas.Pioneer.Domain.Shared.Helpers
 	{
 		//基准时间
 		private static long StartStmp = 1288834974657L;
-
-		//private const long START_STMP = 1480166465631L;
+		
 		/*每一部分占用的位数*/
 
 		//机器标识位数
@@ -45,11 +44,6 @@ namespace Paas.Pioneer.Domain.Shared.Helpers
 		private long _lastTimestamp = -1L;//上一次时间戳
 		public long MachineId { get; protected set; }//机器标识
 		public long DatacenterId { get; protected set; }//数据中心
-														//public long Sequence = 0L;//序列号
-														//{
-														//    get { return _sequence; }
-														//    internal set { _sequence = value; }
-														//}
 
 		private readonly DateTime Jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 		private readonly object _lock = new object();
@@ -70,12 +64,8 @@ namespace Paas.Pioneer.Domain.Shared.Helpers
 			//先检验再赋值
 			MachineId = machineId;
 			DatacenterId = datacenterId;
-			//_sequence = sequence;
 		}
 
-		//public static Init(long machineId, long datacenterId)
-		//{
-		//}
 		public long NextId()
 		{
 			lock (_lock)
@@ -102,7 +92,7 @@ namespace Paas.Pioneer.Domain.Shared.Helpers
 				{
 					//如果和上次生成时间不同,重置sequence，就是下一毫秒开始，sequence计数重新从0开始累加,
 					//为了保证尾数随机性更大一些,最后一位可以设置一个随机数
-					_sequence = 0L;//new Random().Next(10);
+					_sequence = 0L;
 				}
 
 				_lastTimestamp = timestamp;
@@ -124,7 +114,6 @@ namespace Paas.Pioneer.Domain.Shared.Helpers
 		// 获取当前的时间戳
 		protected virtual long TimeGen()
 		{
-			//return TimeExtensions.CurrentTimeMillis();
 			return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds;
 		}
 	}

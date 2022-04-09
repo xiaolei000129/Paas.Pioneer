@@ -223,7 +223,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
             }
 
             var refreshExpires = userClaims.FirstOrDefault(a => a.Type == ClaimAttributes.RefreshExpires)?.Value;
-            if (refreshExpires.IsNull())
+            if (refreshExpires.IsNullOrEmpty())
             {
                 return ResponseOutput.Error("错误token");
             }
@@ -234,7 +234,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
             }
 
             var userId = userClaims.FirstOrDefault(a => a.Type == ClaimAttributes.UserId)?.Value;
-            if (userId.IsNull())
+            if (userId.IsNullOrEmpty())
             {
                 return ResponseOutput.Error("登录信息已失效");
             }

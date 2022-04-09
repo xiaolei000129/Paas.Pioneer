@@ -13,10 +13,15 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
-		<PackageReference Include="NLog" Version="4.7.13" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="NLog" Version="4.7.15" />
 		<PackageReference Include="NLog.Targets.ElasticSearch" Version="7.7.0" />
 		<PackageReference Include="NLog.Web.AspNetCore" Version="4.14.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Paas.Pioneer.Domain.Shared\Paas.Pioneer.Domain.Shared.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

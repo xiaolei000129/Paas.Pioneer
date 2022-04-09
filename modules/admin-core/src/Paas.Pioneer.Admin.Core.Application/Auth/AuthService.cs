@@ -135,7 +135,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
         {
             var img = _verifyCodeHelper.GetBase64String(out string code);
             //删除上次缓存的验证码
-            if (lastKey.NotNull())
+            if (!lastKey.IsNullOrEmpty())
             {
                 await RedisHelper.DelAsync(lastKey);
             }
@@ -174,14 +174,14 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
                 return ResponseOutput.Error<AuthLoginOutput>("账号已被禁用");
             }
             #region 解密
-            if (input.PasswordKey.NotNull())
+            if (!input.PasswordKey.IsNullOrEmpty())
             {
                 var passwordEncryptKey = string.Format(_redisAdminKeys.PassWordEncryptKey, input.PasswordKey);
                 var existsPasswordKey = await RedisHelper.ExistsAsync(passwordEncryptKey);
                 if (existsPasswordKey)
                 {
                     var secretKey = await RedisHelper.GetAsync(passwordEncryptKey);
-                    if (secretKey.IsNull())
+                    if (secretKey.IsNullOrEmpty())
                     {
                         return ResponseOutput.Error<AuthLoginOutput>("解密失败！");
                     }

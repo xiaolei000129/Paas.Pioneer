@@ -320,7 +320,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
         /// <returns></returns>
         private async Task GenerateCodeFileAsync(string fileName, string fileContent)
         {
-            string path = $"{AppContext.BaseDirectory.ToPath()}{fileName}";
+            string path = $"{AppContext.BaseDirectory}{fileName}";
             var dirPath = new DirectoryInfo(path).Parent.FullName;
             if (!Directory.Exists(dirPath))
                 Directory.CreateDirectory(dirPath);

@@ -50,7 +50,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         public async Task<ResponseOutput<List<ApiListOutput>>> GetListAsync(string key)
         {
             Expression<Func<Ad_ApiEntity, bool>> expression = x => true;
-            if (key.NotNull())
+            if (!key.IsNullOrEmpty())
             {
                 expression = expression.And(a => a.Path.Contains(key) || a.Label.Contains(key));
             }
@@ -76,7 +76,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         {
             var key = input.Filter?.Label;
             Expression<Func<Ad_ApiEntity, bool>> expression = x => true;
-            if (key.NotNull())
+            if (!key.IsNullOrEmpty())
             {
                 expression = expression.And(a => a.Path.Contains(key) || a.Label.Contains(key));
             }

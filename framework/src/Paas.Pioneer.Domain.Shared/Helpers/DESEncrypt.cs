@@ -72,9 +72,9 @@ namespace Paas.Pioneer.Domain.Shared.Helpers
 		/// <returns></returns>
 		private static string Encrypt(string encryptString, string key, bool hex, bool lowerCase = false)
 		{
-			if (encryptString.IsNull())
+			if (encryptString.IsNullOrEmpty())
 				return null;
-			if (key.IsNull())
+			if (key.IsNullOrEmpty())
 				key = Key;
 			if (key.Length < 8)
 				throw new ArgumentException("秘钥长度为8位", nameof(key));
@@ -108,9 +108,9 @@ namespace Paas.Pioneer.Domain.Shared.Helpers
 		/// <returns></returns>
 		private static string Decrypt(string decryptString, string key, bool hex)
 		{
-			if (decryptString.IsNull())
+			if (decryptString.IsNullOrEmpty())
 				return null;
-			if (key.IsNull())
+			if (key.IsNullOrEmpty())
 				key = Key;
 			if (key.Length < 8)
 				throw new ArgumentException("秘钥长度为8位", nameof(key));

@@ -7,11 +7,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Paas.Pioneer.Admin.Core.EntityFrameworkCore\Paas.Pioneer.Admin.Core.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Paas.Pioneer.Admin.Core.TestBase\Paas.Pioneer.Admin.Core.TestBase.csproj" />
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="5.1.1" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="5.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
   </ItemGroup>
 
 </Project>

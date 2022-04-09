@@ -12,11 +12,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Elastic.Apm.NetCoreAll" Version="1.13.0" />
-		<PackageReference Include="Volo.Abp.TenantManagement.Domain.Shared" Version="5.1.1" />
-		<PackageReference Include="Volo.Abp.TextTemplating.Scriban" Version="5.1.1" />
+		<PackageReference Include="Elastic.Apm.NetCoreAll" Version="1.14.1" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Domain.Shared" Version="5.2.0" />
+		<PackageReference Include="Volo.Abp.TextTemplating.Scriban" Version="5.2.0" />
 		<PackageReference Include="UAParser" Version="3.1.47" />
-		<PackageReference Include="Paas.Pioneer.Domain.Shared" Version="5.1.1" />
-		<PackageReference Include="Paas.Pioneer.Redis" Version="5.1.1" />
+		<PackageReference Include="Paas.Pioneer.Domain.Shared" Version="5.2.1" />
+		<PackageReference Include="Paas.Pioneer.Redis" Version="5.2.1" />
 	</ItemGroup>
 </Project>

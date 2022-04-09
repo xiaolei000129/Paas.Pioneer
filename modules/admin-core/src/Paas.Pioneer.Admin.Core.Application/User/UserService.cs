@@ -12,7 +12,6 @@ using Paas.Pioneer.Admin.Core.Domain.UserRole;
 using Paas.Pioneer.Domain.Shared.Configs;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
-using Paas.Pioneer.Domain.Shared.Extensions;
 using Paas.Pioneer.Domain.Shared.Helpers;
 using System;
 using System.Collections.Generic;
@@ -183,7 +182,7 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         /// <returns></returns>
         public async Task<IResponseOutput> AddAsync(UserAddInput input)
         {
-            if (input.Password.IsNull())
+            if (input.Password.IsNullOrEmpty())
             {
                 input.Password = "111111";
             }

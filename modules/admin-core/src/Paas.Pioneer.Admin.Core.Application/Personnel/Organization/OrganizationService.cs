@@ -46,7 +46,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Personnel.Organization
 
             Expression<Func<Pe_OrganizationEntity, bool>> predicate = x => true;
 
-            if (key.NotNull())
+            if (!key.IsNullOrEmpty())
             {
                 predicate = predicate.And(a => a.Name.Contains(key) || a.Code.Contains(key));
             }

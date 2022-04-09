@@ -61,21 +61,21 @@ namespace Paas.Pioneer.Domain.Shared.Files
 		/// <summary>
 		/// 文件目录
 		/// </summary>
-		public string FileDirectory => System.IO.Path.Combine(UploadPath, RelativePath).ToPath();
+		public string FileDirectory => System.IO.Path.Combine(UploadPath, RelativePath).Replace(@"\", "/");
 
 		/// <summary>
 		/// 文件请求路径
 		/// </summary>
-		public string FileRequestPath => System.IO.Path.Combine(RequestPath, RelativePath, SaveName).ToPath();
+		public string FileRequestPath => System.IO.Path.Combine(RequestPath, RelativePath, SaveName).Replace(@"\", "/");
 
 		/// <summary>
 		/// 文件相对路径
 		/// </summary>
-		public string FileRelativePath => System.IO.Path.Combine(RelativePath, SaveName).ToPath();
+		public string FileRelativePath => System.IO.Path.Combine(RelativePath, SaveName).Replace(@"\", "/");
 
 		/// <summary>
 		/// 文件路径
 		/// </summary>
-		public string FilePath => System.IO.Path.Combine(UploadPath, RelativePath, SaveName).ToPath();
+		public string FilePath => System.IO.Path.Combine(UploadPath, RelativePath, SaveName).Replace(@"\", "/");
 	}
 }
