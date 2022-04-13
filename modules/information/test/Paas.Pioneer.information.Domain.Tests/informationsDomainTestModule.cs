@@ -1,12 +1,12 @@
-﻿using Paas.Pioneer.Information.EntityFrameworkCore.Tests.EntityFrameworkCore;
+﻿using Paas.Pioneer.information.EntityFrameworkCore.Tests.EntityFrameworkCore;
 using Volo.Abp.Modularity;
 
-namespace Paas.Pioneer.Information.Domain.Tests
+namespace Paas.Pioneer.information.Domain.Tests
 {
     [DependsOn(
-        typeof(InformationsEntityFrameworkCoreTestModule)
+        typeof(informationsEntityFrameworkCoreTestModule)
         )]
-    public class InformationsDomainTestModule : AbpModule
+    public class informationsDomainTestModule : AbpModule
     {
 
     }

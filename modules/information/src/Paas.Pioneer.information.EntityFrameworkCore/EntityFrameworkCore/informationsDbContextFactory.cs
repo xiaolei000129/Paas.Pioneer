@@ -3,28 +3,28 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Paas.Pioneer.Information.EntityFrameworkCore.EntityFrameworkCore
+namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
 {
     /* This class is needed for EF Core console commands
      * (like Add-Migration and Update-Database commands) */
-    public class InformationsDbContextFactory : IDesignTimeDbContextFactory<InformationsDbContext>
+    public class informationsDbContextFactory : IDesignTimeDbContextFactory<informationsDbContext>
     {
-        public InformationsDbContext CreateDbContext(string[] args)
+        public informationsDbContext CreateDbContext(string[] args)
         {
-            InformationsEfCoreEntityExtensionMappings.Configure();
+            informationsEfCoreEntityExtensionMappings.Configure();
 
             var configuration = BuildConfiguration();
 
-            var builder = new DbContextOptionsBuilder<InformationsDbContext>()
+            var builder = new DbContextOptionsBuilder<informationsDbContext>()
                 .UseMySql(configuration.GetConnectionString("Default"), MySqlServerVersion.LatestSupportedServerVersion);
 
-            return new InformationsDbContext(builder.Options);
+            return new informationsDbContext(builder.Options);
         }
 
         private static IConfigurationRoot BuildConfiguration()
         {
             var builder = new ConfigurationBuilder()
-                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../Paas.Pioneer.Information.DbMigrator/"))
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../Paas.Pioneer.information.DbMigrator/"))
                 .AddJsonFile("appsettings.json", optional: false);
 
             return builder.Build();

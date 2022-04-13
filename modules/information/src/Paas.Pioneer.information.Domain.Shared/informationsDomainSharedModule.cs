@@ -2,24 +2,24 @@
 using Volo.Abp.TenantManagement;
 using Volo.Abp.VirtualFileSystem;
 
-namespace Paas.Pioneer.Information.Domain.Shared
+namespace Paas.Pioneer.information.Domain.Shared
 {
     [DependsOn(
         typeof(AbpTenantManagementDomainSharedModule)
         )]
-    public class InformationsDomainSharedModule : AbpModule
+    public class informationsDomainSharedModule : AbpModule
     {
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
-            InformationsGlobalFeatureConfigurator.Configure();
-            InformationsModuleExtensionConfigurator.Configure();
+            informationsGlobalFeatureConfigurator.Configure();
+            informationsModuleExtensionConfigurator.Configure();
         }
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
-                options.FileSets.AddEmbedded<InformationsDomainSharedModule>();
+                options.FileSets.AddEmbedded<informationsDomainSharedModule>();
             });
         }
     }

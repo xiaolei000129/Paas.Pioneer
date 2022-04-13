@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities;
 
-namespace Paas.Pioneer.Information.Domain.BaseExtensions
+namespace Paas.Pioneer.information.Domain.BaseExtensions
 {
     public interface IBaseExtensionRepository<TEntity> where TEntity : Entity<Guid>, ISoftDelete
     {
@@ -116,7 +116,7 @@ namespace Paas.Pioneer.Information.Domain.BaseExtensions
         /// <param name="input">入参</param>
         /// <returns></returns>
         Task<ResponseOutput<Page<TEntity>>> GetResponseOutputPageListAsync<TPageInput>(
-                    Expression<Func<TEntity, bool>> expression,
+                    Expression<Func<TEntity, bool>> expression = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
                     PageInput<TPageInput> input = default,
                     bool isTracking = false,
@@ -147,8 +147,8 @@ namespace Paas.Pioneer.Information.Domain.BaseExtensions
         /// <param name="input">入参</param>
         /// <returns></returns>
         Task<ResponseOutput<Page<TResult>>> GetResponseOutputPageListAsync<TResult, TPageInput>(
-                    Expression<Func<TEntity, bool>> expression,
-                    Expression<Func<TEntity, TResult>> selector,
+                    Expression<Func<TEntity, bool>> expression = default,
+                    Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     PageInput<TPageInput> input = default,
                     bool isTracking = false,

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Paas.Pioneer.Information.Domain;
+using Paas.Pioneer.information.Domain;
 using Volo.Abp;
 using Volo.Abp.Authorization;
 using Volo.Abp.Autofac;
@@ -7,15 +7,15 @@ using Volo.Abp.Data;
 using Volo.Abp.Modularity;
 using Volo.Abp.Threading;
 
-namespace Paas.Pioneer.Informations
+namespace Paas.Pioneer.informations
 {
     [DependsOn(
         typeof(AbpAutofacModule),
         typeof(AbpTestBaseModule),
         typeof(AbpAuthorizationModule),
-        typeof(InformationsDomainModule)
+        typeof(informationsDomainModule)
         )]
-    public class InformationsTestBaseModule : AbpModule
+    public class informationsTestBaseModule : AbpModule
     {
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {

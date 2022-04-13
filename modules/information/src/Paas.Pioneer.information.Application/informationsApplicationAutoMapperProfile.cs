@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 
-namespace Paas.Pioneer.Information.Application
+namespace Paas.Pioneer.information.Application
 {
-    public class InformationsApplicationAutoMapperProfile : Profile
+    public class informationsApplicationAutoMapperProfile : Profile
     {
-        public InformationsApplicationAutoMapperProfile()
+        public informationsApplicationAutoMapperProfile()
         {
             /* You can configure your AutoMapper mapping configuration here.
              * Alternatively, you can split your mapping configurations

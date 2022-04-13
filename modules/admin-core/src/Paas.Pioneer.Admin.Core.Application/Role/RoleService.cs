@@ -47,7 +47,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Role
         {
             var key = input.Filter?.Name;
             Expression<Func<Ad_RoleEntity, bool>> expression = x => true;
-            if (key.NotNull())
+            if (!key.IsNullOrEmpty())
             {
                 expression = expression.And(a => a.Name.Contains(key));
             }

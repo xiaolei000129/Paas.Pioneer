@@ -1,9 +1,9 @@
-﻿using Paas.Pioneer.Informations;
+﻿using Paas.Pioneer.informations;
 using Volo.Abp;
 
-namespace Paas.Pioneer.Information.EntityFrameworkCore.Tests.EntityFrameworkCore
+namespace Paas.Pioneer.information.EntityFrameworkCore.Tests.EntityFrameworkCore
 {
-    public abstract class InformationsEntityFrameworkCoreTestBase : InformationsTestBase<InformationsEntityFrameworkCoreTestModule>
+    public abstract class informationsEntityFrameworkCoreTestBase : informationsTestBase<informationsEntityFrameworkCoreTestModule>
     {
 
     }

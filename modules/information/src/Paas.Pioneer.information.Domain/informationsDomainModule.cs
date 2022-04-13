@@ -1,18 +1,18 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Paas.Pioneer.Information.Domain.Shared;
-using Paas.Pioneer.Information.Domain.Shared.MultiTenancy;
+using Paas.Pioneer.information.Domain.Shared;
+using Paas.Pioneer.information.Domain.Shared.MultiTenancy;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.TenantManagement;
 
-namespace Paas.Pioneer.Information.Domain
+namespace Paas.Pioneer.information.Domain
 {
     [DependsOn(
-        typeof(InformationsDomainSharedModule),
+        typeof(informationsDomainSharedModule),
         typeof(AbpTenantManagementDomainModule)
     )]
-    public class InformationsDomainModule : AbpModule
+    public class informationsDomainModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {

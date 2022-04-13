@@ -139,7 +139,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
             }
 
             Expression<Func<Ad_PermissionEntity, bool>> predicate = x => true;
-            if (key.NotNull())
+            if (!key.IsNullOrEmpty())
             {
                 predicate = predicate.And(a => a.Path.Contains(key) || a.Label.Contains(key));
             }

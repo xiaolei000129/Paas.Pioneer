@@ -53,9 +53,9 @@ namespace Paas.Pioneer.Domain.Shared.Helpers
 				RequestPath = config.RequestPath
 			};
 
-			var dateTimeFormat = config.DateTimeFormat.NotNull() ? DateTime.Now.ToString(config.DateTimeFormat) : "";
-			var format = config.Format.NotNull() ? StringHelper.Format(config.Format, args) : "";
-			fileInfo.RelativePath = Path.Combine(dateTimeFormat, format).ToPath();
+			var dateTimeFormat = !config.DateTimeFormat.IsNullOrEmpty() ? DateTime.Now.ToString(config.DateTimeFormat) : "";
+			var format = !config.Format.IsNullOrEmpty() ? StringHelper.Format(config.Format, args) : "";
+			fileInfo.RelativePath = Path.Combine(dateTimeFormat, format).Replace(@"\", "/");
 
 			if (!Directory.Exists(fileInfo.FileDirectory))
 			{

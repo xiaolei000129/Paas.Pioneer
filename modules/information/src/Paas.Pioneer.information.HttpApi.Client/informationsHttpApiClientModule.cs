@@ -1,22 +1,22 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Paas.Pioneer.Information.Application.Contracts;
+using Paas.Pioneer.information.Application.Contracts;
 using Volo.Abp.Modularity;
 using Volo.Abp.TenantManagement;
 
-namespace Paas.Pioneer.Information.HttpApi.Client
+namespace Paas.Pioneer.information.HttpApi.Client
 {
     [DependsOn(
-        typeof(InformationsApplicationContractsModule),
+        typeof(informationsApplicationContractsModule),
         typeof(AbpTenantManagementHttpApiClientModule)
     )]
-    public class InformationsHttpApiClientModule : AbpModule
+    public class informationsHttpApiClientModule : AbpModule
     {
         public const string RemoteServiceName = "Default";
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             context.Services.AddHttpClientProxies(
-                typeof(InformationsApplicationContractsModule).Assembly,
+                typeof(informationsApplicationContractsModule).Assembly,
                 RemoteServiceName
             );
         }

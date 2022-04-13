@@ -5,7 +5,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Paas.Pioneer.Information.EntityFrameworkCore.Tests\Paas.Pioneer.Information.EntityFrameworkCore.Tests.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.information.EntityFrameworkCore.Tests\Paas.Pioneer.information.EntityFrameworkCore.Tests.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

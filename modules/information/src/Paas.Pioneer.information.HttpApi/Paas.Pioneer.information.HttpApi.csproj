@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<PackageType>Paas.Pioneer.Information.HttpApi</PackageType>
-		<PackageId>Paas.Pioneer.Information.HttpApi</PackageId>
-		<Title>Paas.Pioneer.Information.HttpApi</Title>
+		<PackageType>Paas.Pioneer.information.HttpApi</PackageType>
+		<PackageId>Paas.Pioneer.information.HttpApi</PackageId>
+		<Title>Paas.Pioneer.information.HttpApi</Title>
 		<Authors>Paas.Pioneer</Authors>
-		<Description>Paas.Pioneer.Information.HttpApi</Description>
+		<Description>Paas.Pioneer.information.HttpApi</Description>
 		<TargetFramework>net6.0</TargetFramework>
 		<IncludeBuildOutput>true</IncludeBuildOutput>
 		<NoWarn>$(NoWarn);NU5128</NoWarn>
@@ -13,11 +13,15 @@
 
 	<ItemGroup>
 		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.1.1" />
-		<ProjectReference Include="..\Paas.Pioneer.Information.Application.Contracts\Paas.Pioneer.Information.Application.Contracts.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.information.Application.Contracts\Paas.Pioneer.information.Application.Contracts.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="5.1.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Controllers\" />
 	</ItemGroup>
 
 </Project>

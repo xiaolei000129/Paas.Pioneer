@@ -67,7 +67,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LoginLog
             input.IP = IPHelper.GetIP(_context?.HttpContext?.Request);
 
             string ua = _context.HttpContext.Request.Headers["User-Agent"];
-            if (ua.NotNull())
+            if (!ua.IsNullOrEmpty())
             {
                 var client = UAParser.Parser.GetDefault().Parse(ua);
                 var device = client.Device.Family;

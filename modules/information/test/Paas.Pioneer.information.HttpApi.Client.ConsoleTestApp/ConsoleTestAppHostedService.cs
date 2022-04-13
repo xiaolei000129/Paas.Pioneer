@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp;
 
-namespace Paas.Pioneer.Information.HttpApi.Client.ConsoleTestApp
+namespace Paas.Pioneer.information.HttpApi.Client.ConsoleTestApp
 {
 	public class ConsoleTestAppHostedService : IHostedService
 	{
@@ -18,7 +18,7 @@ namespace Paas.Pioneer.Information.HttpApi.Client.ConsoleTestApp
 
 		public async Task StartAsync(CancellationToken cancellationToken)
 		{
-			using (var application = AbpApplicationFactory.Create<InformationsConsoleApiClientModule>(options =>
+			using (var application = AbpApplicationFactory.Create<informationsConsoleApiClientModule>(options =>
 			{
 				options.Services.ReplaceConfiguration(_configuration);
 			}))

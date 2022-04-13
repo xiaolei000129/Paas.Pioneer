@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Paas.Pioneer.Information.HttpApi.Client.ConsoleTestApp
+namespace Paas.Pioneer.information.HttpApi.Client.ConsoleTestApp
 {
     class Program
     {

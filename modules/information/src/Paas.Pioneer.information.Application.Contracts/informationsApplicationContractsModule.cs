@@ -1,20 +1,20 @@
-﻿using Paas.Pioneer.Information.Domain.Shared;
+﻿using Paas.Pioneer.information.Domain.Shared;
 using Volo.Abp.Modularity;
 using Volo.Abp.ObjectExtending;
 using Volo.Abp.TenantManagement;
 
-namespace Paas.Pioneer.Information.Application.Contracts
+namespace Paas.Pioneer.information.Application.Contracts
 {
     [DependsOn(
-        typeof(InformationsDomainSharedModule),
+        typeof(informationsDomainSharedModule),
         typeof(AbpTenantManagementApplicationContractsModule),
         typeof(AbpObjectExtendingModule)
         )]
-    public class InformationsApplicationContractsModule : AbpModule
+    public class informationsApplicationContractsModule : AbpModule
     {
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
-            InformationsDtoExtensions.Configure();
+            informationsDtoExtensions.Configure();
         }
     }
 }

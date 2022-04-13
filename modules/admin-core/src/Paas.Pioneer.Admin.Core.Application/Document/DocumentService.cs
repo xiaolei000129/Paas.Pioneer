@@ -35,7 +35,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Document
                 end = end.Value.AddDays(1);
             }
             Expression<Func<Ad_DocumentEntity, bool>> predicate = x => true;
-            if (key.NotNull())
+            if (!key.IsNullOrEmpty())
             {
                 predicate = predicate.And(a => a.Name.Contains(key) || a.Label.Contains(key));
             }
@@ -128,7 +128,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Document
 
         public async Task<IResponseOutput> DeleteImageAsync(Guid documentId, string url)
         {
-            if (documentId != Guid.Empty && url.NotNull())
+            if (documentId != Guid.Empty && !url.IsNullOrEmpty())
             {
                 await _documentImageRepository.DeleteAsync(m => m.DocumentId == documentId && m.Url == url);
             }

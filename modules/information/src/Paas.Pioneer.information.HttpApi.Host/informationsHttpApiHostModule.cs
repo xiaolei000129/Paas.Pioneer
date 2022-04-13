@@ -9,10 +9,10 @@ using Microsoft.IdentityModel.Tokens;
 using Paas.Pioneer.Domain.Shared.Auth;
 using Paas.Pioneer.Knife4jUI.Swagger;
 using Paas.Pioneer.Middleware.Middleware.Extensions;
-using Paas.Pioneer.Information.Application;
-using Paas.Pioneer.Information.Domain.Shared.MultiTenancy;
-using Paas.Pioneer.Information.EntityFrameworkCore.EntityFrameworkCore;
-using Paas.Pioneer.Information.HttpApi.Host.Filter;
+using Paas.Pioneer.information.Application;
+using Paas.Pioneer.information.Domain.Shared.MultiTenancy;
+using Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore;
+using Paas.Pioneer.information.HttpApi.Host.Filter;
 using System;
 using System.Linq;
 using System.Text;
@@ -23,19 +23,19 @@ using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.Autofac;
 using Volo.Abp.Modularity;
 
-namespace Paas.Pioneer.Information.HttpApi.Host
+namespace Paas.Pioneer.information.HttpApi.Host
 {
     [DependsOn(
-        typeof(InformationsHttpApiModule),
+        typeof(informationsHttpApiModule),
         typeof(AbpAutofacModule),
         typeof(AbpAspNetCoreMultiTenancyModule),
-        typeof(InformationsApplicationModule),
-        typeof(InformationsEntityFrameworkCoreModule),
+        typeof(informationsApplicationModule),
+        typeof(informationsEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
         typeof(Knife4jUISwaggerModule),
         typeof(DomainSharedModule)
     )]
-    public class InformationsHttpApiHostModule : AbpModule
+    public class informationsHttpApiHostModule : AbpModule
     {
         private IConfiguration Configuration;
 

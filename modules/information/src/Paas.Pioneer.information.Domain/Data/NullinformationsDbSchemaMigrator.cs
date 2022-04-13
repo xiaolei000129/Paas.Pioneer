@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
 
-namespace Paas.Pioneer.Information.Domain.Data
+namespace Paas.Pioneer.information.Domain.Data
 {
     /* This is used if database provider does't define
-     * IInformationsDbSchemaMigrator implementation.
+     * IinformationsDbSchemaMigrator implementation.
      */
-    public class NullInformationsDbSchemaMigrator : IInformationsDbSchemaMigrator, ITransientDependency
+    public class NullinformationsDbSchemaMigrator : IinformationsDbSchemaMigrator, ITransientDependency
     {
         public Task MigrateAsync()
         {

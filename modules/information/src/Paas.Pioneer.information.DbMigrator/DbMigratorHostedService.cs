@@ -7,9 +7,9 @@ using Volo.Abp;
 using NLog;
 using NLog.Web;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
-using Paas.Pioneer.Information.Domain.Data;
+using Paas.Pioneer.information.Domain.Data;
 
-namespace Paas.Pioneer.Information.DbMigrator
+namespace Paas.Pioneer.information.DbMigrator
 {
     public class DbMigratorHostedService : IHostedService
 	{
@@ -24,7 +24,7 @@ namespace Paas.Pioneer.Information.DbMigrator
 
 		public async Task StartAsync(CancellationToken cancellationToken)
 		{
-			using (var application = AbpApplicationFactory.Create<InformationsDbMigratorModule>(options =>
+			using (var application = AbpApplicationFactory.Create<informationsDbMigratorModule>(options =>
 			{
 				options.Services.ReplaceConfiguration(_configuration);
 				options.UseAutofac();
@@ -35,7 +35,7 @@ namespace Paas.Pioneer.Information.DbMigrator
 
 				await application
 					.ServiceProvider
-					.GetRequiredService<InformationsDbMigrationService>()
+					.GetRequiredService<informationsDbMigrationService>()
 					.MigrateAsync();
 
 				application.Shutdown();

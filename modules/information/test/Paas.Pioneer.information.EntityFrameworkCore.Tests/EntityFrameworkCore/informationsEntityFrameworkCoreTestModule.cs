@@ -3,21 +3,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
-using Paas.Pioneer.Information.EntityFrameworkCore.EntityFrameworkCore;
-using Paas.Pioneer.Informations;
+using Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore;
+using Paas.Pioneer.informations;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.Sqlite;
 using Volo.Abp.Modularity;
 
-namespace Paas.Pioneer.Information.EntityFrameworkCore.Tests.EntityFrameworkCore
+namespace Paas.Pioneer.information.EntityFrameworkCore.Tests.EntityFrameworkCore
 {
     [DependsOn(
-        typeof(InformationsEntityFrameworkCoreModule),
-        typeof(InformationsTestBaseModule),
+        typeof(informationsEntityFrameworkCoreModule),
+        typeof(informationsTestBaseModule),
         typeof(AbpEntityFrameworkCoreSqliteModule)
         )]
-    public class InformationsEntityFrameworkCoreTestModule : AbpModule
+    public class informationsEntityFrameworkCoreTestModule : AbpModule
     {
         private SqliteConnection _sqliteConnection;
 
@@ -49,11 +49,11 @@ namespace Paas.Pioneer.Information.EntityFrameworkCore.Tests.EntityFrameworkCore
             var connection = new SqliteConnection("Data Source=:memory:");
             connection.Open();
 
-            var options = new DbContextOptionsBuilder<InformationsDbContext>()
+            var options = new DbContextOptionsBuilder<informationsDbContext>()
                 .UseSqlite(connection)
                 .Options;
 
-            using (var context = new InformationsDbContext(options))
+            using (var context = new informationsDbContext(options))
             {
                 context.GetService<IRelationalDatabaseCreator>().CreateTables();
             }

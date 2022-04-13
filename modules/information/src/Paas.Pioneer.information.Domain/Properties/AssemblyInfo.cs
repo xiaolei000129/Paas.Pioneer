@@ -1,3 +1,3 @@
 ﻿using System.Runtime.CompilerServices;
-[assembly:InternalsVisibleToAttribute("Paas.Pioneer.Information.Domain.Tests")]
-[assembly:InternalsVisibleToAttribute("Paas.Pioneer.Information.TestBase")]
+[assembly:InternalsVisibleToAttribute("Paas.Pioneer.information.Domain.Tests")]
+[assembly:InternalsVisibleToAttribute("Paas.Pioneer.information.TestBase")]

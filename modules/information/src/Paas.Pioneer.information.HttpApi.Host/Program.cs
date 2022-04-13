@@ -8,7 +8,7 @@ using NLog;
 using NLog.Web;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
-namespace Paas.Pioneer.Information.HttpApi.Host
+namespace Paas.Pioneer.information.HttpApi.Host
 {
     public class Program
     {

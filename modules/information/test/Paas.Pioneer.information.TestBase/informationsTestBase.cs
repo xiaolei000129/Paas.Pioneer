@@ -6,11 +6,11 @@ using Volo.Abp.Modularity;
 using Volo.Abp.Uow;
 using Volo.Abp.Testing;
 
-namespace Paas.Pioneer.Informations
+namespace Paas.Pioneer.informations
 {
     /* All test classes are derived from this class, directly or indirectly.
      */
-    public abstract class InformationsTestBase<TStartupModule> : AbpIntegratedTest<TStartupModule>
+    public abstract class informationsTestBase<TStartupModule> : AbpIntegratedTest<TStartupModule>
         where TStartupModule : IAbpModule
     {
         protected override void SetAbpApplicationCreationOptions(AbpApplicationCreationOptions options)

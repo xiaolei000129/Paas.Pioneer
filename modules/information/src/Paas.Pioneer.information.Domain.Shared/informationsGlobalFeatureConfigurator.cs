@@ -1,8 +1,8 @@
 ﻿using Volo.Abp.Threading;
 
-namespace Paas.Pioneer.Information.Domain.Shared
+namespace Paas.Pioneer.information.Domain.Shared
 {
-    public static class InformationsGlobalFeatureConfigurator
+    public static class informationsGlobalFeatureConfigurator
     {
         private static readonly OneTimeRunner OneTimeRunner = new OneTimeRunner();
 

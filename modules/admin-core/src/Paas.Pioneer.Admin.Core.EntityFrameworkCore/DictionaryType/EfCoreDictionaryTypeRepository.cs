@@ -7,6 +7,7 @@ using Paas.Pioneer.Admin.Core.EntityFrameworkCore.EntityFrameworkCore;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -28,7 +29,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.DictionaryType
 
             var key = model.Filter?.Name;
             var list = dbSet
-            .WhereIf(key.NotNull(), a => a.Name.Contains(key) || a.Code.Contains(key))
+            .WhereIf(!key.IsNullOrEmpty(), a => a.Name.Contains(key) || a.Code.Contains(key))
             .AsNoTracking();
 
             var data = new Page<DictionaryTypeOutput>()

@@ -1,8 +1,8 @@
 ﻿using Volo.Abp.Threading;
 
-namespace Paas.Pioneer.Information.Application.Contracts
+namespace Paas.Pioneer.information.Application.Contracts
 {
-    public static class InformationsDtoExtensions
+    public static class informationsDtoExtensions
     {
         private static readonly OneTimeRunner OneTimeRunner = new OneTimeRunner();
 

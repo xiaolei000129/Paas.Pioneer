@@ -1,27 +1,27 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Paas.Pioneer.Information.Domain;
+using Paas.Pioneer.information.Domain;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.Modularity;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 
-namespace Paas.Pioneer.Information.EntityFrameworkCore.EntityFrameworkCore
+namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
 {
     [DependsOn(
-        typeof(InformationsDomainModule),
+        typeof(informationsDomainModule),
         typeof(AbpEntityFrameworkCoreMySQLModule),
         typeof(AbpTenantManagementEntityFrameworkCoreModule)
         )]
-    public class InformationsEntityFrameworkCoreModule : AbpModule
+    public class informationsEntityFrameworkCoreModule : AbpModule
     {
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
-            InformationsEfCoreEntityExtensionMappings.Configure();
+            informationsEfCoreEntityExtensionMappings.Configure();
         }
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
-            context.Services.AddAbpDbContext<InformationsDbContext>(options =>
+            context.Services.AddAbpDbContext<informationsDbContext>(options =>
             {
                 /* Remove "includeAllEntities: true" to create
                  * default repositories only for aggregate roots */
@@ -31,7 +31,7 @@ namespace Paas.Pioneer.Information.EntityFrameworkCore.EntityFrameworkCore
             Configure<AbpDbContextOptions>(options =>
             {
                 /* The main point to change your DBMS.
-                 * See also InformationsMigrationsDbContextFactory for EF Core tooling. */
+                 * See also informationsMigrationsDbContextFactory for EF Core tooling. */
                 options.UseMySQL();
             });
         }
