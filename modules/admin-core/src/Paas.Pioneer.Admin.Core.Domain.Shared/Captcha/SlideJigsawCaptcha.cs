@@ -364,17 +364,17 @@ namespace Paas.Pioneer.Admin.Core.Domain.Shared.Captcha
         public async Task<CaptchaOutput> GetAsync()
         {
             //获取网络图片
-            var client = new HttpClient();
-            var stream = await client.GetStreamAsync("https://picsum.photos/310/155");
-            client.Dispose();
-            Bitmap baseImage = new Bitmap(stream);
-            stream.Dispose();
+            //var client = new HttpClient();
+            //var stream = await client.GetStreamAsync("https://picsum.photos/310/155");
+            //client.Dispose();
+            //Bitmap baseImage = new Bitmap(stream);
+            //stream.Dispose();
 
-            //var oriImage = Image.FromFile($@"{Directory.GetCurrentDirectory()}\wwwroot\captcha\jigsaw\{new Random().Next(1, 4)}.jpg".ToPath());
-            ////更改图片尺寸
-            ////Bitmap baseImage = ResizeImage(oriImage, 310, 155);
-            //Bitmap baseImage = new Bitmap(oriImage);
-            //oriImage.Dispose();
+            var oriImage = Image.FromFile($@"{Directory.GetCurrentDirectory()}\wwwroot\captcha\jigsaw\{new Random().Next(1, 4)}.jpg");
+            //更改图片尺寸
+            //Bitmap baseImage = ResizeImage(oriImage, 310, 155);
+            Bitmap baseImage = new Bitmap(oriImage);
+            oriImage.Dispose();
 
             var oriTemplate = Image.FromFile($@"{Directory.GetCurrentDirectory()}\wwwroot\captcha\jigsaw\templates\{new Random().Next(1, 7)}.png".Replace("\\", @"\"));
 
