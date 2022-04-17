@@ -42,7 +42,7 @@ namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
         /// <returns></returns>
         public async Task<ResponseOutput<Get{{model.taxon}}Output>> GetAsync(Guid id)
         {
-            var result = await _{{ initial_lower }}Repository.GetAsync(p=>p.Id==id, x => new Get{{model.taxon}}Output()
+            var result = await _{{ initial_lower }}Repository.GetAsync(p=>p.Id == id, x => new Get{{model.taxon}}Output()
             {
                 {{~ for item in model.low_code_table_config_list ~}}
                 {{ item.column_name }} = x.{{ item.column_name }},
@@ -58,8 +58,13 @@ namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
         /// <returns></returns>
         public async Task<ResponseOutput<Page<Get{{model.taxon}}PageListOutput>>> GetPageListAsync(PageInput<Get{{model.taxon}}PageListInput> input)
         {
-            var data = await _{{ initial_lower }}Repository.GetPageListAsync(model);
-            return ResponseOutput.Succees(data);
+            var data = await _{{ initial_lower }}Repository.GetResponseOutputPageListAsync(x => new Get{{model.taxon}}PageListOutput
+            {
+                {{~ for item in model.low_code_table_config_list ~}}
+                {{ item.column_name }} = x.{{ item.column_name }},
+                {{~ end ~}}
+            }, input: input);
+            return data;
         }
 
         /// <summary>

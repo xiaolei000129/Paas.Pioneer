@@ -20,9 +20,9 @@
 
         public const string PaasPioneerApplicationMapConfig = "wwwroot/Generate/Paas.Pioneer/Paas.Pioneer.Application/Application/";
 
-        public const string PaasPioneerEntityFrameworkCoreRepository = "wwwroot/Generate/Paas.Pioneer/Paas.Pioneer.Domain/";
+        public const string PaasPioneerDomainIRepository = "wwwroot/Generate/Paas.Pioneer/Paas.Pioneer.Domain/";
 
-        public const string PaasPioneerDomainIRepository = "wwwroot/Generate/Paas.Pioneer/Paas.Pioneer.EntityFrameworkCore/";
+        public const string  PaasPioneerEntityFrameworkCoreRepository = "wwwroot/Generate/Paas.Pioneer/Paas.Pioneer.EntityFrameworkCore/";
 
         public const string VueJs = "wwwroot/Generate/Paas.Pioneer/Web/Vue/";
 

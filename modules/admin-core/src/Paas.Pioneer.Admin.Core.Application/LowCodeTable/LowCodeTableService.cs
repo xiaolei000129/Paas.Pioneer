@@ -220,7 +220,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 var generateCodeLowCodeTableOutput = ObjectMapper.Map<Ad_LowCodeTableEntity, GenerateCodeLowCodeTableOutput>(lowCodeTable);
                 generateCodeLowCodeTableOutput.LowCodeTableConfigList = ObjectMapper.Map<List<LowCodeTableColumnOutput>, List<GenerateCodeLowCodeTableConfigOutPut>>(getColumnList.Data);
                 await GenerateCodeFileContentAsync(generateCodeLowCodeTableOutput);
-                await GeneratePermissionAsync(generateCodeLowCodeTableOutput);
+                //await GeneratePermissionAsync(generateCodeLowCodeTableOutput);
             }
             catch (Exception ex)
             {

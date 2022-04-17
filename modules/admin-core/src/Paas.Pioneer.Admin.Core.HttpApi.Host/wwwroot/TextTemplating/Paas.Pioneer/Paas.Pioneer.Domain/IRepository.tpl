@@ -9,7 +9,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Paas.Pioneer.Admin.Core.Domain.{{ model.taxon }}
 {
-    public interface I{{ model.taxon }}Repository : IRepository<{{ model.low_code_table_name }}Entity, Guid>, IBaseExtensionRepository<{{ model.low_code_table_name }}Entity>
+    public interface I{{ model.taxon }}Repository : IRepository<{{ model.low_code_table_name }}, Guid>, IBaseExtensionRepository<{{ model.low_code_table_name }}>
     {
 
     }

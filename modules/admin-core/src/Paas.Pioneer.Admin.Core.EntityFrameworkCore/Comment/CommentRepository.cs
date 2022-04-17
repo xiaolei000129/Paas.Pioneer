@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Paas.Pioneer.Admin.Core.Application.Contracts.{{ model.taxon }}.Dto.Input;
-using Paas.Pioneer.Admin.Core.Application.Contracts.{{ model.taxon }}.Dto.Output;
-using Paas.Pioneer.Admin.Core.Domain.{{ model.taxon }};
+using Paas.Pioneer.Admin.Core.Application.Contracts.Comment.Dto.Input;
+using Paas.Pioneer.Admin.Core.Application.Contracts.Comment.Dto.Output;
+using Paas.Pioneer.Admin.Core.Domain.Comment;
 using Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions;
 using Paas.Pioneer.Admin.Core.EntityFrameworkCore.EntityFrameworkCore;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
@@ -14,11 +14,11 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Volo.Abp.EntityFrameworkCore;
 
-namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.{{ model.taxon }}
+namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.Comment
 {
-    public class EfCore{{ model.taxon }}Repository : BaseExtensionsRepository<{{ model.low_code_table_name }}>, I{{ model.taxon }}Repository
+    public class EfCoreCommentRepository : BaseExtensionsRepository<Information_CommentEntity>, ICommentRepository
     {
-        public EfCore{{ model.taxon }}Repository(IDbContextProvider<AdminsDbContext> dbContextProvider)
+        public EfCoreCommentRepository(IDbContextProvider<AdminsDbContext> dbContextProvider)
             : base(dbContextProvider)
         {
         }

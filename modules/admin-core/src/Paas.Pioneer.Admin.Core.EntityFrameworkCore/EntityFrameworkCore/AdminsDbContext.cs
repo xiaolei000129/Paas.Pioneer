@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Paas.Pioneer.Admin.Core.Domain.Api;
+using Paas.Pioneer.Admin.Core.Domain.Comment;
 using Paas.Pioneer.Admin.Core.Domain.Dictionary;
 using Paas.Pioneer.Admin.Core.Domain.DictionaryType;
 using Paas.Pioneer.Admin.Core.Domain.Document;
@@ -61,7 +62,8 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.EntityFrameworkCore
         public DbSet<Pe_OrganizationEntity> Pe_OrganizationEntitys { get; set; }
         public DbSet<Pe_PositionEntity> Pe_PositionEntitys { get; set; }
         public DbSet<Ad_LowCodeTableConfigEntity> Ad_LowCodeTableConfigEntitys { get; set; }
-        public DbSet<Ad_LowCodeTableEntity> Ad_LowCodeTableEntity { get; set; }
+        public DbSet<Ad_LowCodeTableEntity> Ad_LowCodeTableEntitys { get; set; }
+        public DbSet<Information_CommentEntity> Information_CommentEntitys { get; set; }
 
         // Tenant Management
         public DbSet<Volo.Abp.TenantManagement.Tenant> Tenants { get; set; }
