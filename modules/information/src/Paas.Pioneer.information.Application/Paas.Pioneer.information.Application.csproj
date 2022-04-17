@@ -12,8 +12,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Paas.Pioneer.information.Application.Contracts\Paas.Pioneer.information.Application.Contracts.csproj" />
-		<ProjectReference Include="..\Paas.Pioneer.information.Domain\Paas.Pioneer.information.Domain.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.information.Application.Contracts\Paas.Pioneer.Information.Application.Contracts.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.information.Domain\Paas.Pioneer.Information.Domain.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

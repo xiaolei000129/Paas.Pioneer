@@ -1,6 +1,6 @@
 ﻿namespace Paas.Pioneer.information.Domain.Settings
 {
-    public static class informationsSettings
+    public static class InformationsSettings
     {
         private const string Prefix = "informations";
 

@@ -17,7 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Paas.Pioneer.information.Domain.Shared\Paas.Pioneer.information.Domain.Shared.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.information.Domain.Shared\Paas.Pioneer.Information.Domain.Shared.csproj" />
 	</ItemGroup>
 
 </Project>

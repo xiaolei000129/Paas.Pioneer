@@ -2,7 +2,7 @@
 
 namespace Paas.Pioneer.information.Domain.Settings
 {
-    public class informationsSettingDefinitionProvider : SettingDefinitionProvider
+    public class InformationsSettingDefinitionProvider : SettingDefinitionProvider
     {
         public override void Define(ISettingDefinitionContext context)
         {

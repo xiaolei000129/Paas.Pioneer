@@ -18,7 +18,7 @@ namespace Paas.Pioneer.information.HttpApi.Client.ConsoleTestApp
 
 		public async Task StartAsync(CancellationToken cancellationToken)
 		{
-			using (var application = AbpApplicationFactory.Create<informationsConsoleApiClientModule>(options =>
+			using (var application = AbpApplicationFactory.Create<InformationsConsoleApiClientModule>(options =>
 			{
 				options.Services.ReplaceConfiguration(_configuration);
 			}))

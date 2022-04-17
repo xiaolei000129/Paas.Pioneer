@@ -5,8 +5,8 @@ using Volo.Abp.Modularity;
 namespace Paas.Pioneer.information.Application.Tests
 {
     [DependsOn(
-        typeof(informationsApplicationModule),
-        typeof(informationsDomainTestModule)
+        typeof(InformationsApplicationModule),
+        typeof(InformationsDomainTestModule)
         )]
     public class informationsApplicationTestModule : AbpModule
     {

@@ -2,9 +2,9 @@
 
 namespace Paas.Pioneer.information.Application
 {
-    public class informationsApplicationAutoMapperProfile : Profile
+    public class InformationsApplicationAutoMapperProfile : Profile
     {
-        public informationsApplicationAutoMapperProfile()
+        public InformationsApplicationAutoMapperProfile()
         {
             /* You can configure your AutoMapper mapping configuration here.
              * Alternatively, you can split your mapping configurations

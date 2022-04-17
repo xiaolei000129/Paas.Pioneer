@@ -2,7 +2,7 @@
 
 namespace Paas.Pioneer.information.Application.Contracts
 {
-    public static class informationsDtoExtensions
+    public static class InformationsDtoExtensions
     {
         private static readonly OneTimeRunner OneTimeRunner = new OneTimeRunner();
 

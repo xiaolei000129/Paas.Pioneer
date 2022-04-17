@@ -3,14 +3,14 @@ using Volo.Abp.Threading;
 
 namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
 {
-    public static class informationsEfCoreEntityExtensionMappings
+    public static class InformationsEfCoreEntityExtensionMappings
     {
         private static readonly OneTimeRunner OneTimeRunner = new OneTimeRunner();
 
         public static void Configure()
         {
-            informationsGlobalFeatureConfigurator.Configure();
-            informationsModuleExtensionConfigurator.Configure();
+            InformationsGlobalFeatureConfigurator.Configure();
+            InformationsModuleExtensionConfigurator.Configure();
 
             OneTimeRunner.Run(() =>
             {

@@ -2,7 +2,7 @@
 
 namespace Paas.Pioneer.information.Domain.Tests
 {
-    public abstract class informationsDomainTestBase : informationsTestBase<informationsDomainTestModule>
+    public abstract class InformationsDomainTestBase : InformationsTestBase<InformationsDomainTestModule>
     {
 
     }

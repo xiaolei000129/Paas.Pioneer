@@ -8,7 +8,7 @@ using Volo.Abp.DependencyInjection;
 namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
 {
     public class EntityFrameworkCoreinformationsDbSchemaMigrator
-        : IinformationsDbSchemaMigrator, ITransientDependency
+        : IInformationsDbSchemaMigrator, ITransientDependency
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -27,7 +27,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
              */
 
             await _serviceProvider
-                .GetRequiredService<informationsDbContext>()
+                .GetRequiredService<InformationsDbContext>()
                 .Database
                 .MigrateAsync();
         }

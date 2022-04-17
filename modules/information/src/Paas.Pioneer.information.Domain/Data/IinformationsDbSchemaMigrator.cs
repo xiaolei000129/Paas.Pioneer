@@ -2,7 +2,7 @@
 
 namespace Paas.Pioneer.information.Domain.Data
 {
-    public interface IinformationsDbSchemaMigrator
+    public interface IInformationsDbSchemaMigrator
     {
         Task MigrateAsync();
     }

@@ -29,9 +29,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Paas.Pioneer.information.Application\Paas.Pioneer.information.Application.csproj" />
-		<ProjectReference Include="..\Paas.Pioneer.information.EntityFrameworkCore\Paas.Pioneer.information.EntityFrameworkCore.csproj" />
-		<ProjectReference Include="..\Paas.Pioneer.information.HttpApi\Paas.Pioneer.information.HttpApi.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.information.Application\Paas.Pioneer.Information.Application.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.information.EntityFrameworkCore\Paas.Pioneer.Information.EntityFrameworkCore.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.information.HttpApi\Paas.Pioneer.Information.HttpApi.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -4,7 +4,7 @@ using Volo.Abp.DependencyInjection;
 
 namespace Paas.Pioneer.informations
 {
-    public class informationsTestDataSeedContributor : IDataSeedContributor, ITransientDependency
+    public class InformationsTestDataSeedContributor : IDataSeedContributor, ITransientDependency
     {
         public Task SeedAsync(DataSeedContext context)
         {

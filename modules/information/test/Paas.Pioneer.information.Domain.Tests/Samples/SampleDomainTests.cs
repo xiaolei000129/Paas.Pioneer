@@ -8,7 +8,7 @@ namespace Paas.Pioneer.information.Domain.Tests.Samples
      * (like IdentityUserManager here).
      * Only test your own domain services.
      */
-    public class SampleDomainTests : informationsDomainTestBase
+    public class SampleDomainTests : InformationsDomainTestBase
     {
         public SampleDomainTests()
         {

@@ -12,7 +12,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Paas.Pioneer.information.Application.Contracts\Paas.Pioneer.information.Application.Contracts.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.information.Application.Contracts\Paas.Pioneer.Information.Application.Contracts.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -7,10 +7,10 @@ namespace Paas.Pioneer.information.DbMigrator
 {
     [DependsOn(
         typeof(AbpAutofacModule),
-        typeof(informationsEntityFrameworkCoreModule),
-        typeof(informationsApplicationContractsModule)
+        typeof(InformationsEntityFrameworkCoreModule),
+        typeof(InformationsApplicationContractsModule)
         )]
-    public class informationsDbMigratorModule : AbpModule
+    public class InformationsDbMigratorModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {

@@ -9,7 +9,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.Tests.EntityFrameworkCore
      * (like default AppUser repository IRepository<AppUser, Guid> here).
      * Only test your custom repository methods.
      */
-    public class SampleRepositoryTests : informationsEntityFrameworkCoreTestBase
+    public class SampleRepositoryTests : InformationsEntityFrameworkCoreTestBase
     {
 
         public SampleRepositoryTests()

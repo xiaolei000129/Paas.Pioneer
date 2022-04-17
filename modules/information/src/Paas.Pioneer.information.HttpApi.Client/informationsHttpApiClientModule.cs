@@ -6,17 +6,17 @@ using Volo.Abp.TenantManagement;
 namespace Paas.Pioneer.information.HttpApi.Client
 {
     [DependsOn(
-        typeof(informationsApplicationContractsModule),
+        typeof(InformationsApplicationContractsModule),
         typeof(AbpTenantManagementHttpApiClientModule)
     )]
-    public class informationsHttpApiClientModule : AbpModule
+    public class InformationsHttpApiClientModule : AbpModule
     {
         public const string RemoteServiceName = "Default";
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             context.Services.AddHttpClientProxies(
-                typeof(informationsApplicationContractsModule).Assembly,
+                typeof(InformationsApplicationContractsModule).Assembly,
                 RemoteServiceName
             );
         }

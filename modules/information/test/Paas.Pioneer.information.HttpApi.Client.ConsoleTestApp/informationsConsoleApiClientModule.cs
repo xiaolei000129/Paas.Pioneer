@@ -8,10 +8,10 @@ using Volo.Abp.Modularity;
 namespace Paas.Pioneer.information.HttpApi.Client.ConsoleTestApp
 {
     [DependsOn(
-        typeof(informationsHttpApiClientModule),
+        typeof(InformationsHttpApiClientModule),
         typeof(AbpHttpClientIdentityModelModule)
         )]
-    public class informationsConsoleApiClientModule : AbpModule
+    public class InformationsConsoleApiClientModule : AbpModule
     {
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {

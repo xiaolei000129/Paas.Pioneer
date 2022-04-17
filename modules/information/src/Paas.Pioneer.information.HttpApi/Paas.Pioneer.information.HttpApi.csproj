@@ -13,7 +13,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.1.1" />
-		<ProjectReference Include="..\Paas.Pioneer.information.Application.Contracts\Paas.Pioneer.information.Application.Contracts.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.information.Application.Contracts\Paas.Pioneer.Information.Application.Contracts.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

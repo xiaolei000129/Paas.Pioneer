@@ -9,8 +9,8 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
 {
     [ReplaceDbContext(typeof(ITenantManagementDbContext))]
     [ConnectionStringName("Default")]
-    public class informationsDbContext :
-        AbpDbContext<informationsDbContext>,
+    public class InformationsDbContext :
+        AbpDbContext<InformationsDbContext>,
         ITenantManagementDbContext
     {
         /* Add DbSet properties for your Aggregate Roots / Entities here. */
@@ -23,7 +23,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
 
         #endregion
 
-        public informationsDbContext(DbContextOptions<informationsDbContext> options)
+        public InformationsDbContext(DbContextOptions<InformationsDbContext> options)
             : base(options)
         {
 

@@ -4,9 +4,9 @@ using Volo.Abp.Modularity;
 namespace Paas.Pioneer.information.Domain.Tests
 {
     [DependsOn(
-        typeof(informationsEntityFrameworkCoreTestModule)
+        typeof(InformationsEntityFrameworkCoreTestModule)
         )]
-    public class informationsDomainTestModule : AbpModule
+    public class InformationsDomainTestModule : AbpModule
     {
 
     }

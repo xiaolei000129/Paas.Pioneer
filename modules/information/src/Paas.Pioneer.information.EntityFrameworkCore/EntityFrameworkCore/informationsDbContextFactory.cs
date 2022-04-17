@@ -7,18 +7,18 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
 {
     /* This class is needed for EF Core console commands
      * (like Add-Migration and Update-Database commands) */
-    public class informationsDbContextFactory : IDesignTimeDbContextFactory<informationsDbContext>
+    public class InformationsDbContextFactory : IDesignTimeDbContextFactory<InformationsDbContext>
     {
-        public informationsDbContext CreateDbContext(string[] args)
+        public InformationsDbContext CreateDbContext(string[] args)
         {
-            informationsEfCoreEntityExtensionMappings.Configure();
+            InformationsEfCoreEntityExtensionMappings.Configure();
 
             var configuration = BuildConfiguration();
 
-            var builder = new DbContextOptionsBuilder<informationsDbContext>()
+            var builder = new DbContextOptionsBuilder<InformationsDbContext>()
                 .UseMySql(configuration.GetConnectionString("Default"), MySqlServerVersion.LatestSupportedServerVersion);
 
-            return new informationsDbContext(builder.Options);
+            return new InformationsDbContext(builder.Options);
         }
 
         private static IConfigurationRoot BuildConfiguration()

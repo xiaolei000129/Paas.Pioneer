@@ -2,7 +2,7 @@
 
 namespace Paas.Pioneer.information.Domain.Shared
 {
-    public static class informationsModuleExtensionConfigurator
+    public static class InformationsModuleExtensionConfigurator
     {
         private static readonly OneTimeRunner OneTimeRunner = new OneTimeRunner();
 

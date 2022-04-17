@@ -7,17 +7,17 @@ using Volo.Abp.TenantManagement;
 namespace Paas.Pioneer.information.Application
 {
     [DependsOn(
-        typeof(informationsDomainModule),
-        typeof(informationsApplicationContractsModule),
+        typeof(InformationsDomainModule),
+        typeof(InformationsApplicationContractsModule),
         typeof(AbpTenantManagementApplicationModule)
         )]
-    public class informationsApplicationModule : AbpModule
+    public class InformationsApplicationModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             Configure<AbpAutoMapperOptions>(options =>
             {
-                options.AddMaps<informationsApplicationModule>();
+                options.AddMaps<InformationsApplicationModule>();
             });
         }
     }

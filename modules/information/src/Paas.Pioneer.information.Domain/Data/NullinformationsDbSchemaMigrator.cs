@@ -6,7 +6,7 @@ namespace Paas.Pioneer.information.Domain.Data
     /* This is used if database provider does't define
      * IinformationsDbSchemaMigrator implementation.
      */
-    public class NullinformationsDbSchemaMigrator : IinformationsDbSchemaMigrator, ITransientDependency
+    public class NullinformationsDbSchemaMigrator : IInformationsDbSchemaMigrator, ITransientDependency
     {
         public Task MigrateAsync()
         {

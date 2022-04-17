@@ -7,7 +7,7 @@ using Volo.Abp.TenantManagement;
 namespace Paas.Pioneer.information.HttpApi
 {
     [DependsOn(
-        typeof(informationsApplicationContractsModule),
+        typeof(InformationsApplicationContractsModule),
         typeof(AbpTenantManagementHttpApiModule),
         typeof(AbpFeatureManagementHttpApiModule)
         )]

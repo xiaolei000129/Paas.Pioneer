@@ -29,8 +29,8 @@ namespace Paas.Pioneer.information.HttpApi.Host
         typeof(informationsHttpApiModule),
         typeof(AbpAutofacModule),
         typeof(AbpAspNetCoreMultiTenancyModule),
-        typeof(informationsApplicationModule),
-        typeof(informationsEntityFrameworkCoreModule),
+        typeof(InformationsApplicationModule),
+        typeof(InformationsEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
         typeof(Knife4jUISwaggerModule),
         typeof(DomainSharedModule)

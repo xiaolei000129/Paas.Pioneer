@@ -21,11 +21,11 @@ using Volo.Abp.EntityFrameworkCore;
 
 namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
 {
-    public class BaseExtensionsRepository<TEntity> : EfCoreRepository<informationsDbContext, TEntity, Guid>, IBaseExtensionRepository<TEntity> where TEntity : Entity<Guid>, ISoftDelete
+    public class BaseExtensionsRepository<TEntity> : EfCoreRepository<InformationsDbContext, TEntity, Guid>, IBaseExtensionRepository<TEntity> where TEntity : Entity<Guid>, ISoftDelete
     {
-        private readonly IDbContextProvider<informationsDbContext> _dbContextProvider;
+        private readonly IDbContextProvider<InformationsDbContext> _dbContextProvider;
 
-        public BaseExtensionsRepository(IDbContextProvider<informationsDbContext> dbContextProvider)
+        public BaseExtensionsRepository(IDbContextProvider<InformationsDbContext> dbContextProvider)
          : base(dbContextProvider)
         {
             _dbContextProvider = dbContextProvider;

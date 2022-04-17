@@ -6,15 +6,15 @@ using Volo.Abp.TenantManagement;
 namespace Paas.Pioneer.information.Application.Contracts
 {
     [DependsOn(
-        typeof(informationsDomainSharedModule),
+        typeof(InformationsDomainSharedModule),
         typeof(AbpTenantManagementApplicationContractsModule),
         typeof(AbpObjectExtendingModule)
         )]
-    public class informationsApplicationContractsModule : AbpModule
+    public class InformationsApplicationContractsModule : AbpModule
     {
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
-            informationsDtoExtensions.Configure();
+            InformationsDtoExtensions.Configure();
         }
     }
 }
