@@ -334,8 +334,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
         private async Task GeneratePermissionAsync(GenerateCodeLowCodeTableOutput model)
         {
             #region 添加视图
-            // 添加视图
-            await _viewRepository.InsertAsync(new Ad_ViewEntity
+            var view = new Ad_ViewEntity
             {
                 ParentId = model.MenuParentId,
                 Cache = true,
@@ -344,7 +343,9 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 Label = model.MenuName,
                 Name = model.Taxon,
                 Path = $"admin/{model.Taxon}",
-            });
+            };
+            // 添加视图
+            await _viewRepository.InsertAsync(view);
             #endregion
 
             #region 添加接口管理
@@ -450,7 +451,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
             var menuPermission = new Ad_PermissionEntity
             {
                 Type = EPermissionType.Menu,
-                ViewId = baseApi.Id,
+                ViewId = view.Id,
                 ParentId = permissionBase.Id,
                 Closable = true,
                 Hidden = false,
@@ -497,7 +498,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 Hidden = false,
                 Enabled = true,
                 Label = $"添加{model.MenuName}",
-                Code = addApi.Path.ToLower().Replace("/", ":"),
+                Code = addApi.Path.TrimStart(':').ToLower().Replace("/", ":"),
                 Description = model.Description,
             };
             await _permissionRepository.InsertAsync(addPermission);
@@ -510,7 +511,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 Hidden = false,
                 Enabled = true,
                 Label = $"修改{model.MenuName}",
-                Code = updateApi.Path.ToLower().Replace("/", ":"),
+                Code = updateApi.Path.TrimStart(':').ToLower().Replace("/", ":"),
                 Description = model.Description,
             };
             await _permissionRepository.InsertAsync(updatePermission);
@@ -523,7 +524,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 Hidden = false,
                 Enabled = true,
                 Label = $"删除{model.MenuName}",
-                Code = deleteApi.Path.ToLower().Replace("/", ":"),
+                Code = deleteApi.Path.TrimStart(':').ToLower().Replace("/", ":"),
                 Description = model.Description,
             };
             await _permissionRepository.InsertAsync(deletePermission);
@@ -536,7 +537,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 Hidden = false,
                 Enabled = true,
                 Label = $"批量删除{model.MenuName}",
-                Code = batchSoftDeleteApi.Path.ToLower().Replace("/", ":"),
+                Code = batchSoftDeleteApi.Path.TrimStart(':').ToLower().Replace("/", ":"),
                 Description = model.Description,
             };
             await _permissionRepository.InsertAsync(batchSoftDeletePermission);

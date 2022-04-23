@@ -37,7 +37,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.LowCodeTableConfig.Dto.O
         /// <summary>
         /// 列是否为空
         /// </summary>
-        public bool IsColumnNullable { get; set; }
+        public bool IsNullable { get; set; }
 
         /// <summary>
         /// 默认值
@@ -47,22 +47,22 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.LowCodeTableConfig.Dto.O
         /// <summary>
         /// 是否需要前端添加
         /// </summary>
-        public bool WebAdd { get; set; }
+        public bool IsWebAdd { get; set; }
 
         /// <summary>
         /// 是否需要前端修改
         /// </summary>
-        public bool WebUpdate { get; set; }
+        public bool IsWebUpdate { get; set; }
 
         /// <summary>
         /// 是否需要前端查询
         /// </summary>
-        public bool WebSelect { get; set; }
+        public bool IsWebSelect { get; set; }
 
         /// <summary>
         /// 是否需要前端显示
         /// </summary>
-        public bool WebShow { get; set; }
+        public bool IsWebShow { get; set; }
 
         /// <summary>
         /// 查询方式

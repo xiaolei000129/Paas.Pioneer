@@ -17,6 +17,8 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
 
             CreateMap<Ad_LowCodeTableConfigEntity, LowCodeTableColumnOutput>();
 
+            CreateMap<LowCodeTableColumnOutput, Ad_LowCodeTableConfigEntity>();
+
             CreateMap<Ad_LowCodeTableEntity, GenerateCodeLowCodeTableOutput>();
 
             CreateMap<LowCodeTableColumnOutput, GenerateCodeLowCodeTableConfigOutPut>();
