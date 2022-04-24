@@ -3,7 +3,6 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.Auth;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Auth.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Auth.Dto.Output;
 using Paas.Pioneer.Admin.Core.Domain.Permission;
-using Paas.Pioneer.Admin.Core.Domain.Shared.Captcha;
 using Paas.Pioneer.Admin.Core.Domain.Shared.Enum;
 using Paas.Pioneer.Admin.Core.Domain.Shared.RedisKey;
 using Paas.Pioneer.Admin.Core.Domain.Tenant;
@@ -12,7 +11,6 @@ using Paas.Pioneer.Admin.Core.Domain.View;
 using Paas.Pioneer.Domain.Shared.Auth;
 using Paas.Pioneer.Domain.Shared.Configs;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
-using Paas.Pioneer.Domain.Shared.Extensions;
 using Paas.Pioneer.Domain.Shared.Helpers;
 using System;
 using System.Collections.Generic;
@@ -21,6 +19,8 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Data;
+using Lazy.SlideCaptcha.Core;
+using static Lazy.SlideCaptcha.Core.ValidateResult;
 
 namespace Paas.Pioneer.Admin.Core.Application.Auth
 {
@@ -31,9 +31,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
         private readonly IPermissionRepository _permissionRepository;
         private readonly VerifyCodeHelper _verifyCodeHelper;
         private readonly ITenantRepository _tenantRepository;
-        private readonly ICaptcha _captcha;
         private readonly IViewRepository _viewRepository;
         private readonly RedisAdminKeys _redisAdminKeys;
+        private readonly ICaptcha _captcha;
 
         public AuthService(IOptions<AppConfig> appConfig,
             VerifyCodeHelper verifyCodeHelper,
@@ -156,9 +156,8 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
             #region 验证码校验
             if (_appConfig.VarifyCode.Enable)
             {
-                input.Captcha.DeleteCache = true;
-                var isSuccees = await _captcha.CheckAsync(input.Captcha);
-                if (!isSuccees)
+                var isSuccees = _captcha.Validate(input.Captcha.Id, input.Captcha.track);
+                if (isSuccees.Result != ValidateResultType.Success)
                 {
                     return ResponseOutput.Error<AuthLoginOutput>("安全验证不通过，请重新登录！");
                 }

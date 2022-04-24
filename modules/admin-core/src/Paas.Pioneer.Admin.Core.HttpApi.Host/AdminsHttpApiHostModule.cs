@@ -1,3 +1,5 @@
+using Lazy.SlideCaptcha.Core.Resources;
+using Lazy.SlideCaptcha.Core.Resources.Handler;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -15,6 +17,7 @@ using Paas.Pioneer.Domain.Shared.Auth;
 using Paas.Pioneer.Knife4jUI.Swagger;
 using Paas.Pioneer.Middleware.Middleware.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,6 +58,14 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Host
             ConfigureAuthentication(context, configuration);
 
             TextTemplatingScriban();
+
+            context.Services.AddSlideCaptcha(configuration, options =>
+            {
+                for (int i = 1; i < 11; i++)
+                {
+                    options.Backgrounds.Add(new Resource(FileResourceHandler.TYPE, @$"wwwroot/captcha/images/background/{i}.jpg"));
+                }
+            });
 
             // 设置模型验证
             context.Services.AddControllers(options =>

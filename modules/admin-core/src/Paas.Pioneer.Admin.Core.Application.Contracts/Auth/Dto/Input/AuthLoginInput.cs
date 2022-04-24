@@ -1,4 +1,4 @@
-﻿using Paas.Pioneer.Admin.Core.Domain.Shared.Captcha.Dtos;
+﻿using Lazy.SlideCaptcha.Core.Validator;
 using System.ComponentModel.DataAnnotations;
 
 namespace Paas.Pioneer.Admin.Core.Application.Contracts.Auth.Dto.Input
@@ -40,5 +40,14 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Auth.Dto.Input
         /// 验证数据
         /// </summary>
         public CaptchaInput Captcha { get; set; }
+    }
+
+    /// <summary>
+    /// 滑动验证码
+    /// </summary>
+    public class CaptchaInput
+    {
+        public string Id { get; set; }
+        public SlideTrack track { get; set; }
     }
 }

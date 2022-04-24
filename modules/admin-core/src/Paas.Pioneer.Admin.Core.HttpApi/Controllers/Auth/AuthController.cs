@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Lazy.SlideCaptcha.Core;
+using Lazy.SlideCaptcha.Core.Validator;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -9,8 +11,6 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.LoginLog;
 using Paas.Pioneer.Admin.Core.Application.Contracts.LoginLog.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.User;
 using Paas.Pioneer.Admin.Core.Application.Contracts.User.Dto.Output;
-using Paas.Pioneer.Admin.Core.Domain.Shared.Captcha;
-using Paas.Pioneer.Admin.Core.Domain.Shared.Captcha.Dtos;
 using Paas.Pioneer.Domain.Shared.Auth;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Extensions;
@@ -119,9 +119,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <returns></returns>
         [HttpGet("getCaptcha")]
         [AllowAnonymous]
-        public async Task<ResponseOutput<CaptchaOutput>> GetCaptcha()
+        public ResponseOutput<CaptchaData> GetCaptcha()
         {
-            var data = await _captcha.GetAsync();
+            var data = _captcha.Generate();
             return ResponseOutput.Succees(data);
         }
 
@@ -131,9 +131,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <returns></returns>
         [HttpGet("checkCaptcha")]
         [AllowAnonymous]
-        public async Task<IResponseOutput> CheckCaptcha([FromQuery] CaptchaInput input)
+        public IResponseOutput CheckCaptcha([FromQuery] string id, SlideTrack track)
         {
-            var result = await _captcha.CheckAsync(input);
+            var result = _captcha.Validate(id, track);
             return ResponseOutput.Succees(result);
         }
 
