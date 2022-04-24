@@ -80,8 +80,8 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.EntityFrameworkCore
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
             .ConfigureWarnings(b => b.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
-            .LogTo(Console.WriteLine, LogLevel.Information, DbContextLoggerOptions.Level)
-           .EnableDetailedErrors();
+            .LogTo(Console.WriteLine, LogLevel.Information)
+            .EnableSensitiveDataLogging();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -69,9 +69,10 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task Add([FromBody] ApiAddInput input)
+        public async Task<bool> Add([FromBody] ApiAddInput input)
         {
             await _apiService.AddAsync(input);
+            return true;
         }
 
         /// <summary>

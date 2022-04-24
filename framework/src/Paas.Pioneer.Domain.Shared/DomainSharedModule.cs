@@ -22,7 +22,8 @@ namespace Paas.Pioneer
 
             context.Services.AddControllers(options =>
             {
-                options.Filters.Add<ResultWrapperFilter>();
+                options.Filters.Add<ModelValidAttribute>(-1);
+                //options.Filters.Add<ResultWrapperFilter>();
             });
         }
 

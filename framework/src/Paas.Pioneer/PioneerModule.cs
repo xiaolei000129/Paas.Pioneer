@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Paas.Pioneer.Domain.Shared.Auth;
 using Paas.Pioneer.Knife4jUI.Swagger;
 using Paas.Pioneer.Middleware.Middleware.Extensions;
+using Paas.Pioneer.Middleware.Middleware.ResultWrapper;
 using Paas.Pioneer.Redis;
 using System;
 using System.Linq;
@@ -77,9 +78,6 @@ namespace Paas.Pioneer
 				app.UseDeveloperExceptionPage();
 			}
 
-			//全局日志中间件
-			app.UseLoggerMiddleware();
-
 			// 生成全局唯一Id
 			app.UseCorrelationId();
 
@@ -100,6 +98,12 @@ namespace Paas.Pioneer
 
 			// 授权
 			app.UseAuthorization();
+
+			//全局日志中间件
+			//app.UseLoggerMiddleware();
+
+			// 返回结果格式化
+			app.UseResultWrapper();
 
 			// 配置末端点
 			app.UseConfiguredEndpoints(endpoints =>

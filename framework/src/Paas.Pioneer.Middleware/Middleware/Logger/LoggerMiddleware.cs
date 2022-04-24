@@ -163,7 +163,7 @@ namespace Paas.Pioneer.Middleware
         /// </summary>
         /// <param name="response"></param>
         /// <returns></returns>
-        public async Task<string> GetResponseStream(HttpResponse response)
+        public static async Task<string> GetResponseStream(HttpResponse response)
         {
             response.Body.Seek(0, SeekOrigin.Begin);
             //读流
