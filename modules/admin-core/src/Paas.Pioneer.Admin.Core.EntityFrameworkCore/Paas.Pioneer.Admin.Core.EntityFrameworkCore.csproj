@@ -13,8 +13,8 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Paas.Pioneer.Admin.Core.Domain\Paas.Pioneer.Admin.Core.Domain.csproj" />
-		<PackageReference Include="Volo.Abp.EntityFrameworkCore.MySQL" Version="5.2.0" />
-		<PackageReference Include="Volo.Abp.TenantManagement.EntityFrameworkCore" Version="5.2.0" />
+		<PackageReference Include="Volo.Abp.EntityFrameworkCore.MySQL" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.TenantManagement.EntityFrameworkCore" Version="5.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -17,8 +17,6 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Auth
 
         Task<ResponseOutput<AuthUserInfoOutput>> GetUserInfoAsync();
 
-        Task<ResponseOutput<AuthGetVerifyCodeOutput>> GetVerifyCodeAsync(string lastKey);
-
         Task<ResponseOutput<GetPassWordEncryptKeyOutput>> GetPassWordEncryptKeyAsync();
 
         Task<IEnumerable<string>> GetPermissionsCodeListAsync(Guid? userId);

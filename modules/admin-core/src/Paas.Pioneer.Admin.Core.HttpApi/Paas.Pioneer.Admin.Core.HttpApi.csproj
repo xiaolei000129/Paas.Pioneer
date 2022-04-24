@@ -18,11 +18,11 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Paas.Pioneer.Admin.Core.Application.Contracts\Paas.Pioneer.Admin.Core.Application.Contracts.csproj" />
-		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.2.1" />
+		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.2.2" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="5.2.0" />
+		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="5.2.1" />
 	</ItemGroup>
 
 </Project>

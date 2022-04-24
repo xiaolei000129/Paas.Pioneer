@@ -30,14 +30,12 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
         private readonly IUserRepository _userRepository;
         private readonly AppConfig _appConfig;
         private readonly IPermissionRepository _permissionRepository;
-        private readonly VerifyCodeHelper _verifyCodeHelper;
         private readonly ITenantRepository _tenantRepository;
         private readonly IViewRepository _viewRepository;
         private readonly RedisAdminKeys _redisAdminKeys;
         private readonly ICaptcha _captcha;
 
         public AuthService(IOptions<AppConfig> appConfig,
-            VerifyCodeHelper verifyCodeHelper,
             IUserRepository userRepository,
             IPermissionRepository permissionRepository,
             ITenantRepository tenantRepository,
@@ -46,7 +44,6 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
             RedisAdminKeys redisAdminKeys)
         {
             _appConfig = appConfig.Value;
-            _verifyCodeHelper = verifyCodeHelper;
             _userRepository = userRepository;
             _permissionRepository = permissionRepository;
             _tenantRepository = tenantRepository;
@@ -130,26 +127,6 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
                 isTenant = true;
             }
             return await _permissionRepository.GetPermissionsCodeListAsync(userId, isTenant);
-        }
-
-        public async Task<ResponseOutput<AuthGetVerifyCodeOutput>> GetVerifyCodeAsync(string lastKey)
-        {
-            var img = _verifyCodeHelper.GetBase64String(out string code);
-            //删除上次缓存的验证码
-            if (!lastKey.IsNullOrEmpty())
-            {
-                await RedisHelper.DelAsync(lastKey);
-            }
-            //写入Redis
-            var guid = Guid.NewGuid().ToString("N");
-            var key = string.Format(_redisAdminKeys.VerifyCodeKey, guid);
-            await RedisHelper.SetAsync(key, code, TimeSpan.FromMinutes(5));
-            var data = new AuthGetVerifyCodeOutput
-            {
-                Key = guid,
-                Img = img
-            };
-            return ResponseOutput.Succees(data);
         }
 
         public async Task<ResponseOutput<AuthLoginOutput>> LoginAsync(AuthLoginInput input)

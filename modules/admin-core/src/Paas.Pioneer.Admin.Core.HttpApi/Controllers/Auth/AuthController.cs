@@ -103,18 +103,6 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         }
 
         /// <summary>
-        /// 获取验证码
-        /// </summary>
-        /// <param name="lastKey">上次验证码键</param>
-        /// <returns></returns>
-        [HttpGet("getVerifyCode")]
-        [AllowAnonymous]
-        public async Task<ResponseOutput<AuthGetVerifyCodeOutput>> GetVerifyCode(string lastKey)
-        {
-            return await _authService.GetVerifyCodeAsync(lastKey);
-        }
-
-        /// <summary>
         /// 获取验证数据
         /// </summary>
         /// <returns></returns>
