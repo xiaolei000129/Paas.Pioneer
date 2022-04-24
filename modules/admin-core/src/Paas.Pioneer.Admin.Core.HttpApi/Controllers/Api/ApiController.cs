@@ -69,9 +69,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> Add([FromBody] ApiAddInput input)
+        public async Task Add([FromBody] ApiAddInput input)
         {
-            return await _apiService.AddAsync(input);
+            await _apiService.AddAsync(input);
         }
 
         /// <summary>
@@ -80,9 +80,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> Update([FromBody] ApiUpdateInput input)
+        public async Task Update([FromBody] ApiUpdateInput input)
         {
-            return await _apiService.UpdateAsync(input);
+            await _apiService.UpdateAsync(input);
         }
 
         /// <summary>
@@ -91,9 +91,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> SoftDeleteAsync(Guid id)
+        public async Task SoftDeleteAsync(Guid id)
         {
-            return await _apiService.DeleteAsync(id);
+            await _apiService.DeleteAsync(id);
         }
 
         /// <summary>
@@ -102,9 +102,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="ids"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> BatchSoftDelete([FromBody] Guid[] ids)
+        public async Task BatchSoftDelete([FromBody] Guid[] ids)
         {
-            return await _apiService.BatchSoftDeleteAsync(ids);
+            await _apiService.BatchSoftDeleteAsync(ids);
         }
     }
 }

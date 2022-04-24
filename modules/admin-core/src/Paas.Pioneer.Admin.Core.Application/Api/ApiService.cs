@@ -99,11 +99,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> AddAsync(ApiAddInput input)
+        public async Task AddAsync(ApiAddInput input)
         {
             var entity = ObjectMapper.Map<ApiAddInput, Ad_ApiEntity>(input);
             await _apiRepository.InsertAsync(entity);
-            return ResponseOutput.Succees("添加成功");
         }
 
         /// <summary>
@@ -111,7 +110,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> UpdateAsync(ApiUpdateInput input)
+        public async Task UpdateAsync(ApiUpdateInput input)
         {
             var entity = await _apiRepository.GetAsync(input.Id);
             if (entity == null)
@@ -120,7 +119,6 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
             }
             ObjectMapper.Map(input, entity);
             await _apiRepository.UpdateAsync(entity);
-            return ResponseOutput.Succees("修改成功！");
         }
 
         /// <summary>
@@ -128,10 +126,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             await _apiRepository.DeleteAsync(id);
-            return ResponseOutput.Succees("删除成功");
         }
 
         /// <summary>
@@ -139,10 +136,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(IEnumerable<Guid> ids)
+        public async Task BatchSoftDeleteAsync(IEnumerable<Guid> ids)
         {
             await _apiRepository.DeleteManyAsync(ids);
-            return ResponseOutput.Succees("删除成功！");
         }
     }
 }

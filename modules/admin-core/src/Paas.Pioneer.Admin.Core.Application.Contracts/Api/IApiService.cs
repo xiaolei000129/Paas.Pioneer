@@ -40,27 +40,27 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Api
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<IResponseOutput> AddAsync(ApiAddInput input);
+        Task AddAsync(ApiAddInput input);
 
         /// <summary>
         /// ÐÞ¸Ä
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<IResponseOutput> UpdateAsync(ApiUpdateInput input);
+        Task UpdateAsync(ApiUpdateInput input);
 
         /// <summary>
         /// É¾³ý
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<IResponseOutput> DeleteAsync(Guid id);
+        Task DeleteAsync(Guid id);
 
         /// <summary>
         /// ÅúÁ¿É¾³ý
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        Task<IResponseOutput> BatchSoftDeleteAsync(IEnumerable<Guid> ids);
+        Task BatchSoftDeleteAsync(IEnumerable<Guid> ids);
     }
 }
