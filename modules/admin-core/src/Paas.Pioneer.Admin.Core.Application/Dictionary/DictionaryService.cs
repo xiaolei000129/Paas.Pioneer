@@ -7,6 +7,7 @@ using Paas.Pioneer.Domain.Shared.Dto.Output;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 
 namespace Paas.Pioneer.Admin.Core.Application.Dictionary
@@ -63,7 +64,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Dictionary
         {
             if (await _dictionaryRepository.AnyAsync(x => x.DictionaryTypeId == input.DictionaryTypeId && x.Code == input.Code))
             {
-                return ResponseOutput.Error("字典编码已存在！");
+                throw new BusinessException("字典编码已存在！");
             }
             var dictionary = ObjectMapper.Map<DictionaryAddInput, Ad_DictionaryEntity>(input);
             await _dictionaryRepository.InsertAsync(dictionary);
@@ -80,11 +81,11 @@ namespace Paas.Pioneer.Admin.Core.Application.Dictionary
             var entity = await _dictionaryRepository.GetAsync(input.Id);
             if (entity?.Id == Guid.Empty)
             {
-                return ResponseOutput.Error("数据字典不存在！");
+                throw new BusinessException("数据字典不存在！");
             }
             if (await _dictionaryRepository.AnyAsync(x => x.Id != input.Id && x.DictionaryTypeId == input.DictionaryTypeId && x.Code == input.Code))
             {
-                return ResponseOutput.Error("字典编码已存在！");
+                throw new BusinessException("字典编码已存在！");
             }
             ObjectMapper.Map(input, entity);
             await _dictionaryRepository.UpdateAsync(entity);

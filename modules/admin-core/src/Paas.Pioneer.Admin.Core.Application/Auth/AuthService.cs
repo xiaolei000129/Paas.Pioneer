@@ -21,6 +21,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Data;
 using Lazy.SlideCaptcha.Core;
 using static Lazy.SlideCaptcha.Core.ValidateResult;
+using Volo.Abp;
 
 namespace Paas.Pioneer.Admin.Core.Application.Auth
 {
@@ -159,18 +160,18 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
                 var isSuccees = _captcha.Validate(input.Captcha.Id, input.Captcha.track);
                 if (isSuccees.Result != ValidateResultType.Success)
                 {
-                    return ResponseOutput.Error<AuthLoginOutput>("安全验证不通过，请重新登录！");
+                    throw new BusinessException("安全验证不通过，请重新登录！");
                 }
             }
             #endregion 验证码校验
             var user = await _userRepository.GetAsync(expression: x => x.UserName == input.UserName);
             if (user == null)
             {
-                return ResponseOutput.Error<AuthLoginOutput>("账号输入有误!");
+                throw new BusinessException("账号输入有误!");
             }
             if (!user.Enabled)
             {
-                return ResponseOutput.Error<AuthLoginOutput>("账号已被禁用");
+                throw new BusinessException("账号已被禁用");
             }
             #region 解密
             if (!input.PasswordKey.IsNullOrEmpty())
@@ -182,14 +183,14 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
                     var secretKey = await RedisHelper.GetAsync(passwordEncryptKey);
                     if (secretKey.IsNullOrEmpty())
                     {
-                        return ResponseOutput.Error<AuthLoginOutput>("解密失败！");
+                        throw new BusinessException("解密失败！");
                     }
                     input.Password = DesEncrypt.Decrypt(input.Password, secretKey);
                     await RedisHelper.DelAsync(passwordEncryptKey);
                 }
                 else
                 {
-                    return ResponseOutput.Error<AuthLoginOutput>("解密失败！");
+                    throw new BusinessException("解密失败！");
                 }
             }
             #endregion 解密
@@ -197,7 +198,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
             var password = MD5Encrypt.Encrypt32(input.Password);
             if (user.Password != password)
             {
-                return ResponseOutput.Error<AuthLoginOutput>("密码输入有误！");
+                throw new BusinessException("密码输入有误！");
             }
 
             var authLoginOutput = ObjectMapper.Map<Ad_UserEntity, AuthLoginOutput>(user);
@@ -207,11 +208,11 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
                 var tenant = await _tenantRepository.GetAsync(expression: x => x.Id == user.TenantId, isTracking: true);
                 if (tenant == null)
                 {
-                    return ResponseOutput.Error<AuthLoginOutput>("平台信息为空");
+                    throw new BusinessException("平台信息为空");
                 }
                 if (!tenant.GetProperty<bool>("Enabled"))
                 {
-                    return ResponseOutput.Error<AuthLoginOutput>("平台已被禁用");
+                    throw new BusinessException("平台已被禁用");
                 }
                 authLoginOutput.TenantType = tenant.GetProperty<ETenantType>("TenantType");
             }

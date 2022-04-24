@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Data;
 using Volo.Abp.MultiTenancy;
@@ -224,24 +225,24 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
             var userClaims = _userToken.Decode(token);
             if (userClaims == null || !userClaims.Any())
             {
-                return ResponseOutput.Error("错误token");
+                throw new BusinessException("错误token");
             }
 
             var refreshExpires = userClaims.FirstOrDefault(a => a.Type == ClaimAttributes.RefreshExpires)?.Value;
             if (refreshExpires.IsNullOrEmpty())
             {
-                return ResponseOutput.Error("错误token");
+                throw new BusinessException("错误token");
             }
 
             if (refreshExpires.ToLong() <= DateTime.Now.ToTimestamp())
             {
-                return ResponseOutput.Error("登录信息已过期");
+                throw new BusinessException("登录信息已过期");
             }
 
             var userId = userClaims.FirstOrDefault(a => a.Type == ClaimAttributes.UserId)?.Value;
             if (userId.IsNullOrEmpty())
             {
-                return ResponseOutput.Error("登录信息已失效");
+                throw new BusinessException("登录信息已失效");
             }
             using (_dataFilter.Disable<IMultiTenant>())
             {

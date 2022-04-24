@@ -10,6 +10,7 @@ using Paas.Pioneer.Domain.Shared.Dto.Output;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 
 namespace Paas.Pioneer.Admin.Core.Application.Personnel.Employee
@@ -82,7 +83,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Personnel.Employee
             var employee = await _employeeRepository.GetAsync(input.Id);
             if (employee?.Id == Guid.Empty)
             {
-                return ResponseOutput.Error("用户不存在！");
+                throw new BusinessException("用户不存在！");
             }
 
             ObjectMapper.Map(input, employee);

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 
 namespace Paas.Pioneer.Admin.Core.Application.DictionaryType
@@ -29,7 +30,7 @@ namespace Paas.Pioneer.Admin.Core.Application.DictionaryType
         {
             if (await _dictionaryTypeRepository.AnyAsync(x => x.Code == input.Code))
             {
-                return ResponseOutput.Error("字典类型编码已存在！");
+                throw new BusinessException("字典类型编码已存在！");
             }
             var dictionaryType = ObjectMapper.Map<DictionaryTypeAddInput, Ad_DictionaryTypeEntity>(input);
             await _dictionaryTypeRepository.InsertAsync(dictionaryType);
@@ -86,11 +87,11 @@ namespace Paas.Pioneer.Admin.Core.Application.DictionaryType
             var entity = await _dictionaryTypeRepository.GetAsync(input.Id);
             if (entity == null)
             {
-                return ResponseOutput.Error("数据字典不存在！");
+                throw new BusinessException("数据字典不存在！");
             }
             if (await _dictionaryTypeRepository.AnyAsync(x => x.Id != input.Id && x.Code == input.Code))
             {
-                return ResponseOutput.Error("字典类型编码已存在！");
+                throw new BusinessException("字典类型编码已存在！");
             }
             ObjectMapper.Map(input, entity);
             await _dictionaryTypeRepository.UpdateAsync(entity);

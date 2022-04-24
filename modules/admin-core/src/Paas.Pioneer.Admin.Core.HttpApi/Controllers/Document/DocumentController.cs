@@ -10,6 +10,7 @@ using Paas.Pioneer.Domain.Shared.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 
 namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
@@ -200,7 +201,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
                     return ResponseOutput.Succees(data: HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + res.Data.FileRequestPath);
                 }
             }
-            return ResponseOutput.Error("上传失败！");
+            throw new BusinessException("上传失败！");
         }
 
         /// <summary>

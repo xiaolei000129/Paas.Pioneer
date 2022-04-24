@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 
 namespace Paas.Pioneer.Admin.Core.Application.Personnel.Organization
@@ -80,7 +81,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Personnel.Organization
             var entity = await _organizationRepository.GetAsync(input.Id);
             if (entity?.Id == Guid.Empty)
             {
-                return ResponseOutput.Error("数据字典不存在！");
+                throw new BusinessException("数据字典不存在！");
             }
             ObjectMapper.Map(input, entity);
             await _organizationRepository.UpdateAsync(entity);

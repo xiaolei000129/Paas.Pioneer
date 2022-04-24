@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 
 namespace Paas.Pioneer.Admin.Core.Application.Api
@@ -115,7 +116,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
             var entity = await _apiRepository.GetAsync(input.Id);
             if (entity == null)
             {
-                return ResponseOutput.Error("接口不存在！");
+                throw new BusinessException("接口不存在！");
             }
             ObjectMapper.Map(input, entity);
             await _apiRepository.UpdateAsync(entity);

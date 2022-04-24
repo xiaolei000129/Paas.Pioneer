@@ -13,6 +13,7 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp;
 
 namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
 {
@@ -89,7 +90,7 @@ namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
             var entity = await _{{ initial_lower }}Repository.GetAsync(input.Id);
             if (entity?.Id == Guid.Empty)
             {
-                return ResponseOutput.Error("数据不存在！");
+                throw new BusinessException("数据不存在！");
             }
             ObjectMapper.Map(input, entity);
             await _{{ initial_lower }}Repository.UpdateAsync(entity);

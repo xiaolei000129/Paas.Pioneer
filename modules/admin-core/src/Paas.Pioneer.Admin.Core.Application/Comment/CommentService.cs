@@ -1,25 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Paas.Pioneer.Admin.Core.Application.Contracts.Comment;
+﻿using Paas.Pioneer.Admin.Core.Application.Contracts.Comment;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Comment.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Comment.Dto.Output;
 using Paas.Pioneer.Admin.Core.Domain.Comment;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
-using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
-using Volo.Abp.Domain.Repositories;
 
 namespace Paas.Pioneer.Admin.Core.Application.Comment
 {
     /// <summary>
     /// 评论管理服务
     /// </summary>
-     public class CommentService : ApplicationService, ICommentService
+    public class CommentService : ApplicationService, ICommentService
     {
         
         private readonly ICommentRepository _commentRepository;
@@ -92,7 +89,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Comment
             var entity = await _commentRepository.GetAsync(input.Id);
             if (entity?.Id == Guid.Empty)
             {
-                return ResponseOutput.Error("数据不存在！");
+                throw new BusinessException("数据不存在！");
             }
             ObjectMapper.Map(input, entity);
             await _commentRepository.UpdateAsync(entity);

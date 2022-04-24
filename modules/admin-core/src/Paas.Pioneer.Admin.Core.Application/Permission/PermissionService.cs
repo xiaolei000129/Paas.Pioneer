@@ -23,6 +23,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.MultiTenancy;
@@ -262,11 +263,11 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
         {
             var list = await _permissionRepository.ToListAsync();
 
-            var model = list.Where(a => a.Id == id).FirstOrDefault();
+            var model = list.FirstOrDefault(a => a.Id == id);
 
             if (model == null)
             {
-                return ResponseOutput.Error("权限点不存在！");
+                throw new BusinessException("权限点不存在！");
             }
 
             var permissionData = ObjectMapper.Map<List<Ad_PermissionEntity>, List<PermissionDataOutput>>(list);

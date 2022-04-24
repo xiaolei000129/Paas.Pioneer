@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Data;
 using Volo.Abp.Domain.Repositories;
@@ -213,9 +214,9 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         public async Task<IResponseOutput> UpdateAsync(UserUpdateInput input)
         {
             var user = await _userRepository.GetAsync(input.Id);
-            if (!(user?.Id != Guid.Empty))
+            if (user == null || user.Id == Guid.Empty)
             {
-                return ResponseOutput.Error("用户不存在！");
+                throw new BusinessException("用户不存在！");
             }
 
             ObjectMapper.Map(input, user);
@@ -266,14 +267,14 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         {
             if (input.ConfirmPassword != input.NewPassword)
             {
-                return ResponseOutput.Error("新密码和确认密码不一致！");
+                throw new BusinessException("新密码和确认密码不一致！");
             }
 
             var entity = await _userRepository.GetAsync(input.Id);
             var oldPassword = MD5Encrypt.Encrypt32(input.OldPassword);
             if (oldPassword != entity.Password)
             {
-                return ResponseOutput.Error("旧密码不正确！");
+                throw new BusinessException("旧密码不正确！");
             }
 
             input.Password = MD5Encrypt.Encrypt32(input.NewPassword);

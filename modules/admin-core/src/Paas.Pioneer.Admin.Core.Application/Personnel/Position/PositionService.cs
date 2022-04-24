@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 
 namespace Paas.Pioneer.Admin.Core.Application.Personnel.Position
@@ -79,7 +80,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Personnel.Position
             var entity = await _positionRepository.GetAsync(input.Id);
             if (entity?.Id == Guid.Empty)
             {
-                return ResponseOutput.Error("职位不存在！");
+                throw new BusinessException("职位不存在！");
             }
 
             ObjectMapper.Map(input, entity);

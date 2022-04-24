@@ -24,6 +24,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.TextTemplating;
@@ -210,7 +211,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 var lowCodeTable = await _lowCodeTableRepository.GetAsync(id);
                 if (lowCodeTable == null)
                 {
-                    return ResponseOutput.Error("数据错误");
+                    throw new BusinessException("数据错误");
                 }
                 var getColumnList = await GetColumnListByTableNameAsync(id);
                 if (!getColumnList.Success)

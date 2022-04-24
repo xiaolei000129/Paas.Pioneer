@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Data;
 using Volo.Abp.Domain.Repositories;
@@ -52,7 +53,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Tenant
         {
             if (await _tenantRepository.AnyAsync(x => x.Name == input.Name.Trim()))
             {
-                return ResponseOutput.Error("租户已存在！");
+                throw new BusinessException("租户已存在！");
             }
             var entity = ObjectMapper.Map<TenantAddInput, Volo.Abp.TenantManagement.Tenant>(input);
             var tenant = await _tenantRepository.InsertAsync(entity, true);
@@ -167,7 +168,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Tenant
             var entity = await _tenantRepository.GetAsync(input.Id);
             if (entity == null)
             {
-                return ResponseOutput.Error("租户不存在！");
+                throw new BusinessException("租户不存在！");
             }
             ObjectMapper.Map(input, entity);
             await _tenantRepository.UpdateAsync(entity);

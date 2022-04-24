@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 
 namespace Paas.Pioneer.Admin.Core.Application.View
@@ -132,7 +133,7 @@ namespace Paas.Pioneer.Admin.Core.Application.View
             var entity = await _viewRepository.FindAsync(input.Id);
             if (!(entity?.Id != Guid.Empty))
             {
-                return ResponseOutput.Error("视图不存在！");
+                throw new BusinessException("视图不存在！");
             }
             ObjectMapper.Map(input, entity);
             await _viewRepository.UpdateAsync(entity);
