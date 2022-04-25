@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
+using Paas.Pioneer.AutoWrapper.Attributes;
 using System.Linq;
-using Volo.Abp.DependencyInjection;
 
 namespace Paas.Pioneer.Domain.Shared
 {
@@ -27,12 +27,12 @@ namespace Paas.Pioneer.Domain.Shared
             }
 
             //如果包含NoWrapperAttribute则说明不需要对返回结果进行包装，直接返回原始值
-            if ((controllerActionDescriptor.ControllerTypeInfo.GetCustomAttributes(typeof(NoWrapperAttribute), false)).Any())
+            if ((controllerActionDescriptor.ControllerTypeInfo.GetCustomAttributes(typeof(NoAutoWrapperAttribute), false)).Any())
             {
                 return;
             }
 
-            if ((controllerActionDescriptor.MethodInfo.GetCustomAttributes(typeof(NoWrapperAttribute), false)).Any())
+            if ((controllerActionDescriptor.MethodInfo.GetCustomAttributes(typeof(NoAutoWrapperAttribute), false)).Any())
             {
                 return;
             }

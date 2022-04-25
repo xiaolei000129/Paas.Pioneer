@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paas.Pioneer.Redis", "src\P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paas.Pioneer.Domain", "src\Paas.Pioneer.Domain\Paas.Pioneer.Domain.csproj", "{99BBC02D-86FB-4048-B606-D203ABAA9954}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paas.Pioneer.AutoWrapper", "src\Paas.Pioneer.AutoWrapper\Paas.Pioneer.AutoWrapper.csproj", "{8C4223E1-0C8A-421C-AE58-81824B9FE1B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{99BBC02D-86FB-4048-B606-D203ABAA9954}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99BBC02D-86FB-4048-B606-D203ABAA9954}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99BBC02D-86FB-4048-B606-D203ABAA9954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C4223E1-0C8A-421C-AE58-81824B9FE1B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C4223E1-0C8A-421C-AE58-81824B9FE1B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C4223E1-0C8A-421C-AE58-81824B9FE1B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C4223E1-0C8A-421C-AE58-81824B9FE1B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{1828B840-36CA-41EB-946C-6EF396816AF2} = {83D98DAA-9A0F-4A41-B58F-2033BBB57736}
 		{7989226C-AC35-4002-BFBE-C2C9EA8EEB94} = {EA20D17B-D4D6-4B99-BD43-AF20A749BA36}
 		{99BBC02D-86FB-4048-B606-D203ABAA9954} = {EA20D17B-D4D6-4B99-BD43-AF20A749BA36}
+		{8C4223E1-0C8A-421C-AE58-81824B9FE1B7} = {EA20D17B-D4D6-4B99-BD43-AF20A749BA36}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C491D72-0EB2-4F3F-81A5-E9A7A7124B31}

@@ -15,7 +15,8 @@ $projects = (
     "framework\src\Paas.Pioneer.Domain.Shared",
     "framework\src\Paas.Pioneer.Knife4jUI.Swagger",
     "framework\src\Paas.Pioneer.Middleware",
-    "framework\src\Paas.Pioneer.Redis"
+    "framework\src\Paas.Pioneer.Redis",
+    "framework\src\Paas.Pioneer.AutoWrapper"
 )
 
 # Get the version

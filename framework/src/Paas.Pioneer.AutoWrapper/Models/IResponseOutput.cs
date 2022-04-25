@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
+using Volo.Abp.DependencyInjection;
 
-namespace Paas.Pioneer.Domain.Shared.Dto.Output
+namespace Paas.Pioneer.AutoWrapper
 {
     /// <summary>
     /// 响应数据输出接口

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using System.Linq;
 using Volo.Abp.DependencyInjection;
 

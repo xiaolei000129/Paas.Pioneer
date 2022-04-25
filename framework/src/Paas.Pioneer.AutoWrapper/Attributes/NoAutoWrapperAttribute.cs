@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Paas.Pioneer.Domain.Shared
+namespace Paas.Pioneer.AutoWrapper.Attributes
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    public class NoWrapperAttribute : Attribute
+    public class NoAutoWrapperAttribute : Attribute
     {
     }
 }
