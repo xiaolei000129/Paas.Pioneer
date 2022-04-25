@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -54,6 +55,18 @@ namespace Paas.Pioneer.Controllers
         [HttpGet("Empty")]
         public void Empty()
         {
+        }
+
+        [HttpGet("EmptyTask")]
+        public Task EmptyTask()
+        {
+            return Task.CompletedTask;
+        }
+
+        [HttpGet("EmptyTaskResponseOutput")]
+        public ResponseOutput<bool> EmptyTaskResponseOutput()
+        {
+            return ResponseOutput.Succees();
         }
 
         [HttpGet("EmptyObj")]

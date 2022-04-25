@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 using Paas.Pioneer.AutoWrapper.Extensions;
 using Paas.Pioneer.AutoWrapper.Attributes;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using System.Linq;
 
 namespace Paas.Pioneer.AutoWrapper.Base
 {
@@ -50,6 +52,31 @@ namespace Paas.Pioneer.AutoWrapper.Base
                 var endpoint = context.GetEndpoint();
 
                 if (endpoint?.Metadata?.GetMetadata<NoAutoWrapperAttribute>() is object)
+                {
+                    await awm.RevertResponseBodyStreamAsync(memoryStream, originalResponseBodyStream);
+                    return;
+                }
+
+                //获取Action的返回类型
+                var controllerActionDescriptor = endpoint?.Metadata?.GetMetadata<ControllerActionDescriptor>();
+                if (controllerActionDescriptor == null)
+                {
+                    await awm.RevertResponseBodyStreamAsync(memoryStream, originalResponseBodyStream);
+                    return;
+                }
+
+                //泛型的特殊处理
+                var returnType = controllerActionDescriptor.MethodInfo.ReturnType;
+                if (returnType == typeof(Task) || returnType == typeof(Task<>) || returnType == typeof(ValueTask<>))
+                {
+                    if (returnType.GetGenericArguments().Any())
+                    {
+                        returnType = returnType.GetGenericArguments().FirstOrDefault();
+                    }
+                }
+
+                //如果终结点已经是ResponseOutput<T>则不进行包装处理
+                if (returnType.IsGenericType && returnType == typeof(ResponseOutput<>))
                 {
                     await awm.RevertResponseBodyStreamAsync(memoryStream, originalResponseBodyStream);
                     return;
