@@ -11,6 +11,12 @@ namespace Paas.Pioneer.Domain.Shared
     /// </summary>
     public class ResultWrapperFilter : ActionFilterAttribute
     {
+        private readonly IResponseOutput<object> _result;
+        public ResultWrapperFilter(IResponseOutput<object> result)
+        {
+            _result = result;
+        }
+
         public override void OnResultExecuting(ResultExecutingContext context)
         {
             var controllerActionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
@@ -41,7 +47,7 @@ namespace Paas.Pioneer.Domain.Shared
                     {
                         return;
                     }
-                    context.Result = new ObjectResult(ResponseOutput.Succees(objectResult.Value));
+                    context.Result = new ObjectResult(_result.Succees(objectResult.Value));
                 }
             }
         }
