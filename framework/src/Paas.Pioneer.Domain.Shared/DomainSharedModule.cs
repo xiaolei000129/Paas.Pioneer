@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Paas.Pioneer.Domain.Shared;
 using Paas.Pioneer.Domain.Shared.ApplicationBuilderExtensions;
 using Paas.Pioneer.Domain.Shared.Configs;
+using Paas.Pioneer.Domain.Shared.Extensions;
+using Paas.Pioneer.Domain.Shared.Provider;
 using Volo.Abp;
 using Volo.Abp.Modularity;
 
@@ -22,8 +26,11 @@ namespace Paas.Pioneer
 
             context.Services.AddControllers(options =>
             {
-                options.Filters.Add<ResultWrapperFilter>();
+                //options.Filters.Add<ModelValidAttribute>(-1);
+                //options.Filters.Add<ResultWrapperFilter>();
             });
+            context.Services.Replace(ServiceDescriptor.Singleton<IApplicationModelProvider, ResultWrapperApplicationModelProvider>());
+            context.Services.AddEndpointsApiExplorer();
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)

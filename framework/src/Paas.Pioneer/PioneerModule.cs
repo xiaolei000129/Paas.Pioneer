@@ -23,7 +23,7 @@ using Volo.Abp.Modularity;
 
 namespace Paas.Pioneer
 {
-	[DependsOn(
+    [DependsOn(
 		typeof(AbpAutofacModule),
 		typeof(AbpAspNetCoreMvcModule),
 		typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
@@ -77,9 +77,6 @@ namespace Paas.Pioneer
 				app.UseDeveloperExceptionPage();
 			}
 
-			//全局日志中间件
-			app.UseLoggerMiddleware();
-
 			// 生成全局唯一Id
 			app.UseCorrelationId();
 
@@ -100,6 +97,9 @@ namespace Paas.Pioneer
 
 			// 授权
 			app.UseAuthorization();
+
+			//全局日志中间件
+			app.UseLoggerMiddleware();
 
 			// 配置末端点
 			app.UseConfiguredEndpoints(endpoints =>

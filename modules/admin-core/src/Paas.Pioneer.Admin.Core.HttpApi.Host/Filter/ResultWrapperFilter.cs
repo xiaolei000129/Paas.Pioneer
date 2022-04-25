@@ -10,15 +10,20 @@ namespace Paas.Pioneer.Domain.Shared
     /// <summary>
     /// 返回结果格式化
     /// </summary>
-    public class ResultWrapperFilter : ActionFilterAttribute
+    public class ResultWrapperFilter : IActionFilter, ITransientDependency
     {
-        private readonly IResponseOutput<object> _result;
-        public ResultWrapperFilter(IResponseOutput<object> result)
+        //private readonly IResponseOutput<object> _result;
+        //public ResultWrapperFilter(IResponseOutput<object> result)
+        //{
+        //    _result = result;
+        //}
+
+        public void OnActionExecuted(ActionExecutedContext context)
         {
-            _result = result;
+
         }
 
-        public override void OnResultExecuting(ResultExecutingContext context)
+        public void OnActionExecuting(ActionExecutingContext context)
         {
             var controllerActionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
             if (controllerActionDescriptor == null)
@@ -46,13 +51,13 @@ namespace Paas.Pioneer.Domain.Shared
                 {
                     return;
                 }
-                context.Result = new ObjectResult(_result.Succees(objectResult.Value));
+                context.Result = new ObjectResult(ResponseOutput.Succees(objectResult.Value));
             }
 
             // 没有返回值
             if (context.Result is EmptyResult)
             {
-                context.Result = new ObjectResult(_result.Succees());
+                context.Result = new ObjectResult(ResponseOutput.Succees());
             }
         }
     }
