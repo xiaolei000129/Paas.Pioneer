@@ -13,11 +13,11 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Auth
     /// </summary>
     public interface IAuthService : IApplicationService
     {
-        Task<ResponseOutput<AuthLoginOutput>> LoginAsync(AuthLoginInput input);
+        Task<AuthLoginOutput> LoginAsync(AuthLoginInput input);
 
-        Task<ResponseOutput<AuthUserInfoOutput>> GetUserInfoAsync();
+        Task<AuthUserInfoOutput> GetUserInfoAsync();
 
-        Task<ResponseOutput<GetPassWordEncryptKeyOutput>> GetPassWordEncryptKeyAsync();
+        Task<GetPassWordEncryptKeyOutput> GetPassWordEncryptKeyAsync();
 
         Task<IEnumerable<string>> GetPermissionsCodeListAsync(Guid? userId);
     }

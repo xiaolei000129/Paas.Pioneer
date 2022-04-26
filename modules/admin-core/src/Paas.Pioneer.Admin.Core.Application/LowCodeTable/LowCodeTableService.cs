@@ -65,47 +65,44 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
             _permissionApiRepository = permissionApiRepository;
         }
 
-        public async Task<IResponseOutput> AddLowCodeTableAsync(AddLowCodeTableInput input)
+        public async Task AddLowCodeTableAsync(AddLowCodeTableInput input)
         {
             // 验证是否已存在
             bool isExist = await _lowCodeTableRepository.AnyAsync(x => x.LowCodeTableName == input.LowCodeTableName);
             if (isExist)
-                return ResponseOutput.Error<bool>(msg: "已经存在该表");
+                throw new BusinessException("已经存在该表");
 
             var entity = ObjectMapper.Map<AddLowCodeTableInput, Ad_LowCodeTableEntity>(input);
             await _lowCodeTableRepository.InsertAsync(entity);
-            return ResponseOutput.Succees(true);
         }
 
-        public async Task<IResponseOutput> EditLowCodeTableAsync(EditLowCodeTableInput input)
+        public async Task EditLowCodeTableAsync(EditLowCodeTableInput input)
         {
             // 验证除自身外是否已存在
             bool isExist = await _lowCodeTableRepository
                 .AnyAsync(x => x.LowCodeTableName == input.LowCodeTableName && x.Id != input.Id);
 
             if (isExist)
-                return ResponseOutput.Error<bool>(msg: "已经存在该表");
+                throw new BusinessException("已经存在该表");
 
             var table = await _lowCodeTableRepository.GetAsync(input.Id);
             ObjectMapper.Map(input, table);
 
             await _lowCodeTableRepository.UpdateAsync(table);
-            return ResponseOutput.Succees(true);
         }
 
-        public async Task<IResponseOutput> DelLowCodeTableAsync(Guid id)
+        public async Task DelLowCodeTableAsync(Guid id)
         {
             await _lowCodeTableRepository.DeleteAsync(m => m.Id == id);
-            return ResponseOutput.Succees(true);
         }
 
-        public async Task<ResponseOutput<Page<LowCodeTableOutput>>> GetLowCodeTablePageListAsync(PageInput<GetLowCodeTablePadedInput> input)
+        public async Task<Page<LowCodeTableOutput>> GetLowCodeTablePageListAsync(PageInput<GetLowCodeTablePadedInput> input)
         {
             var data = await _lowCodeTableRepository.GetLowCodeTablePageListAsync(input);
-            return ResponseOutput.Succees(data);
+            return data;
         }
 
-        public async Task<IResponseOutput<LowCodeTableOutput>> GetAsync(Guid id)
+        public async Task<LowCodeTableOutput> GetAsync(Guid id)
         {
             var result = await _lowCodeTableRepository.GetAsync(x => x.Id == id, x => new LowCodeTableOutput()
             {
@@ -118,19 +115,18 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 MenuName = x.MenuName,
                 Taxon = x.Taxon
             });
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> BatchDeleteAsync(IEnumerable<Guid> ids)
+        public async Task BatchDeleteAsync(IEnumerable<Guid> ids)
         {
             await _lowCodeTableRepository.DeleteAsync(x => ids.Contains(x.Id));
-            return ResponseOutput.Succees();
         }
 
-        public async Task<IResponseOutput<IEnumerable<LowCodeTableEntityOutput>>> GetTableEntityListAsync()
+        public async Task<IEnumerable<LowCodeTableEntityOutput>> GetTableEntityListAsync()
         {
             var _dbContext = await _lowCodeTableRepository.GetDbContextAsync();
-            return ResponseOutput.Succees(_dbContext.Model.GetEntityTypes().Select(u =>
+            return _dbContext.Model.GetEntityTypes().Select(u =>
                 {
                     var constructorArgument = ((ConstructorBinding)u.ConstructorBinding)?
                          .RuntimeType?
@@ -143,30 +139,30 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                         TableName = u.GetDefaultTableName(),
                         TableComment = constructorArgument?.Value?.ToString(),
                     };
-                }));
+                });
         }
 
-        public async Task<IResponseOutput<List<LowCodeTableColumnOutput>>> GetColumnListByTableNameAsync(Guid id)
+        public async Task<List<LowCodeTableColumnOutput>> GetColumnListByTableNameAsync(Guid id)
         {
             var _dbContext = await _lowCodeTableRepository.GetDbContextAsync();
             var lowCodeTableName = await _lowCodeTableRepository.GetAsync(x => x.Id == id, x => x.LowCodeTableName);
 
             if (lowCodeTableName == null)
             {
-                return ResponseOutput.Error<List<LowCodeTableColumnOutput>>("数据错误");
+                throw new BusinessException("数据错误");
             }
             // 获取实体类型属性
             var entityType = _dbContext.Model.GetEntityTypes().FirstOrDefault(u => u.ClrType.Name == lowCodeTableName);
             if (entityType == null)
             {
-                return ResponseOutput.Error<List<LowCodeTableColumnOutput>>("数据错误");
+                throw new BusinessException("数据错误");
             }
 
             // 获取原始类型属性
             var type = entityType.ClrType;
             if (type == null)
             {
-                return ResponseOutput.Error<List<LowCodeTableColumnOutput>>("数据错误");
+                throw new BusinessException("数据错误");
             }
             // 获取实体字段列表
             List<LowCodeTableColumnOutput> lowCodeTableColumnList = type.GetProperties().Select(propertyInfo => entityType.FindProperty(propertyInfo.Name))
@@ -202,10 +198,10 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 }
             }
             // 按原始类型的顺序获取所有实体类型属性（不包含导航属性，会返回null）
-            return ResponseOutput.Succees(lowCodeTableColumnList);
+            return lowCodeTableColumnList;
         }
 
-        public async Task<IResponseOutput> GenerateCodeAsync(Guid id)
+        public async Task GenerateCodeAsync(Guid id)
         {
             try
             {
@@ -215,12 +211,8 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                     throw new BusinessException("数据错误");
                 }
                 var getColumnList = await GetColumnListByTableNameAsync(id);
-                if (!getColumnList.Success)
-                {
-                    return getColumnList;
-                }
                 var generateCodeLowCodeTableOutput = ObjectMapper.Map<Ad_LowCodeTableEntity, GenerateCodeLowCodeTableOutput>(lowCodeTable);
-                generateCodeLowCodeTableOutput.LowCodeTableConfigList = ObjectMapper.Map<List<LowCodeTableColumnOutput>, List<GenerateCodeLowCodeTableConfigOutPut>>(getColumnList.Data);
+                generateCodeLowCodeTableOutput.LowCodeTableConfigList = ObjectMapper.Map<List<LowCodeTableColumnOutput>, List<GenerateCodeLowCodeTableConfigOutPut>>(getColumnList);
                 await GenerateCodeFileContentAsync(generateCodeLowCodeTableOutput);
                 //await GeneratePermissionAsync(generateCodeLowCodeTableOutput);
             }
@@ -228,7 +220,6 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
             {
                 throw;
             }
-            return ResponseOutput.Succees("生成成功");
         }
 
         /// <summary>

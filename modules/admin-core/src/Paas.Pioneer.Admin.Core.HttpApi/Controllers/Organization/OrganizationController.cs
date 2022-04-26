@@ -35,7 +35,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<OrganizationGetOutput>> Get(Guid id)
+        public async Task<OrganizationGetOutput> Get(Guid id)
         {
             return await _organizationService.GetAsync(id);
         }
@@ -46,7 +46,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="key"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ResponseOutput<List<OrganizationListOutput>>> GetList(string key)
+        public async Task<List<OrganizationListOutput>> GetList(string key)
         {
             return await _organizationService.GetListAsync(key);
         }
@@ -57,9 +57,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> Add([FromBody]OrganizationAddInput input)
+        public async Task Add([FromBody] OrganizationAddInput input)
         {
-            return await _organizationService.AddAsync(input);
+            await _organizationService.AddAsync(input);
         }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> Update([FromBody] OrganizationUpdateInput input)
+        public async Task Update([FromBody] OrganizationUpdateInput input)
         {
-            return await _organizationService.UpdateAsync(input);
+            await _organizationService.UpdateAsync(input);
         }
 
         /// <summary>
@@ -79,9 +79,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> SoftDelete(Guid id)
+        public async Task SoftDelete(Guid id)
         {
-            return await _organizationService.DeleteAsync(id);
+            await _organizationService.DeleteAsync(id);
         }
     }
 }

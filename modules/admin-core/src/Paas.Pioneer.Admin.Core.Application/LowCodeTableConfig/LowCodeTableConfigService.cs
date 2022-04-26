@@ -14,6 +14,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.ObjectMapping;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Volo.Abp;
 
 namespace Paas.Pioneer.Admin.Core.Application.LowCodeTableConfig
 {
@@ -30,19 +31,18 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTableConfig
             _lowCodeTableConfigRepository = lowCodeTableConfigRepository;
         }
 
-        public async Task<IResponseOutput> AddLowCodeTableConfigAsync(AddLowCodeTableConfigInput input)
+        public async Task AddLowCodeTableConfigAsync(AddLowCodeTableConfigInput input)
         {
             // 验证是否已存在
             bool isExist = await _lowCodeTableConfigRepository.AnyAsync(x => x.ColumnName == input.PropertyName);
             if (isExist)
-                return ResponseOutput.Error<bool>(msg: "已经存在该字段");
+                throw new BusinessException("已经存在该字段");
 
             var entity = ObjectMapper.Map<AddLowCodeTableConfigInput, Ad_LowCodeTableConfigEntity>(input);
             await _lowCodeTableConfigRepository.InsertAsync(entity);
-            return ResponseOutput.Succees(true);
         }
 
-        public async Task<IResponseOutput> EditLowCodeTableConfigAsync(List<EditLowCodeTableConfigInput> inputList)
+        public async Task EditLowCodeTableConfigAsync(List<EditLowCodeTableConfigInput> inputList)
         {
             var lowCodeTableId = inputList.FirstOrDefault().LowCodeTableId;
             await _lowCodeTableConfigRepository.DeleteAsync(x => x.LowCodeTableId == lowCodeTableId);
@@ -51,19 +51,16 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTableConfig
             {
                 await _lowCodeTableConfigRepository.InsertManyAsync(addEntitys);
             }
-            return ResponseOutput.Succees(true);
         }
 
-        public async Task<IResponseOutput> DelLowCodeTableConfigAsync(Guid id)
+        public async Task DelLowCodeTableConfigAsync(Guid id)
         {
             await _lowCodeTableConfigRepository.DeleteAsync(m => m.Id == id);
-            return ResponseOutput.Succees(true);
         }
 
-        public async Task<ResponseOutput<Page<LowCodeTableConfigOutput>>> GetLowCodeTableConfigPageListAsync(PageInput<GetLowCodeTableConfigPadedInput> input)
+        public async Task<Page<LowCodeTableConfigOutput>> GetLowCodeTableConfigPageListAsync(PageInput<GetLowCodeTableConfigPadedInput> input)
         {
-            var data = await _lowCodeTableConfigRepository.GetLowCodeTableConfigPageListAsync(input);
-            return ResponseOutput.Succees(data);
+            return await _lowCodeTableConfigRepository.GetLowCodeTableConfigPageListAsync(input);
         }
     }
 }

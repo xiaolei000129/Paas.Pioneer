@@ -36,7 +36,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id">主键</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<GetCommentOutput>> Get(Guid id)
+        public async Task<GetCommentOutput> Get(Guid id)
         {
             return await _commentService.GetAsync(id);
         }
@@ -47,7 +47,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input">入参</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<Page<GetCommentPageListOutput>>> GetPageList(PageInput<GetCommentPageListInput> input)
+        public async Task<Page<GetCommentPageListOutput>> GetPageList(PageInput<GetCommentPageListInput> input)
         {
             return await _commentService.GetPageListAsync(input);
         }
@@ -58,9 +58,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input">入参</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> Add([FromBody] AddCommentInput input)
+        public async Task Add([FromBody] AddCommentInput input)
         {
-            return await _commentService.AddAsync(input);
+             await _commentService.AddAsync(input);
         }
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input">入参</param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> Update([FromBody] UpdateCommentInput input)
+        public async Task Update([FromBody] UpdateCommentInput input)
         {
-            return await _commentService.UpdateAsync(input);
+             await _commentService.UpdateAsync(input);
         }
 
         /// <summary>
@@ -80,9 +80,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id">主键</param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            return await _commentService.DeleteAsync(id);
+             await _commentService.DeleteAsync(id);
         }
 
         /// <summary>
@@ -91,9 +91,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="ids">主键集合</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> BatchSoftDelete([FromBody] Guid[] ids)
+        public async Task BatchSoftDelete([FromBody] Guid[] ids)
         {
-            return await _commentService.BatchSoftDeleteAsync(ids);
+            await _commentService.BatchSoftDeleteAsync(ids);
         }
     }
 }

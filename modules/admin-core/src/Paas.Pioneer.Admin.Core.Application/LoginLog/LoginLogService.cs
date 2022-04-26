@@ -31,7 +31,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LoginLog
             _loginLogRepository = loginLogRepository;
         }
 
-        public async Task<ResponseOutput<Page<LoginLogOutput>>> GetPageListAsync(PageInput<LoginLogModel> input)
+        public async Task<Page<LoginLogOutput>> GetPageListAsync(PageInput<LoginLogModel> input)
         {
             var userId = input.Filter?.CreatedUserId;
             Expression<Func<Ad_LoginLogEntity, bool>> expression = x => true;
@@ -62,7 +62,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LoginLog
         input);
         }
 
-        public async Task<ResponseOutput<Guid>> AddAsync(LoginLogAddInput input)
+        public async Task<Guid> AddAsync(LoginLogAddInput input)
         {
             var res = new ResponseOutput<Guid>();
             input.IP = IPHelper.GetIP(_context?.HttpContext?.Request);
@@ -79,9 +79,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LoginLog
                 input.BrowserInfo = ua;
             }
             var entity = ObjectMapper.Map<LoginLogAddInput, Ad_LoginLogEntity>(input);
-            var id = (await _loginLogRepository.InsertAsync(entity)).Id;
-
-            return res.Succees(id);
+            return (await _loginLogRepository.InsertAsync(entity)).Id;
         }
     }
 }

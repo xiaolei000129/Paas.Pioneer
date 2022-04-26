@@ -71,7 +71,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<List<TEntity>>> GetResponseOutputListAsync(
+        Task<List<TEntity>> GetResponseOutputListAsync(
                     Expression<Func<TEntity, bool>> expression = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     bool isTracking = false,
@@ -84,7 +84,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<List<TResult>>> GetResponseOutputListAsync<TResult>(
+        Task<List<TResult>> GetResponseOutputListAsync<TResult>(
                     Expression<Func<TEntity, bool>> expression = default,
                     Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
@@ -101,7 +101,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<Page<TResult>>> GetResponseOutputListAsync<TResult, TPageInput>(
+        Task<Page<TResult>> GetResponseOutputListAsync<TResult, TPageInput>(
                     Expression<Func<TEntity, bool>> expression = default,
                     Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
@@ -116,7 +116,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<Page<TEntity>>> GetResponseOutputPageListAsync<TPageInput>(
+        Task<Page<TEntity>> GetResponseOutputPageListAsync<TPageInput>(
                     Expression<Func<TEntity, bool>> expression = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
                     PageInput<TPageInput> input = default,
@@ -131,7 +131,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<Page<TEntity>>> GetResponseOutputPageListAsync<TPageInput>(
+        Task<Page<TEntity>> GetResponseOutputPageListAsync<TPageInput>(
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     PageInput<TPageInput> input = default,
                     bool isTracking = false,
@@ -147,7 +147,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<Page<TResult>>> GetResponseOutputPageListAsync<TResult, TPageInput>(
+        Task<Page<TResult>> GetResponseOutputPageListAsync<TResult, TPageInput>(
                     Expression<Func<TEntity, bool>> expression = default,
                     Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
@@ -165,7 +165,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<Page<TResult>>> GetResponseOutputPageListAsync<TResult, TPageInput>(
+        Task<Page<TResult>> GetResponseOutputPageListAsync<TResult, TPageInput>(
                     Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     PageInput<TPageInput> input = default,

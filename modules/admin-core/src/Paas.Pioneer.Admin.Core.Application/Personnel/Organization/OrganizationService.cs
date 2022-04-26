@@ -2,8 +2,6 @@
 using Paas.Pioneer.Admin.Core.Application.Contracts.Personnel.Organization.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Personnel.Organization.Dto.Output;
 using Paas.Pioneer.Admin.Core.Domain.Personnel.Organization;
-using Paas.Pioneer.AutoWrapper;
-using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +21,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Personnel.Organization
             _organizationRepository = organizationRepository;
         }
 
-        public async Task<ResponseOutput<OrganizationGetOutput>> GetAsync(Guid id)
+        public async Task<OrganizationGetOutput> GetAsync(Guid id)
         {
             var result = await _organizationRepository.GetAsync(
                 expression: x => x.Id == id,
@@ -39,10 +37,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Personnel.Organization
                     Enabled = x.Enabled,
                     Description = x.Description
                 });
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
-        public async Task<ResponseOutput<List<OrganizationListOutput>>> GetListAsync(string key)
+        public async Task<List<OrganizationListOutput>> GetListAsync(string key)
         {
 
             Expression<Func<Pe_OrganizationEntity, bool>> predicate = x => true;
@@ -69,14 +67,13 @@ namespace Paas.Pioneer.Admin.Core.Application.Personnel.Organization
             return data;
         }
 
-        public async Task<IResponseOutput> AddAsync(OrganizationAddInput input)
+        public async Task AddAsync(OrganizationAddInput input)
         {
             var dictionary = ObjectMapper.Map<OrganizationAddInput, Pe_OrganizationEntity>(input);
             await _organizationRepository.InsertAsync(dictionary);
-            return ResponseOutput.Succees("添加成功！");
         }
 
-        public async Task<IResponseOutput> UpdateAsync(OrganizationUpdateInput input)
+        public async Task UpdateAsync(OrganizationUpdateInput input)
         {
             var entity = await _organizationRepository.GetAsync(input.Id);
             if (entity?.Id == Guid.Empty)
@@ -85,14 +82,11 @@ namespace Paas.Pioneer.Admin.Core.Application.Personnel.Organization
             }
             ObjectMapper.Map(input, entity);
             await _organizationRepository.UpdateAsync(entity);
-            return ResponseOutput.Succees("修改成功！");
         }
 
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             await _organizationRepository.DeleteAsync(a => a.Id == id);
-            return ResponseOutput.Succees("删除成功！");
         }
-
     }
 }

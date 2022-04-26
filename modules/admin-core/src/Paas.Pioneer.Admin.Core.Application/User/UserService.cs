@@ -11,7 +11,6 @@ using Paas.Pioneer.Admin.Core.Domain.User;
 using Paas.Pioneer.Admin.Core.Domain.UserRole;
 using Paas.Pioneer.Domain.Shared.Configs;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Helpers;
 using System;
 using System.Collections.Generic;
@@ -62,9 +61,8 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         /// </summary>
         /// <param name="id">用户id</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<AuthLoginOutput>> GetLoginUserAsync(Guid id)
+        public async Task<AuthLoginOutput> GetLoginUserAsync(Guid id)
         {
-            var output = new ResponseOutput<AuthLoginOutput>();
             var entityDto = await _userRepository.GetAsync(expression: x => x.Id == id,
                 selector: x => new AuthLoginOutput
                 {
@@ -80,7 +78,7 @@ namespace Paas.Pioneer.Admin.Core.Application.User
                     entityDto.TenantType = tenant.GetProperty<ETenantType>("TenantType");
                 }
             }
-            return output.Succees(entityDto);
+            return entityDto;
         }
 
         #endregion
@@ -92,14 +90,14 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         /// </summary>
         /// <param name="id">用户Id</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<UserAndRoleOutput>> GetAsync(Guid id)
+        public async Task<UserAndRoleOutput> GetAsync(Guid id)
         {
             var model = new UserAndRoleOutput()
             {
                 Form = await GetUserInfoByIdAsync(id),
             };
             model.Form.RoleIds = (await _userRepository.GetUserRoleInfoById(id)).Select(x => x.Id);
-            return ResponseOutput.Succees(model);
+            return model;
         }
 
         #endregion
@@ -110,7 +108,7 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         /// 查询角色下拉数据
         /// </summary>
         /// <returns></returns>
-        public async Task<ResponseOutput<SelectModel>> GetSelectAsync()
+        public async Task<SelectModel> GetSelectAsync()
         {
             var model = new SelectModel()
             {
@@ -120,7 +118,7 @@ namespace Paas.Pioneer.Admin.Core.Application.User
                     Name = x.Name,
                 }),
             };
-            return ResponseOutput.Succees(model);
+            return model;
         }
 
         #endregion
@@ -131,14 +129,14 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         /// 获取当前登录用户信息
         /// </summary>
         /// <returns></returns>
-        public async Task<ResponseOutput<UserModelOutput>> GetBasicAsync()
+        public async Task<UserModelOutput> GetBasicAsync()
         {
             if (!(CurrentUser.Id != Guid.Empty))
             {
-                return ResponseOutput.Error<UserModelOutput>("未登录！");
+                throw new BusinessException("未登录！");
             }
 
-            return ResponseOutput.Succees(await GetUserInfoByIdAsync(CurrentUser.Id.Value));
+            return await GetUserInfoByIdAsync(CurrentUser.Id.Value);
         }
 
         #endregion
@@ -150,7 +148,7 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<GetUserPageListOutput>>> GetPageListAsync(PageInput<UserModelInput> input)
+        public async Task<Page<GetUserPageListOutput>> GetPageListAsync(PageInput<UserModelInput> input)
         {
             var data = await _userRepository.GetResponseOutputPageListAsync(selector: x => new GetUserPageListOutput
             {
@@ -164,9 +162,9 @@ namespace Paas.Pioneer.Admin.Core.Application.User
             },
             x => x.OrderByDescending(p => p.CreationTime),
             input);
-            var userIds = data.Data.List.Select(x => x.Id);
+            var userIds = data.List.Select(x => x.Id);
             var userRoleList = await _userRepository.GetUserRoleInfoById(userIds);
-            foreach (var item in data.Data.List)
+            foreach (var item in data.List)
             {
                 item.RoleNames = userRoleList.Where(x => x.UserId == item.Id).Select(x => x.Name);
             }
@@ -182,7 +180,7 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> AddAsync(UserAddInput input)
+        public async Task AddAsync(UserAddInput input)
         {
             if (input.Password.IsNullOrEmpty())
             {
@@ -199,8 +197,6 @@ namespace Paas.Pioneer.Admin.Core.Application.User
                 var roles = input.RoleIds.Select(a => new Ad_UserRoleEntity { UserId = user.Id, RoleId = a });
                 await _userRoleRepository.InsertManyAsync(roles);
             }
-
-            return ResponseOutput.Succees("添加成功！");
         }
 
         #endregion
@@ -212,7 +208,7 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> UpdateAsync(UserUpdateInput input)
+        public async Task UpdateAsync(UserUpdateInput input)
         {
             var user = await _userRepository.GetAsync(input.Id);
             if (user == null || user.Id == Guid.Empty)
@@ -230,8 +226,6 @@ namespace Paas.Pioneer.Admin.Core.Application.User
                 var roles = input.RoleIds.Select(a => new Ad_UserRoleEntity { UserId = user.Id, RoleId = a });
                 await _userRoleRepository.InsertManyAsync(roles);
             }
-
-            return ResponseOutput.Succees("修改成功！");
         }
 
         #endregion
@@ -243,7 +237,7 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> UpdateBasicAsync(UserUpdateBasicInput input)
+        public async Task UpdateBasicAsync(UserUpdateBasicInput input)
         {
             var entity = await _userRepository.GetAsync(input.Id);
             entity = ObjectMapper.Map(input, entity);
@@ -251,8 +245,6 @@ namespace Paas.Pioneer.Admin.Core.Application.User
 
             //清除用户缓存
             await RedisHelper.DelAsync(string.Format(_redisAdminKeys.UserInfo, input.Id));
-
-            return ResponseOutput.Succees("修改成功！");
         }
 
         #endregion
@@ -264,7 +256,7 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> ChangePasswordAsync(UserChangePasswordInput input)
+        public async Task ChangePasswordAsync(UserChangePasswordInput input)
         {
             if (input.ConfirmPassword != input.NewPassword)
             {
@@ -282,8 +274,6 @@ namespace Paas.Pioneer.Admin.Core.Application.User
 
             entity = ObjectMapper.Map(input, entity);
             await _userRepository.UpdateAsync(entity);
-
-            return ResponseOutput.Succees("修改成功！");
         }
 
         #endregion
@@ -295,10 +285,9 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         /// </summary>
         /// <param name="id">用户ID</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             await _userRepository.DeleteAsync(m => m.Id == id);
-            return ResponseOutput.Succees("删除成功！");
         }
 
         #endregion
@@ -310,11 +299,10 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         /// </summary>
         /// <param name="ids">用户id集合</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(Guid[] ids)
+        public async Task BatchSoftDeleteAsync(Guid[] ids)
         {
             await _userRoleRepository.DeleteAsync(a => ids.Contains(a.UserId));
             await _userRepository.DeleteAsync(a => ids.Contains(a.Id));
-            return ResponseOutput.Succees("删除成功！");
         }
 
         #endregion

@@ -20,21 +20,21 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Api
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<ResponseOutput<ApiGetOutput>> GetAsync(Guid id);
+        Task<ApiGetOutput> GetAsync(Guid id);
 
         /// <summary>
         /// 获得列表
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        Task<ResponseOutput<List<ApiListOutput>>> GetListAsync(string key);
+        Task<List<ApiListOutput>> GetListAsync(string key);
 
         /// <summary>
         /// 获得分页
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<ResponseOutput<Page<ApiListOutput>>> GetPageListAsync(PageInput<ApiInput> model);
+        Task<Page<ApiListOutput>> GetPageListAsync(PageInput<ApiInput> model);
 
         /// <summary>
         /// 添加

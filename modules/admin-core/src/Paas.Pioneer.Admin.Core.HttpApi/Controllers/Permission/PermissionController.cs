@@ -37,7 +37,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="end"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<List<PermissionListOutput>>> GetList(string key, DateTime? start, DateTime? end)
+        public async Task<List<PermissionListOutput>> GetList(string key, DateTime? start, DateTime? end)
         {
             return await _permissionService.GetListAsync(key, start, end);
         }
@@ -48,7 +48,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<PermissionGetGroupOutput>> GetGroup(Guid id)
+        public async Task<PermissionGetGroupOutput> GetGroup(Guid id)
         {
             return await _permissionService.GetGroupAsync(id);
         }
@@ -59,7 +59,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<PermissionGetMenuOutput>> GetMenu(Guid id)
+        public async Task<PermissionGetMenuOutput> GetMenu(Guid id)
         {
             return await _permissionService.GetMenuAsync(id);
         }
@@ -70,7 +70,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<PermissionGetApiOutput>> GetApi(Guid id)
+        public async Task<PermissionGetApiOutput> GetApi(Guid id)
         {
             return await _permissionService.GetApiAsync(id);
         }
@@ -81,7 +81,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<PermissionGetDotOutput>> GetDot(Guid id)
+        public async Task<PermissionGetDotOutput> GetDot(Guid id)
         {
             return await _permissionService.GetDotAsync(id);
         }
@@ -91,7 +91,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput> GetPermissionList()
+        public async Task<object> GetPermissionList()
         {
             return await _permissionService.GetPermissionListAsync();
         }
@@ -102,7 +102,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="roleId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<List<Guid>>> GetRolePermissionList(Guid roleId)
+        public async Task<List<Guid>> GetRolePermissionList(Guid roleId)
         {
             return await _permissionService.GetRolePermissionListAsync(roleId);
         }
@@ -113,7 +113,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="tenantId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<IEnumerable<Guid>>> GetTenantPermissionList(Guid tenantId)
+        public async Task<IEnumerable<Guid>> GetTenantPermissionList(Guid tenantId)
         {
             return await _permissionService.GetTenantPermissionListAsync(tenantId);
         }
@@ -124,9 +124,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> AddGroup([FromBody] PermissionAddGroupInput input)
+        public async Task AddGroup([FromBody] PermissionAddGroupInput input)
         {
-            return await _permissionService.AddGroupAsync(input);
+            await _permissionService.AddGroupAsync(input);
         }
 
         /// <summary>
@@ -135,9 +135,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> AddMenu([FromBody] PermissionAddMenuInput input)
+        public async Task AddMenu([FromBody] PermissionAddMenuInput input)
         {
-            return await _permissionService.AddMenuAsync(input);
+            await _permissionService.AddMenuAsync(input);
         }
 
         /// <summary>
@@ -146,9 +146,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> AddApi([FromBody] PermissionAddApiInput input)
+        public async Task AddApi([FromBody] PermissionAddApiInput input)
         {
-            return await _permissionService.AddApiAsync(input);
+            await _permissionService.AddApiAsync(input);
         }
 
         /// <summary>
@@ -157,9 +157,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> AddDot([FromBody] PermissionAddDotInput input)
+        public async Task AddDot([FromBody] PermissionAddDotInput input)
         {
-            return await _permissionService.AddDotAsync(input);
+            await _permissionService.AddDotAsync(input);
         }
 
         /// <summary>
@@ -168,9 +168,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> UpdateGroup([FromBody] PermissionUpdateGroupInput input)
+        public async Task UpdateGroup([FromBody] PermissionUpdateGroupInput input)
         {
-            return await _permissionService.UpdateGroupAsync(input);
+            await _permissionService.UpdateGroupAsync(input);
         }
 
         /// <summary>
@@ -179,9 +179,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> UpdateMenu([FromBody] PermissionUpdateMenuInput input)
+        public async Task UpdateMenu([FromBody] PermissionUpdateMenuInput input)
         {
-            return await _permissionService.UpdateMenuAsync(input);
+            await _permissionService.UpdateMenuAsync(input);
         }
 
         /// <summary>
@@ -190,9 +190,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> UpdateApi([FromBody] PermissionUpdateApiInput input)
+        public async Task UpdateApi([FromBody] PermissionUpdateApiInput input)
         {
-            return await _permissionService.UpdateApiAsync(input);
+            await _permissionService.UpdateApiAsync(input);
         }
 
         /// <summary>
@@ -201,9 +201,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> UpdateDot([FromBody] PermissionUpdateDotInput input)
+        public async Task UpdateDot([FromBody] PermissionUpdateDotInput input)
         {
-            return await _permissionService.UpdateDotAsync(input);
+            await _permissionService.UpdateDotAsync(input);
         }
 
         /// <summary>
@@ -212,9 +212,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            return await _permissionService.DeleteAsync(id);
+            await _permissionService.DeleteAsync(id);
         }
 
         /// <summary>
@@ -223,9 +223,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> Assign([FromBody] PermissionAssignInput input)
+        public async Task Assign([FromBody] PermissionAssignInput input)
         {
-            return await _permissionService.AssignAsync(input);
+            await _permissionService.AssignAsync(input);
         }
 
         /// <summary>
@@ -234,9 +234,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> SaveTenantPermissions([FromBody] PermissionSaveTenantPermissionsInput input)
+        public async Task SaveTenantPermissions([FromBody] PermissionSaveTenantPermissionsInput input)
         {
-            return await _permissionService.SaveTenantPermissionsAsync(input);
+            await _permissionService.SaveTenantPermissionsAsync(input);
         }
     }
 }

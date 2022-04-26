@@ -16,41 +16,41 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<ResponseOutput<DictionaryGetOutput>> GetAsync(Guid id);
+        Task<DictionaryGetOutput> GetAsync(Guid id);
 
         /// <summary>
         /// 分页获取
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<ResponseOutput<Page<DictionaryPageListOutput>>> GetPageListAsync(PageInput<DictionaryInput> model);
+        Task<Page<DictionaryPageListOutput>> GetPageListAsync(PageInput<DictionaryInput> model);
 
         /// <summary>
         /// 添加
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<IResponseOutput> AddAsync(DictionaryAddInput input);
+        Task AddAsync(DictionaryAddInput input);
 
         /// <summary>
         /// 修改
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<IResponseOutput> UpdateAsync(DictionaryUpdateInput input);
+        Task UpdateAsync(DictionaryUpdateInput input);
 
         /// <summary>
         /// 删除
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<IResponseOutput> DeleteAsync(Guid id);
+        Task DeleteAsync(Guid id);
 
         /// <summary>
         /// 批量删除
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        Task<IResponseOutput> BatchSoftDeleteAsync(Guid[] ids);
+        Task BatchSoftDeleteAsync(Guid[] ids);
     }
 }

@@ -15,12 +15,12 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Cache
         /// »º´æÁÐ±í
         /// </summary>
         /// <returns></returns>
-        ResponseOutput<List<object>> GetList();
+        List<object> GetList();
 
         /// <summary>
         /// Çå³ý»º´æ
         /// </summary>
         /// <returns></returns>
-        Task<IResponseOutput> ClearAsync(CacheDeleteInput model);
+        Task ClearAsync(CacheDeleteInput model);
     }
 }

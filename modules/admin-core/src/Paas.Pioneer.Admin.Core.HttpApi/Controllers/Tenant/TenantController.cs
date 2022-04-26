@@ -37,7 +37,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<TenantGetOutput>> Get(Guid id)
+        public async Task<TenantGetOutput> Get(Guid id)
         {
             return await _tenantServices.GetAsync(id);
         }
@@ -48,7 +48,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<Page<GetTenantPageListOutput>>> GetPageList(PageInput<GetTenantsInput> model)
+        public async Task<Page<GetTenantPageListOutput>> GetPageList(PageInput<GetTenantsInput> model)
         {
             return await _tenantServices.GetPageListAsync(model);
         }
@@ -59,9 +59,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> Add([FromBody] TenantAddInput input)
+        public async Task Add([FromBody] TenantAddInput input)
         {
-            return await _tenantServices.AddAsync(input);
+            await _tenantServices.AddAsync(input);
         }
 
         /// <summary>
@@ -70,9 +70,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> Update([FromBody] TenantUpdateInput input)
+        public async Task Update([FromBody] TenantUpdateInput input)
         {
-            return await _tenantServices.UpdateAsync(input);
+            await _tenantServices.UpdateAsync(input);
         }
 
         /// <summary>
@@ -81,9 +81,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            return await _tenantServices.DeleteAsync(id);
+            await _tenantServices.DeleteAsync(id);
         }
 
         /// <summary>
@@ -92,9 +92,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> SoftDelete(Guid id)
+        public async Task SoftDelete(Guid id)
         {
-            return await _tenantServices.SoftDeleteAsync(id);
+            await _tenantServices.SoftDeleteAsync(id);
         }
 
         /// <summary>
@@ -103,9 +103,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="ids"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> BatchSoftDelete([FromBody] Guid[] ids)
+        public async Task BatchSoftDelete([FromBody] Guid[] ids)
         {
-            return await _tenantServices.BatchSoftDeleteAsync(ids);
+            await _tenantServices.BatchSoftDeleteAsync(ids);
         }
     }
 }

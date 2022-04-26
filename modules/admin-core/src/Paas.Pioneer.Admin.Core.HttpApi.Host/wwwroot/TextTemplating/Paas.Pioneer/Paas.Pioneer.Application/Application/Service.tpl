@@ -73,7 +73,7 @@ namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> AddAsync(Add{{model.taxon}}Input input)
+        public async Task AddAsync(Add{{model.taxon}}Input input)
         {
             var {{ initial_lower }} = ObjectMapper.Map<Add{{model.taxon}}Input, {{ model.low_code_table_name }}>(input);
             await _{{ initial_lower }}Repository.InsertAsync({{ initial_lower }});
@@ -85,7 +85,7 @@ namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> UpdateAsync(Update{{model.taxon}}Input input)
+        public async Task UpdateAsync(Update{{model.taxon}}Input input)
         {
             var entity = await _{{ initial_lower }}Repository.GetAsync(input.Id);
             if (entity?.Id == Guid.Empty)
@@ -102,7 +102,7 @@ namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             await _{{ initial_lower }}Repository.DeleteAsync(m => m.Id == id);
             return ResponseOutput.Succees("删除成功！");
@@ -113,7 +113,7 @@ namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
         /// </summary>
         /// <param name="ids">主键集合</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(IEnumerable<Guid> ids)
+        public async Task BatchSoftDeleteAsync(IEnumerable<Guid> ids)
         {
             await _{{ initial_lower }}Repository.DeleteAsync(x => ids.Contains(x.Id));
             return ResponseOutput.Succees("删除成功！");

@@ -32,7 +32,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ResponseOutput<List<object>> List()
+        public List<object> List()
         {
             return _cacheService.GetList();
         }
@@ -42,9 +42,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> Clear(CacheDeleteInput model)
+        public async Task Clear(CacheDeleteInput model)
         {
-            return await _cacheService.ClearAsync(model);
+             await _cacheService.ClearAsync(model);
         }
     }
 }

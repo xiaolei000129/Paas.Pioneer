@@ -27,7 +27,7 @@ namespace Paas.Pioneer.Admin.Core.Application.DictionaryType
             _dictionaryRepository = dictionaryRepository;
         }
 
-        public async Task<IResponseOutput> AddAsync(DictionaryTypeAddInput input)
+        public async Task AddAsync(DictionaryTypeAddInput input)
         {
             if (await _dictionaryTypeRepository.AnyAsync(x => x.Code == input.Code))
             {
@@ -35,23 +35,20 @@ namespace Paas.Pioneer.Admin.Core.Application.DictionaryType
             }
             var dictionaryType = ObjectMapper.Map<DictionaryTypeAddInput, Ad_DictionaryTypeEntity>(input);
             await _dictionaryTypeRepository.InsertAsync(dictionaryType);
-            return ResponseOutput.Succees("添加成功");
         }
 
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(IEnumerable<Guid> ids)
+        public async Task BatchSoftDeleteAsync(IEnumerable<Guid> ids)
         {
             await _dictionaryTypeRepository.DeleteAsync(x => ids.Contains(x.Id));
-            return ResponseOutput.Succees("删除成功！");
         }
 
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             //删除字典数据
             await _dictionaryRepository.DeleteAsync(a => a.DictionaryTypeId == id);
 
             //删除字典类型
             await _dictionaryTypeRepository.DeleteAsync(id);
-            return ResponseOutput.Succees("删除成功！");
         }
 
         /// <summary>
@@ -59,7 +56,7 @@ namespace Paas.Pioneer.Admin.Core.Application.DictionaryType
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<ResponseOutput<DictionaryTypeGetOutput>> GetAsync(Guid id)
+        public async Task<DictionaryTypeGetOutput> GetAsync(Guid id)
         {
             var result = await _dictionaryTypeRepository.GetAsync(p => p.Id == id, x => new DictionaryTypeGetOutput()
             {
@@ -69,7 +66,7 @@ namespace Paas.Pioneer.Admin.Core.Application.DictionaryType
                 Enabled = x.Enabled,
                 Name = x.Name,
             });
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
         /// <summary>
@@ -77,13 +74,13 @@ namespace Paas.Pioneer.Admin.Core.Application.DictionaryType
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<DictionaryTypeOutput>>> GetPageListAsync(PageInput<DictionaryTypeInput> model)
+        public async Task<Page<DictionaryTypeOutput>> GetPageListAsync(PageInput<DictionaryTypeInput> model)
         {
             var data = await _dictionaryTypeRepository.GetPageListAsync(model);
-            return ResponseOutput.Succees(data);
+            return data;
         }
 
-        public async Task<IResponseOutput> UpdateAsync(DictionaryTypeUpdateInput input)
+        public async Task UpdateAsync(DictionaryTypeUpdateInput input)
         {
             var entity = await _dictionaryTypeRepository.GetAsync(input.Id);
             if (entity == null)
@@ -96,7 +93,6 @@ namespace Paas.Pioneer.Admin.Core.Application.DictionaryType
             }
             ObjectMapper.Map(input, entity);
             await _dictionaryTypeRepository.UpdateAsync(entity);
-            return ResponseOutput.Succees("修改成功");
         }
     }
 }

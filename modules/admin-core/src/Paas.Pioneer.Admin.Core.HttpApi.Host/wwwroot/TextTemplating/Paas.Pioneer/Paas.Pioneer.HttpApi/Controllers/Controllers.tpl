@@ -60,7 +60,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input">入参</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> Add([FromBody] Add{{model.taxon}}Input input)
+        public async Task Add([FromBody] Add{{model.taxon}}Input input)
         {
             return await _{{ initial_lower }}Service.AddAsync(input);
         }
@@ -71,7 +71,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input">入参</param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> Update([FromBody] Update{{model.taxon}}Input input)
+        public async Task Update([FromBody] Update{{model.taxon}}Input input)
         {
             return await _{{ initial_lower }}Service.UpdateAsync(input);
         }
@@ -82,7 +82,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id">主键</param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> Delete(Guid id)
+        public async Task Delete(Guid id)
         {
             return await _{{ initial_lower }}Service.DeleteAsync(id);
         }
@@ -93,7 +93,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="ids">主键集合</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> BatchSoftDelete([FromBody] Guid[] ids)
+        public async Task BatchSoftDelete([FromBody] Guid[] ids)
         {
             return await _{{ initial_lower }}Service.BatchSoftDeleteAsync(ids);
         }

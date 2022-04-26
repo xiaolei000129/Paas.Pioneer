@@ -35,7 +35,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Comment
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<GetCommentOutput>> GetAsync(Guid id)
+        public async Task<GetCommentOutput> GetAsync(Guid id)
         {
             var result = await _commentRepository.GetAsync(p=>p.Id == id, x => new GetCommentOutput()
             {
@@ -46,7 +46,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Comment
                 CreationTime = x.CreationTime,
                 Id = x.Id,
             });
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Comment
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<GetCommentPageListOutput>>> GetPageListAsync(PageInput<GetCommentPageListInput> input)
+        public async Task<Page<GetCommentPageListOutput>> GetPageListAsync(PageInput<GetCommentPageListInput> input)
         {
             var data = await _commentRepository.GetResponseOutputPageListAsync(x => new GetCommentPageListOutput
             {
@@ -73,11 +73,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Comment
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> AddAsync(AddCommentInput input)
+        public async Task AddAsync(AddCommentInput input)
         {
             var comment = ObjectMapper.Map<AddCommentInput, Information_CommentEntity>(input);
             await _commentRepository.InsertAsync(comment);
-            return ResponseOutput.Succees("添加成功！");
         }
 
         /// <summary>
@@ -85,7 +84,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Comment
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> UpdateAsync(UpdateCommentInput input)
+        public async Task UpdateAsync(UpdateCommentInput input)
         {
             var entity = await _commentRepository.GetAsync(input.Id);
             if (entity?.Id == Guid.Empty)
@@ -94,7 +93,6 @@ namespace Paas.Pioneer.Admin.Core.Application.Comment
             }
             ObjectMapper.Map(input, entity);
             await _commentRepository.UpdateAsync(entity);
-            return ResponseOutput.Succees("修改成功！");
         }
 
         /// <summary>
@@ -102,10 +100,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Comment
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             await _commentRepository.DeleteAsync(m => m.Id == id);
-            return ResponseOutput.Succees("删除成功！");
         }
 
         /// <summary>
@@ -113,10 +110,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Comment
         /// </summary>
         /// <param name="ids">主键集合</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(IEnumerable<Guid> ids)
+        public async Task BatchSoftDeleteAsync(IEnumerable<Guid> ids)
         {
             await _commentRepository.DeleteAsync(x => ids.Contains(x.Id));
-            return ResponseOutput.Succees("删除成功！");
         }
     }
 }

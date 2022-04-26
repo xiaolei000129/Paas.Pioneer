@@ -44,7 +44,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id">视图ID</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput> Get(Guid id)
+        public async Task<ViewGetOutput> Get(Guid id)
         {
             return await _viewService.GetAsync(id);
         }
@@ -59,7 +59,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="key">视图路径,视图名称</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<List<ViewGetOutput>>> GetList(string key)
+        public async Task<List<ViewGetOutput>> GetList(string key)
         {
             return await _viewService.GetListAsync(key);
         }
@@ -73,7 +73,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="model">分页模型</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<Page<ViewGetOutput>>> GetPageList(PageInput<ViewModel> model)
+        public async Task<Page<ViewGetOutput>> GetPageList(PageInput<ViewModel> model)
         {
             return await _viewService.GetPageListAsync(model);
         }
@@ -87,9 +87,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput>Add([FromBody] ViewAddInput input)
+        public async Task Add([FromBody] ViewAddInput input)
         {
-            return await _viewService.AddAsync(input);
+            await _viewService.AddAsync(input);
         }
         #endregion
 
@@ -101,9 +101,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput>Update([FromBody] ViewUpdateInput input)
+        public async Task Update([FromBody] ViewUpdateInput input)
         {
-            return await _viewService.UpdateAsync(input);
+            await _viewService.UpdateAsync(input);
         }
         #endregion
 
@@ -115,9 +115,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id">视图ID</param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput>SoftDelete(Guid id)
+        public async Task SoftDelete(Guid id)
         {
-            return await _viewService.DeleteAsync(id);
+            await _viewService.DeleteAsync(id);
         }
 
         #endregion
@@ -129,9 +129,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="ids">集合ID</param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput>BatchSoftDelete([FromBody] Guid[] ids)
+        public async Task BatchSoftDelete([FromBody] Guid[] ids)
         {
-            return await _viewService.BatchSoftDeleteAsync(ids);
+            await _viewService.BatchSoftDeleteAsync(ids);
         }
         #endregion
     }

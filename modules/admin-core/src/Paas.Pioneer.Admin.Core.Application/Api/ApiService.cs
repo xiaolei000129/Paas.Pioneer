@@ -30,9 +30,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<ResponseOutput<ApiGetOutput>> GetAsync(Guid id)
+        public async Task<ApiGetOutput> GetAsync(Guid id)
         {
-            return ResponseOutput.Succees(await _apiRepository.GetAsync(expression: x => x.Id == id, selector: x => new ApiGetOutput
+            return await _apiRepository.GetAsync(expression: x => x.Id == id, selector: x => new ApiGetOutput
             {
                 Id = x.Id,
                 Description = x.Description,
@@ -41,7 +41,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
                 Label = x.Label,
                 ParentId = x.ParentId,
                 Path = x.Path,
-            }));
+            });
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<ResponseOutput<List<ApiListOutput>>> GetListAsync(string key)
+        public async Task<List<ApiListOutput>> GetListAsync(string key)
         {
             Expression<Func<Ad_ApiEntity, bool>> expression = x => true;
             if (!key.IsNullOrEmpty())
@@ -74,7 +74,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<ApiListOutput>>> GetPageListAsync(PageInput<ApiInput> input)
+        public async Task<Page<ApiListOutput>> GetPageListAsync(PageInput<ApiInput> input)
         {
             var key = input.Filter?.Label;
             Expression<Func<Ad_ApiEntity, bool>> expression = x => true;

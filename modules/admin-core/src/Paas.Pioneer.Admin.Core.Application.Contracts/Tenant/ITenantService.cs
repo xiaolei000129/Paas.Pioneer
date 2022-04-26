@@ -13,18 +13,18 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Tenant
 {
     public interface ITenantService : IApplicationService
     {
-        Task<ResponseOutput<TenantGetOutput>> GetAsync(Guid id);
+        Task<TenantGetOutput> GetAsync(Guid id);
 
-        Task<ResponseOutput<Page<GetTenantPageListOutput>>> GetPageListAsync(PageInput<GetTenantsInput> input);
+        Task<Page<GetTenantPageListOutput>> GetPageListAsync(PageInput<GetTenantsInput> input);
 
-        Task<IResponseOutput> AddAsync(TenantAddInput input);
+        Task AddAsync(TenantAddInput input);
 
-        Task<IResponseOutput> UpdateAsync(TenantUpdateInput input);
+        Task UpdateAsync(TenantUpdateInput input);
 
-        Task<IResponseOutput> DeleteAsync(Guid id);
+        Task DeleteAsync(Guid id);
 
-        Task<IResponseOutput> SoftDeleteAsync(Guid id);
+        Task SoftDeleteAsync(Guid id);
 
-        Task<IResponseOutput> BatchSoftDeleteAsync(IEnumerable<Guid> ids);
+        Task BatchSoftDeleteAsync(IEnumerable<Guid> ids);
     }
 }

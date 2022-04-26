@@ -38,7 +38,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<Page<LowCodeTableOutput>>> GetPageList(PageInput<GetLowCodeTablePadedInput> input)
+        public async Task<Page<LowCodeTableOutput>> GetPageList(PageInput<GetLowCodeTablePadedInput> input)
         {
             return await _lowCodeTableService.GetLowCodeTablePageListAsync(input);
         }
@@ -49,7 +49,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput<LowCodeTableOutput>> Get(Guid id)
+        public async Task<LowCodeTableOutput> Get(Guid id)
         {
             return await _lowCodeTableService.GetAsync(id);
         }
@@ -60,9 +60,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> Add([FromBody] AddLowCodeTableInput input)
+        public async Task Add([FromBody] AddLowCodeTableInput input)
         {
-            return await _lowCodeTableService.AddLowCodeTableAsync(input);
+            await _lowCodeTableService.AddLowCodeTableAsync(input);
         }
 
         /// <summary>
@@ -71,9 +71,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> Update([FromBody] EditLowCodeTableInput input)
+        public async Task Update([FromBody] EditLowCodeTableInput input)
         {
-            return await _lowCodeTableService.EditLowCodeTableAsync(input);
+            await _lowCodeTableService.EditLowCodeTableAsync(input);
         }
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            return await _lowCodeTableService.DelLowCodeTableAsync(id);
+            await _lowCodeTableService.DelLowCodeTableAsync(id);
         }
 
         /// <summary>
@@ -93,9 +93,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="ids"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> BatchDelete([FromBody] Guid[] ids)
+        public async Task BatchDelete([FromBody] Guid[] ids)
         {
-            return await _lowCodeTableService.BatchDeleteAsync(ids);
+            await _lowCodeTableService.BatchDeleteAsync(ids);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput<IEnumerable<LowCodeTableEntityOutput>>> GetTableEntityList()
+        public async Task<IEnumerable<LowCodeTableEntityOutput>> GetTableEntityList()
         {
             return await _lowCodeTableService.GetTableEntityListAsync();
         }
@@ -113,7 +113,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput<List<LowCodeTableColumnOutput>>> GetColumnListByTableName(Guid id)
+        public async Task<List<LowCodeTableColumnOutput>> GetColumnListByTableName(Guid id)
         {
             return await _lowCodeTableService.GetColumnListByTableNameAsync(id);
         }
@@ -123,9 +123,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput> GenerateCode(Guid id)
+        public async Task GenerateCode(Guid id)
         {
-            return await _lowCodeTableService.GenerateCodeAsync(id);
+            await _lowCodeTableService.GenerateCodeAsync(id);
         }
     }
 }

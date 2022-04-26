@@ -10,43 +10,43 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Permission
 {
     public interface IPermissionService : IApplicationService
     {
-        Task<ResponseOutput<PermissionGetGroupOutput>> GetGroupAsync(Guid id);
+        Task<PermissionGetGroupOutput> GetGroupAsync(Guid id);
 
-        Task<ResponseOutput<PermissionGetMenuOutput>> GetMenuAsync(Guid id);
+        Task<PermissionGetMenuOutput> GetMenuAsync(Guid id);
 
-        Task<ResponseOutput<PermissionGetApiOutput>> GetApiAsync(Guid id);
+        Task<PermissionGetApiOutput> GetApiAsync(Guid id);
 
-        Task<ResponseOutput<PermissionGetDotOutput>> GetDotAsync(Guid id);
+        Task<PermissionGetDotOutput> GetDotAsync(Guid id);
 
-        Task<IResponseOutput> GetPermissionListAsync();
+        Task<object> GetPermissionListAsync();
 
-        Task<ResponseOutput<List<Guid>>> GetRolePermissionListAsync(Guid roleId);
+        Task<List<Guid>> GetRolePermissionListAsync(Guid roleId);
 
-        Task<ResponseOutput<IEnumerable<Guid>>> GetTenantPermissionListAsync(Guid tenantId);
+        Task<IEnumerable<Guid>> GetTenantPermissionListAsync(Guid tenantId);
 
-        Task<ResponseOutput<List<PermissionListOutput>>> GetListAsync(string key, DateTime? start, DateTime? end);
+        Task<List<PermissionListOutput>> GetListAsync(string key, DateTime? start, DateTime? end);
 
-        Task<IResponseOutput> AddGroupAsync(PermissionAddGroupInput input);
+        Task AddGroupAsync(PermissionAddGroupInput input);
 
-        Task<IResponseOutput> AddMenuAsync(PermissionAddMenuInput input);
+        Task AddMenuAsync(PermissionAddMenuInput input);
 
-        Task<IResponseOutput> AddApiAsync(PermissionAddApiInput input);
+        Task AddApiAsync(PermissionAddApiInput input);
 
-        Task<IResponseOutput> AddDotAsync(PermissionAddDotInput input);
+        Task AddDotAsync(PermissionAddDotInput input);
 
-        Task<IResponseOutput> UpdateGroupAsync(PermissionUpdateGroupInput input);
+        Task UpdateGroupAsync(PermissionUpdateGroupInput input);
 
-        Task<IResponseOutput> UpdateMenuAsync(PermissionUpdateMenuInput input);
+        Task UpdateMenuAsync(PermissionUpdateMenuInput input);
 
-        Task<IResponseOutput> UpdateApiAsync(PermissionUpdateApiInput input);
+        Task UpdateApiAsync(PermissionUpdateApiInput input);
 
-        Task<IResponseOutput> UpdateDotAsync(PermissionUpdateDotInput input);
+        Task UpdateDotAsync(PermissionUpdateDotInput input);
 
-        Task<IResponseOutput> DeleteAsync(Guid id);
+        Task DeleteAsync(Guid id);
 
-        Task<IResponseOutput> AssignAsync(PermissionAssignInput input);
+        Task AssignAsync(PermissionAssignInput input);
 
-        Task<IResponseOutput> SaveTenantPermissionsAsync(PermissionSaveTenantPermissionsInput input);
+        Task SaveTenantPermissionsAsync(PermissionSaveTenantPermissionsInput input);
 
     }
 }

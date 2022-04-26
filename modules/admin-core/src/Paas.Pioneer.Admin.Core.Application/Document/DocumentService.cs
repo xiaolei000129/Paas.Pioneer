@@ -28,7 +28,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Document
             _documentRepository = DocumentRepository;
             _documentImageRepository = documentImageRepository;
         }
-        public async Task<ResponseOutput<List<DocumentListOutput>>> GetListAsync(string key, DateTime? start, DateTime? end)
+        public async Task<List<DocumentListOutput>> GetListAsync(string key, DateTime? start, DateTime? end)
         {
             if (end.HasValue)
             {
@@ -61,81 +61,66 @@ namespace Paas.Pioneer.Admin.Core.Application.Document
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<ResponseOutput<List<string>>> GetImageListAsync(Guid id)
+        public async Task<List<string>> GetImageListAsync(Guid id)
         {
             return await _documentImageRepository.GetResponseOutputListAsync(a => a.DocumentId == id,
                 a => a.Url,
                 x => x.OrderByDescending(a => a.CreationTime));
         }
 
-        public async Task<IResponseOutput> AddGroupAsync(DocumentAddGroupInput input)
+        public async Task AddGroupAsync(DocumentAddGroupInput input)
         {
             var entity = ObjectMapper.Map<DocumentAddGroupInput, Ad_DocumentEntity>(input);
             await _documentRepository.InsertAsync(entity);
-
-            return ResponseOutput.Succees("添加成功！");
         }
 
-        public async Task<IResponseOutput> AddMenuAsync(DocumentAddMenuInput input)
+        public async Task AddMenuAsync(DocumentAddMenuInput input)
         {
             var entity = ObjectMapper.Map<DocumentAddMenuInput, Ad_DocumentEntity>(input);
             await _documentRepository.InsertAsync(entity);
-
-            return ResponseOutput.Succees("添加成功！");
         }
 
-        public async Task<IResponseOutput> AddImageAsync(DocumentAddImageInput input)
+        public async Task AddImageAsync(DocumentAddImageInput input)
         {
             var entity = ObjectMapper.Map<DocumentAddImageInput, Ad_DocumentImageEntity>(input);
             await _documentImageRepository.InsertAsync(entity);
-
-            return ResponseOutput.Succees("添加成功！");
         }
 
-        public async Task<IResponseOutput> UpdateGroupAsync(DocumentUpdateGroupInput input)
+        public async Task UpdateGroupAsync(DocumentUpdateGroupInput input)
         {
             var entity = await _documentRepository.GetAsync(input.Id);
             entity = ObjectMapper.Map(input, entity);
             await _documentRepository.UpdateAsync(entity);
-
-            return ResponseOutput.Succees("修改成功！");
         }
 
-        public async Task<IResponseOutput> UpdateMenuAsync(DocumentUpdateMenuInput input)
+        public async Task UpdateMenuAsync(DocumentUpdateMenuInput input)
         {
             var entity = await _documentRepository.GetAsync(input.Id);
             entity = ObjectMapper.Map(input, entity);
             await _documentRepository.UpdateAsync(entity);
-
-            return ResponseOutput.Succees("修改成功！");
         }
 
-        public async Task<IResponseOutput> UpdateContentAsync(DocumentUpdateContentInput input)
+        public async Task UpdateContentAsync(DocumentUpdateContentInput input)
         {
             var entity = await _documentRepository.GetAsync(input.Id);
             entity = ObjectMapper.Map(input, entity);
             await _documentRepository.UpdateAsync(entity);
-
-            return ResponseOutput.Succees("修改成功！");
         }
 
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             await _documentRepository.DeleteAsync(m => m.Id == id);
-
-            return ResponseOutput.Succees("删除成功！");
         }
 
-        public async Task<IResponseOutput> DeleteImageAsync(Guid documentId, string url)
+        public async Task DeleteImageAsync(Guid documentId, string url)
         {
             if (documentId != Guid.Empty && !url.IsNullOrEmpty())
             {
                 await _documentImageRepository.DeleteAsync(m => m.DocumentId == documentId && m.Url == url);
             }
-            return ResponseOutput.Succees("删除成功！");
         }
 
-        public async Task<ResponseOutput<List<DocumentGetPlainListOutput>>> GetPlainListAsync()
+        public async Task<List<DocumentGetPlainListOutput>> GetPlainListAsync()
         {
             return await _documentRepository.GetResponseOutputListAsync(expression: a => (new[] { EDocumentType.Group, EDocumentType.Markdown }).Contains(a.Type),
                 selector: a => new DocumentGetPlainListOutput
@@ -149,13 +134,12 @@ namespace Paas.Pioneer.Admin.Core.Application.Document
                 x => x.OrderByDescending(x => x.Sort));
         }
 
-        public async Task<IResponseOutput> SoftDeleteAsync(Guid id)
+        public async Task SoftDeleteAsync(Guid id)
         {
             await _documentRepository.DeleteAsync(id);
-            return ResponseOutput.Succees("操作成功");
         }
 
-        public async Task<ResponseOutput<DocumentGetGroupOutput>> GetGroupAsync(Guid id)
+        public async Task<DocumentGetGroupOutput> GetGroupAsync(Guid id)
         {
             var result = await _documentRepository.GetAsync(x => x.Id == id, x => new DocumentGetGroupOutput()
             {
@@ -166,10 +150,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Document
                 ParentId = x.ParentId,
                 Type = x.Type,
             });
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
-        public async Task<ResponseOutput<DocumentGetMenuOutput>> GetMenuAsync(Guid id)
+        public async Task<DocumentGetMenuOutput> GetMenuAsync(Guid id)
         {
             var result = await _documentRepository.GetAsync(x => x.Id == id, x => new DocumentGetMenuOutput()
             {
@@ -180,10 +164,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Document
                 ParentId = x.ParentId,
                 Type = x.Type,
             });
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
-        public async Task<ResponseOutput<DocumentGetContentOutput>> GetContentAsync(Guid id)
+        public async Task<DocumentGetContentOutput> GetContentAsync(Guid id)
         {
             var result = await _documentRepository.GetAsync(x => x.Id == id, x => new DocumentGetContentOutput()
             {
@@ -191,7 +175,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Document
                 Content = x.Content,
                 Label = x.Label,
             });
-            return ResponseOutput.Succees(result);
+            return result;
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
             _redisAdminKeys = redisAdminKeys;
         }
 
-        public async Task<ResponseOutput<GetPassWordEncryptKeyOutput>> GetPassWordEncryptKeyAsync()
+        public async Task<GetPassWordEncryptKeyOutput> GetPassWordEncryptKeyAsync()
         {
             //写入Redis
             var guid = Guid.NewGuid().ToString("N");
@@ -64,10 +64,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
                 Key = guid,
                 EncyptKey = encyptKey
             };
-            return ResponseOutput.Succees(data);
+            return data;
         }
 
-        public async Task<ResponseOutput<AuthUserInfoOutput>> GetUserInfoAsync()
+        public async Task<AuthUserInfoOutput> GetUserInfoAsync()
         {
             var authUserInfoOutput = new AuthUserInfoOutput();
 
@@ -112,7 +112,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
             ////用户权限点
             authUserInfoOutput.Permissions = await _permissionRepository.GetPermissionsCodeListAsync(CurrentUser.Id, isTenant);
 
-            return ResponseOutput.Succees(authUserInfoOutput);
+            return authUserInfoOutput;
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
             return await _permissionRepository.GetPermissionsCodeListAsync(userId, isTenant);
         }
 
-        public async Task<ResponseOutput<AuthLoginOutput>> LoginAsync(AuthLoginInput input)
+        public async Task<AuthLoginOutput> LoginAsync(AuthLoginInput input)
         {
             #region 验证码校验
             if (_appConfig.VarifyCode.Enable)
@@ -193,7 +193,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
                 }
                 authLoginOutput.TenantType = tenant.GetProperty<ETenantType>("TenantType");
             }
-            return ResponseOutput.Succees(authLoginOutput);
+            return authLoginOutput;
         }
     }
 }

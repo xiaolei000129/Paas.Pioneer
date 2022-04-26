@@ -12,8 +12,8 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.LoginLog
 {
     public interface ILoginLogService : IApplicationService
     {
-        Task<ResponseOutput<Page<LoginLogOutput>>> GetPageListAsync(PageInput<LoginLogModel> input);
+        Task<Page<LoginLogOutput>> GetPageListAsync(PageInput<LoginLogModel> input);
 
-        Task<ResponseOutput<Guid>> AddAsync(LoginLogAddInput input);
+        Task<Guid> AddAsync(LoginLogAddInput input);
     }
 }

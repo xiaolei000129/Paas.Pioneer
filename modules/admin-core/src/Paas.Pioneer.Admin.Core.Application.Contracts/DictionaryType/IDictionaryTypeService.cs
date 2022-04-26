@@ -12,16 +12,16 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.DictionaryType
 {
     public interface IDictionaryTypeService : IApplicationService
     {
-        Task<ResponseOutput<DictionaryTypeGetOutput>> GetAsync(Guid id);
+        Task<DictionaryTypeGetOutput> GetAsync(Guid id);
 
-        Task<ResponseOutput<Page<DictionaryTypeOutput>>> GetPageListAsync(PageInput<DictionaryTypeInput> model);
+        Task<Page<DictionaryTypeOutput>> GetPageListAsync(PageInput<DictionaryTypeInput> model);
 
-        Task<IResponseOutput> AddAsync(DictionaryTypeAddInput input);
+        Task AddAsync(DictionaryTypeAddInput input);
 
-        Task<IResponseOutput> UpdateAsync(DictionaryTypeUpdateInput input);
+        Task UpdateAsync(DictionaryTypeUpdateInput input);
 
-        Task<IResponseOutput> DeleteAsync(Guid id);
+        Task DeleteAsync(Guid id);
 
-        Task<IResponseOutput> BatchSoftDeleteAsync(IEnumerable<Guid> ids);
+        Task BatchSoftDeleteAsync(IEnumerable<Guid> ids);
     }
 }

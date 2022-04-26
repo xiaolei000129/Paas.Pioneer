@@ -49,7 +49,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<DocumentGetGroupOutput>> GetGroupAsync(Guid id)
+        public async Task<DocumentGetGroupOutput> GetGroupAsync(Guid id)
         {
             return await _documentService.GetGroupAsync(id);
         }
@@ -60,7 +60,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<DocumentGetMenuOutput>> GetMenuAsync(Guid id)
+        public async Task<DocumentGetMenuOutput> GetMenuAsync(Guid id)
         {
             return await _documentService.GetMenuAsync(id);
         }
@@ -71,7 +71,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<DocumentGetContentOutput>> GetContentAsync(Guid id)
+        public async Task<DocumentGetContentOutput> GetContentAsync(Guid id)
         {
             return await _documentService.GetContentAsync(id);
         }
@@ -84,7 +84,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="end"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<List<DocumentListOutput>>> GetList(string key, DateTime? start, DateTime? end)
+        public async Task<List<DocumentListOutput>> GetList(string key, DateTime? start, DateTime? end)
         {
             return await _documentService.GetListAsync(key, start, end);
         }
@@ -95,7 +95,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<List<string>>> GetImageList(Guid id)
+        public async Task<List<string>> GetImageList(Guid id)
         {
             return await _documentService.GetImageListAsync(id);
         }
@@ -105,7 +105,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<List<DocumentGetPlainListOutput>>> GetPlainList()
+        public async Task<List<DocumentGetPlainListOutput>> GetPlainList()
         {
             return await _documentService.GetPlainListAsync();
         }
@@ -116,9 +116,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> AddGroup([FromBody] DocumentAddGroupInput input)
+        public async Task AddGroup([FromBody] DocumentAddGroupInput input)
         {
-            return await _documentService.AddGroupAsync(input);
+            await _documentService.AddGroupAsync(input);
         }
 
         /// <summary>
@@ -127,9 +127,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> AddMenu([FromBody] DocumentAddMenuInput input)
+        public async Task AddMenu([FromBody] DocumentAddMenuInput input)
         {
-            return await _documentService.AddMenuAsync(input);
+            await _documentService.AddMenuAsync(input);
         }
 
         /// <summary>
@@ -138,9 +138,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> UpdateGroup([FromBody] DocumentUpdateGroupInput input)
+        public async Task UpdateGroup([FromBody] DocumentUpdateGroupInput input)
         {
-            return await _documentService.UpdateGroupAsync(input);
+            await _documentService.UpdateGroupAsync(input);
         }
 
         /// <summary>
@@ -149,9 +149,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> UpdateMenu([FromBody] DocumentUpdateMenuInput input)
+        public async Task UpdateMenu([FromBody] DocumentUpdateMenuInput input)
         {
-            return await _documentService.UpdateMenuAsync(input);
+            await _documentService.UpdateMenuAsync(input);
         }
 
         /// <summary>
@@ -160,9 +160,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> UpdateContent([FromBody] DocumentUpdateContentInput input)
+        public async Task UpdateContent([FromBody] DocumentUpdateContentInput input)
         {
-            return await _documentService.UpdateContentAsync(input);
+            await _documentService.UpdateContentAsync(input);
         }
 
         /// <summary>
@@ -172,9 +172,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="url"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> DeleteImage(Guid documentId, string url)
+        public async Task DeleteImage(Guid documentId, string url)
         {
-            return await _documentService.DeleteImageAsync(documentId, url);
+            await _documentService.DeleteImageAsync(documentId, url);
         }
 
         /// <summary>
@@ -183,23 +183,20 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> UploadImage([FromForm] DocumentUploadImageInput input)
+        public async Task<string> UploadImage([FromForm] DocumentUploadImageInput input)
         {
             var config = _uploadConfig.Document;
             var res = await _uploadHelper.UploadAsync(input.File, config, new { input.Id });
             if (res.Success)
             {
                 //保存文档图片
-                var r = await _documentService.AddImageAsync(
+                await _documentService.AddImageAsync(
                 new DocumentAddImageInput
                 {
                     DocumentId = input.Id,
                     Url = res.Data.FileRequestPath
                 });
-                if (r.Success)
-                {
-                    return ResponseOutput.Succees(data: HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + res.Data.FileRequestPath);
-                }
+                return HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + res.Data.FileRequestPath;
             }
             throw new BusinessException("上传失败！");
         }
@@ -210,9 +207,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> SoftDelete(Guid id)
+        public async Task SoftDelete(Guid id)
         {
-            return await _documentService.SoftDeleteAsync(id);
+            await _documentService.SoftDeleteAsync(id);
         }
     }
 }

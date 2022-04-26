@@ -5,7 +5,6 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.Personnel.Position.Dto.Outpu
 using Paas.Pioneer.Admin.Core.Domain.Personnel.Position;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
 using Paas.Pioneer.AutoWrapper;
-using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -27,7 +26,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Personnel.Position
             _positionRepository = positionRepository;
         }
 
-        public async Task<ResponseOutput<PositionDataOutput>> GetAsync(Guid id)
+        public async Task<PositionDataOutput> GetAsync(Guid id)
         {
             var result = await _positionRepository.GetAsync(
                 expression: x => x.Id == id,
@@ -40,10 +39,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Personnel.Position
                     Description = x.Description,
                     Enabled = x.Enabled,
                 });
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
-        public async Task<ResponseOutput<Page<PositionListOutput>>> GetPageListAsync(PageInput<PositionDataOutput> input)
+        public async Task<Page<PositionListOutput>> GetPageListAsync(PageInput<PositionDataOutput> input)
         {
             var key = input.Filter?.Name;
 
@@ -68,15 +67,13 @@ namespace Paas.Pioneer.Admin.Core.Application.Personnel.Position
             return list;
         }
 
-        public async Task<IResponseOutput> AddAsync(PositionAddInput input)
+        public async Task AddAsync(PositionAddInput input)
         {
             var entity = ObjectMapper.Map<PositionAddInput, Pe_PositionEntity>(input);
             await _positionRepository.InsertAsync(entity);
-
-            return ResponseOutput.Succees("添加成功！");
         }
 
-        public async Task<IResponseOutput> UpdateAsync(PositionUpdateInput input)
+        public async Task UpdateAsync(PositionUpdateInput input)
         {
             var entity = await _positionRepository.GetAsync(input.Id);
             if (entity?.Id == Guid.Empty)
@@ -86,19 +83,16 @@ namespace Paas.Pioneer.Admin.Core.Application.Personnel.Position
 
             ObjectMapper.Map(input, entity);
             await _positionRepository.UpdateAsync(entity);
-            return ResponseOutput.Succees("修改成功！");
         }
 
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             await _positionRepository.DeleteAsync(m => m.Id == id);
-            return ResponseOutput.Succees("删除成功！");
         }
 
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(Guid[] ids)
+        public async Task BatchSoftDeleteAsync(Guid[] ids)
         {
             await _positionRepository.DeleteAsync(x => ids.Contains(x.Id));
-            return ResponseOutput.Succees("删除成功！");
         }
     }
 }

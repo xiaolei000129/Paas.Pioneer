@@ -56,7 +56,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<UserModelOutput>> GetBasic()
+        public async Task<UserModelOutput> GetBasic()
         {
             return await _userService.GetBasicAsync();
         }
@@ -71,7 +71,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id">用户Id</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<UserAndRoleOutput>> Get(Guid id)
+        public async Task<UserAndRoleOutput> Get(Guid id)
         {
             return await _userService.GetAsync(id);
         }
@@ -85,7 +85,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<SelectModel>> GetSelect()
+        public async Task<SelectModel> GetSelect()
         {
             return await _userService.GetSelectAsync();
         }
@@ -100,7 +100,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<Page<GetUserPageListOutput>>> GetPageList(PageInput<UserModelInput> input)
+        public async Task<Page<GetUserPageListOutput>> GetPageList(PageInput<UserModelInput> input)
         {
             return await _userService.GetPageListAsync(input);
         }
@@ -115,9 +115,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput>Add([FromBody] UserAddInput input)
+        public async Task Add([FromBody] UserAddInput input)
         {
-            return await _userService.AddAsync(input);
+            await _userService.AddAsync(input);
         }
 
         #endregion
@@ -130,9 +130,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput>Update([FromBody] UserUpdateInput input)
+        public async Task Update([FromBody] UserUpdateInput input)
         {
-            return await _userService.UpdateAsync(input);
+            await _userService.UpdateAsync(input);
         }
 
         #endregion
@@ -145,9 +145,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id">用户ID</param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> SoftDelete(Guid id)
+        public async Task SoftDelete(Guid id)
         {
-            return await _userService.DeleteAsync(id);
+            await _userService.DeleteAsync(id);
         }
 
         #endregion
@@ -160,9 +160,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="ids">用户id集合</param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput>BatchSoftDelete([FromBody] Guid[] ids)
+        public async Task BatchSoftDelete([FromBody] Guid[] ids)
         {
-            return await _userService.BatchSoftDeleteAsync(ids);
+            await _userService.BatchSoftDeleteAsync(ids);
         }
 
         #endregion
@@ -175,9 +175,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput>ChangePassword([FromBody] UserChangePasswordInput input)
+        public async Task ChangePassword([FromBody] UserChangePasswordInput input)
         {
-            return await _userService.ChangePasswordAsync(input);
+            await _userService.ChangePasswordAsync(input);
         }
 
         #endregion
@@ -190,9 +190,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput>UpdateBasic([FromBody] UserUpdateBasicInput input)
+        public async Task UpdateBasic([FromBody] UserUpdateBasicInput input)
         {
-            return await _userService.UpdateBasicAsync(input);
+            await _userService.UpdateBasicAsync(input);
         }
 
         #endregion
@@ -205,13 +205,13 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="file">文件流</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput>AvatarUpload([FromForm] IFormFile file)
+        public async Task<string> AvatarUpload([FromForm] IFormFile file)
         {
             var config = _uploadConfig.Avatar;
             var res = await _uploadHelper.UploadAsync(file, config, new { CurrentUser.Id });
             if (res.Success)
             {
-                return ResponseOutput.Succees(data: HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + res.Data.FileRequestPath);
+                return HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + res.Data.FileRequestPath;
             }
             throw new BusinessException(res.Msg ?? "上传失败！");
         }

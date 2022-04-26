@@ -2,7 +2,6 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.View.Dto;
 using Paas.Pioneer.Admin.Core.Application.Contracts.View.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.View.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,18 +15,18 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.View
     /// </summary>
     public interface IViewService : IApplicationService
     {
-        Task<ResponseOutput<ViewGetOutput>> GetAsync(Guid id);
+        Task<ViewGetOutput> GetAsync(Guid id);
 
-        Task<ResponseOutput<List<ViewGetOutput>>> GetListAsync(string key);
+        Task<List<ViewGetOutput>> GetListAsync(string key);
 
-        Task<ResponseOutput<Page<ViewGetOutput>>> GetPageListAsync(PageInput<ViewModel> model);
+        Task<Page<ViewGetOutput>> GetPageListAsync(PageInput<ViewModel> model);
 
-        Task<IResponseOutput> AddAsync(ViewAddInput input);
+        Task AddAsync(ViewAddInput input);
 
-        Task<IResponseOutput> UpdateAsync(ViewUpdateInput input);
+        Task UpdateAsync(ViewUpdateInput input);
 
-        Task<IResponseOutput> DeleteAsync(Guid id);
+        Task DeleteAsync(Guid id);
 
-        Task<IResponseOutput> BatchSoftDeleteAsync(Guid[] ids);
+        Task BatchSoftDeleteAsync(Guid[] ids);
     }
 }

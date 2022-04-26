@@ -32,7 +32,7 @@ namespace Paas.Pioneer.Admin.Core.Application.View
         /// </summary>
         /// <param name="id">视图ID</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<ViewGetOutput>> GetAsync(Guid id)
+        public async Task<ViewGetOutput> GetAsync(Guid id)
         {
             var model = await _viewRepository.GetAsync(expression: x => x.Id == id, selector: x => new ViewGetOutput()
             {
@@ -44,7 +44,7 @@ namespace Paas.Pioneer.Admin.Core.Application.View
                 ParentId = x.ParentId,
                 Path = x.Path,
             });
-            return ResponseOutput.Succees(model);
+            return model;
         }
 
         #endregion
@@ -56,7 +56,7 @@ namespace Paas.Pioneer.Admin.Core.Application.View
         /// </summary>
         /// <param name="key">视图路径,视图名称</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<List<ViewGetOutput>>> GetListAsync(string key)
+        public async Task<List<ViewGetOutput>> GetListAsync(string key)
         {
             Expression<Func<Ad_ViewEntity, bool>> expression = x => true;
             if (!key.IsNullOrEmpty())
@@ -86,7 +86,7 @@ namespace Paas.Pioneer.Admin.Core.Application.View
         /// </summary>
         /// <param name="input">分页模型</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<ViewGetOutput>>> GetPageListAsync(PageInput<ViewModel> input)
+        public async Task<Page<ViewGetOutput>> GetPageListAsync(PageInput<ViewModel> input)
         {
             return await _viewRepository.GetResponseOutputPageListAsync(
                 selector: x => new ViewGetOutput()
@@ -113,11 +113,10 @@ namespace Paas.Pioneer.Admin.Core.Application.View
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> AddAsync(ViewAddInput input)
+        public async Task AddAsync(ViewAddInput input)
         {
             var entity = ObjectMapper.Map<ViewAddInput, Ad_ViewEntity>(input);
             await _viewRepository.InsertAsync(entity);
-            return ResponseOutput.Succees("添加成功！");
         }
 
         #endregion
@@ -129,7 +128,7 @@ namespace Paas.Pioneer.Admin.Core.Application.View
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> UpdateAsync(ViewUpdateInput input)
+        public async Task UpdateAsync(ViewUpdateInput input)
         {
             var entity = await _viewRepository.FindAsync(input.Id);
             if (!(entity?.Id != Guid.Empty))
@@ -138,7 +137,6 @@ namespace Paas.Pioneer.Admin.Core.Application.View
             }
             ObjectMapper.Map(input, entity);
             await _viewRepository.UpdateAsync(entity);
-            return ResponseOutput.Succees("修改成功！");
         }
 
         #endregion
@@ -149,10 +147,9 @@ namespace Paas.Pioneer.Admin.Core.Application.View
         /// </summary>
         /// <param name="id">视图ID</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             await _viewRepository.DeleteAsync(m => m.Id == id);
-            return ResponseOutput.Succees("删除成功！");
         }
         #endregion
 
@@ -162,10 +159,9 @@ namespace Paas.Pioneer.Admin.Core.Application.View
         /// </summary>
         /// <param name="ids">集合ID</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(Guid[] ids)
+        public async Task BatchSoftDeleteAsync(Guid[] ids)
         {
             await _viewRepository.DeleteAsync(a => ids.Contains(a.Id));
-            return ResponseOutput.Succees("删除成功！");
         }
         #endregion
     }

@@ -50,7 +50,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Tenant
             _permissionRepository = permissionRepository;
         }
 
-        public async Task<IResponseOutput> AddAsync(TenantAddInput input)
+        public async Task AddAsync(TenantAddInput input)
         {
             if (await _tenantRepository.AnyAsync(x => x.Name == input.Name.Trim()))
             {
@@ -91,10 +91,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Tenant
             tenant.SetProperty("UserId", user.Id);
             tenant.SetProperty("RoleId", role.Id);
             await _tenantRepository.UpdateAsync(tenant, true);
-            return ResponseOutput.Succees("操作成功");
         }
 
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(IEnumerable<Guid> ids)
+        public async Task BatchSoftDeleteAsync(IEnumerable<Guid> ids)
         {
             //删除用户
             await _userRepository.DeleteAsync(a => ids.Contains(a.TenantId.Value));
@@ -104,11 +103,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Tenant
 
             //删除租户
             await _tenantRepository.DeleteAsync(a => ids.Contains(a.Id));
-
-            return ResponseOutput.Succees("操作成功");
         }
 
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             var roleIds = await _roleRepository.GetListAsync(expression: x => x.TenantId == id, selector: x => x.Id, order: null);
             var userIds = await _userRepository.GetListAsync(expression: x => x.TenantId == id, selector: x => x.Id, order: null);
@@ -126,31 +123,29 @@ namespace Paas.Pioneer.Admin.Core.Application.Tenant
 
             //删除租户
             await _tenantRepository.HardDeleteAsync(a => a.Id == id);
-
-            return ResponseOutput.Succees();
         }
 
-        public async Task<ResponseOutput<TenantGetOutput>> GetAsync(Guid id)
+        public async Task<TenantGetOutput> GetAsync(Guid id)
         {
             var result = ObjectMapper.Map<Volo.Abp.TenantManagement.Tenant, TenantGetOutput>(await _tenantRepository.GetAsync(predicate: x => x.Id == id));
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
-        public async Task<ResponseOutput<Page<GetTenantPageListOutput>>> GetPageListAsync(PageInput<GetTenantsInput> input)
+        public async Task<Page<GetTenantPageListOutput>> GetPageListAsync(PageInput<GetTenantsInput> input)
         {
             var tenantQueryable = await _tenantRepository.GetQueryableAsync();
             var key = input.Filter?.Filter;
             var query = tenantQueryable.WhereIf(!key.IsNullOrEmpty(), x => x.Name.Contains(key));
             var tenantPageList = await query.OrderByDescending(x => x.CreationTime).Page(input.CurrentPage, input.PageSize).ToListAsync();
             var resultPageData = ObjectMapper.Map<List<Volo.Abp.TenantManagement.Tenant>, List<GetTenantPageListOutput>>(tenantPageList);
-            return ResponseOutput.Succees(new Page<GetTenantPageListOutput>
+            return new Page<GetTenantPageListOutput>
             {
                 Total = await query.CountAsync(),
                 List = resultPageData
-            });
+            };
         }
 
-        public async Task<IResponseOutput> SoftDeleteAsync(Guid id)
+        public async Task SoftDeleteAsync(Guid id)
         {
             //删除用户
             await _userRepository.DeleteAsync(a => a.TenantId == id);
@@ -160,11 +155,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Tenant
 
             //删除租户
             await _tenantRepository.DeleteAsync(x => x.Id == id);
-
-            return ResponseOutput.Succees("删除成功");
         }
 
-        public async Task<IResponseOutput> UpdateAsync(TenantUpdateInput input)
+        public async Task UpdateAsync(TenantUpdateInput input)
         {
             var entity = await _tenantRepository.GetAsync(input.Id);
             if (entity == null)
@@ -173,7 +166,6 @@ namespace Paas.Pioneer.Admin.Core.Application.Tenant
             }
             ObjectMapper.Map(input, entity);
             await _tenantRepository.UpdateAsync(entity);
-            return ResponseOutput.Succees();
         }
     }
 }

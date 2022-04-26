@@ -74,18 +74,12 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <summary>
         /// 获得token
         /// </summary>
-        /// <param name="output"></param>
         /// <returns></returns>
-        private ResponseOutput<LoginSuccessOutput> GetToken(ResponseOutput<AuthLoginOutput> output)
+        private LoginSuccessOutput GetToken(AuthLoginOutput user)
         {
-            if (!output.Success)
-            {
-                return ResponseOutput.Error<LoginSuccessOutput>(output.Msg);
-            }
-            var user = output.Data;
             if (user == null)
             {
-                return ResponseOutput.Error<LoginSuccessOutput>("用户信息错误");
+                throw new BusinessException("用户信息错误");
             }
             IEnumerable<Claim> claimList = new[]
             {
@@ -96,10 +90,10 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
                 new Claim(ClaimAttributes.TenantType, user.TenantType.ToString()),
             };
             var token = _userToken.Create(claimList);
-            return ResponseOutput.Succees(new LoginSuccessOutput
+            return new LoginSuccessOutput
             {
                 token = token
-            });
+            };
         }
 
         /// <summary>
@@ -108,10 +102,10 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <returns></returns>
         [HttpGet("getCaptcha")]
         [AllowAnonymous]
-        public ResponseOutput<CaptchaData> GetCaptcha()
+        public CaptchaData GetCaptcha()
         {
             var data = _captcha.Generate();
-            return ResponseOutput.Succees(data);
+            return data;
         }
 
         /// <summary>
@@ -120,10 +114,10 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <returns></returns>
         [HttpGet("checkCaptcha")]
         [AllowAnonymous]
-        public IResponseOutput CheckCaptcha([FromQuery] string id, SlideTrack track)
+        public ValidateResult CheckCaptcha([FromQuery] string id, SlideTrack track)
         {
             var result = _captcha.Validate(id, track);
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
         /// <summary>
@@ -132,7 +126,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <returns></returns>
         [HttpGet("getPassWordEncryptKey")]
         [AllowAnonymous]
-        public async Task<ResponseOutput<GetPassWordEncryptKeyOutput>> GetPassWordEncryptKey()
+        public async Task<GetPassWordEncryptKeyOutput> GetPassWordEncryptKey()
         {
             return await _authService.GetPassWordEncryptKeyAsync();
         }
@@ -142,7 +136,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("getUserInfo")]
-        public async Task<ResponseOutput<AuthUserInfoOutput>> GetUserInfo()
+        public async Task<AuthUserInfoOutput> GetUserInfo()
         {
             using (_dataFilter.Disable<IMultiTenant>())
             {
@@ -158,7 +152,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <returns></returns>
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IResponseOutput> Login([FromBody] AuthLoginInput input)
+        public async Task<LoginSuccessOutput> Login([FromBody] AuthLoginInput input)
         {
             using (_dataFilter.Disable<IMultiTenant>())
             {
@@ -173,30 +167,17 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
                 {
                     CreatedUserName = input.UserName,
                     ElapsedMilliseconds = sw.ElapsedMilliseconds,
-                    Status = res.Success,
-                    Msg = res.Msg
+                    Status = true,
+                    Msg = "登录成功"
                 };
-
-                ResponseOutput<AuthLoginOutput> output = null;
-                if (res.Success)
-                {
-                    output = res;
-                    var user = output.Data;
-                    loginLogAddInput.CreatedUserId = user.Id;
-                    loginLogAddInput.NickName = user.NickName;
-                    loginLogAddInput.TenantId = user.TenantId;
-                }
+                loginLogAddInput.CreatedUserId = res.Id;
+                loginLogAddInput.NickName = res.NickName;
+                loginLogAddInput.TenantId = res.TenantId;
 
                 await _loginLogService.AddAsync(loginLogAddInput);
 
                 #endregion 添加登录日志
-
-                if (!res.Success)
-                {
-                    return res;
-                }
-
-                return GetToken(output);
+                return GetToken(res);
             }
         }
 
@@ -208,7 +189,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <returns></returns>
         [HttpGet("refresh")]
         [AllowAnonymous]
-        public async Task<IResponseOutput> Refresh([BindRequired] string token)
+        public async Task<LoginSuccessOutput> Refresh([BindRequired] string token)
         {
             var userClaims = _userToken.Decode(token);
             if (userClaims == null || !userClaims.Any())

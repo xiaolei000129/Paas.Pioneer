@@ -36,7 +36,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<DictionaryTypeGetOutput>> Get(Guid id)
+        public async Task<DictionaryTypeGetOutput> Get(Guid id)
         {
             return await _dictionaryTypeService.GetAsync(id);
         }
@@ -47,7 +47,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<Page<DictionaryTypeOutput>>> GetPageList(PageInput<DictionaryTypeInput> model)
+        public async Task<Page<DictionaryTypeOutput>> GetPageList(PageInput<DictionaryTypeInput> model)
         {
             return await _dictionaryTypeService.GetPageListAsync(model);
         }
@@ -58,9 +58,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> Add([FromBody] DictionaryTypeAddInput input)
+        public async Task Add([FromBody] DictionaryTypeAddInput input)
         {
-            return await _dictionaryTypeService.AddAsync(input);
+            await _dictionaryTypeService.AddAsync(input);
         }
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> Update([FromBody] DictionaryTypeUpdateInput input)
+        public async Task Update([FromBody] DictionaryTypeUpdateInput input)
         {
-            return await _dictionaryTypeService.UpdateAsync(input);
+            await _dictionaryTypeService.UpdateAsync(input);
         }
 
         /// <summary>
@@ -80,9 +80,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> SoftDelete(Guid id)
+        public async Task SoftDelete(Guid id)
         {
-            return await _dictionaryTypeService.DeleteAsync(id);
+            await _dictionaryTypeService.DeleteAsync(id);
         }
 
         /// <summary>
@@ -91,9 +91,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="ids"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> BatchSoftDelete([FromBody] Guid[] ids)
+        public async Task BatchSoftDelete([FromBody] Guid[] ids)
         {
-            return await _dictionaryTypeService.BatchSoftDeleteAsync(ids);
+            await _dictionaryTypeService.BatchSoftDeleteAsync(ids);
         }
     }
 }

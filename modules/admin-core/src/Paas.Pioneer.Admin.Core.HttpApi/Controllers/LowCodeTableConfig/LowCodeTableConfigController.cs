@@ -37,7 +37,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<Page<LowCodeTableConfigOutput>>> GetPageList(PageInput<GetLowCodeTableConfigPadedInput> input)
+        public async Task<Page<LowCodeTableConfigOutput>> GetPageList(PageInput<GetLowCodeTableConfigPadedInput> input)
         {
             return await _lowCodeTableConfigService.GetLowCodeTableConfigPageListAsync(input);
         }
@@ -48,9 +48,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> Add([FromBody] AddLowCodeTableConfigInput input)
+        public async Task Add([FromBody] AddLowCodeTableConfigInput input)
         {
-            return await _lowCodeTableConfigService.AddLowCodeTableConfigAsync(input);
+            await _lowCodeTableConfigService.AddLowCodeTableConfigAsync(input);
         }
 
         /// <summary>
@@ -59,9 +59,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="inputList"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> Update([FromBody] List<EditLowCodeTableConfigInput> inputList)
+        public async Task Update([FromBody] List<EditLowCodeTableConfigInput> inputList)
         {
-            return await _lowCodeTableConfigService.EditLowCodeTableConfigAsync(inputList);
+            await _lowCodeTableConfigService.EditLowCodeTableConfigAsync(inputList);
         }
 
         /// <summary>
@@ -70,9 +70,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            return await _lowCodeTableConfigService.DelLowCodeTableConfigAsync(id);
+            await _lowCodeTableConfigService.DelLowCodeTableConfigAsync(id);
         }
     }
 }

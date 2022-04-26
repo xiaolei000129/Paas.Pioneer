@@ -12,16 +12,16 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Role
 {
     public interface IRoleService : IApplicationService
     {
-        Task<ResponseOutput<RoleGetOutput>> GetAsync(Guid id);
+        Task<RoleGetOutput> GetAsync(Guid id);
 
-        Task<ResponseOutput<Page<RoleListOutput>>> GetPageListAsync(PageInput<RoleInput> input);
+        Task<Page<RoleListOutput>> GetPageListAsync(PageInput<RoleInput> input);
 
-        Task<IResponseOutput> AddAsync(RoleAddInput input);
+        Task AddAsync(RoleAddInput input);
 
-        Task<IResponseOutput> UpdateAsync(RoleUpdateInput input);
+        Task UpdateAsync(RoleUpdateInput input);
 
-        Task<IResponseOutput> DeleteAsync(Guid id);
+        Task DeleteAsync(Guid id);
 
-        Task<IResponseOutput> BatchSoftDeleteAsync(Guid[] ids);
+        Task BatchSoftDeleteAsync(Guid[] ids);
     }
 }

@@ -4,7 +4,6 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.Api;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Api.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Api.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -37,7 +36,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<ApiGetOutput>> Get(Guid id)
+        public async Task<ApiGetOutput> Get(Guid id)
         {
             return await _apiService.GetAsync(id);
         }
@@ -48,7 +47,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="key"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<List<ApiListOutput>>> GetList(string key)
+        public async Task<List<ApiListOutput>> GetList(string key)
         {
             return await _apiService.GetListAsync(key);
         }
@@ -59,7 +58,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="model">分页模型</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<Page<ApiListOutput>>> GetPageList(PageInput<ApiInput> model)
+        public async Task<Page<ApiListOutput>> GetPageList(PageInput<ApiInput> model)
         {
             return await _apiService.GetPageListAsync(model);
         }

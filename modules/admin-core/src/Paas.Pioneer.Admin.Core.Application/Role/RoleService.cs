@@ -5,14 +5,13 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.Role.Dto.Output;
 using Paas.Pioneer.Admin.Core.Domain.Role;
 using Paas.Pioneer.Admin.Core.Domain.RolePermission;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.AutoWrapper;
-using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Volo.Abp;
 
 namespace Paas.Pioneer.Admin.Core.Application.Role
 {
@@ -30,7 +29,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Role
             _rolePermissionRepository = rolePermissionRepository;
         }
 
-        public async Task<ResponseOutput<RoleGetOutput>> GetAsync(Guid id)
+        public async Task<RoleGetOutput> GetAsync(Guid id)
         {
             var result = await _roleRepository.GetAsync(expression: x => x.Id == id,
                 selector: x => new RoleGetOutput()
@@ -41,10 +40,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Role
                     Enabled = x.Enabled,
                     Name = x.Name,
                 });
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
-        public async Task<ResponseOutput<Page<RoleListOutput>>> GetPageListAsync(PageInput<RoleInput> input)
+        public async Task<Page<RoleListOutput>> GetPageListAsync(PageInput<RoleInput> input)
         {
             var key = input.Filter?.Name;
             Expression<Func<Ad_RoleEntity, bool>> expression = x => true;
@@ -66,41 +65,34 @@ namespace Paas.Pioneer.Admin.Core.Application.Role
             input);
         }
 
-        public async Task<IResponseOutput> AddAsync(RoleAddInput input)
+        public async Task AddAsync(RoleAddInput input)
         {
             var entity = ObjectMapper.Map<RoleAddInput, Ad_RoleEntity>(input);
             await _roleRepository.InsertAsync(entity);
-
-            return ResponseOutput.Succees("添加成功！");
         }
 
-        public async Task<IResponseOutput> UpdateAsync(RoleUpdateInput input)
+        public async Task UpdateAsync(RoleUpdateInput input)
         {
 
             var entity = await _roleRepository.GetAsync(input.Id);
             if (!(entity?.Id != Guid.Empty))
             {
-                return ResponseOutput.Succees("角色不存在！");
+                throw new BusinessException("角色不存在！");
             }
 
             ObjectMapper.Map(input, entity);
             await _roleRepository.UpdateAsync(entity);
-            return ResponseOutput.Succees("修改成功！");
         }
 
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             await _roleRepository.DeleteAsync(m => m.Id == id);
-
-            return ResponseOutput.Succees("删除成功！");
         }
 
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(Guid[] ids)
+        public async Task BatchSoftDeleteAsync(Guid[] ids)
         {
             await _roleRepository.DeleteAsync(a => ids.Contains(a.Id));
             await _rolePermissionRepository.DeleteAsync(a => ids.Contains(a.RoleId));
-
-            return ResponseOutput.Succees("删除成功！");
         }
     }
 }

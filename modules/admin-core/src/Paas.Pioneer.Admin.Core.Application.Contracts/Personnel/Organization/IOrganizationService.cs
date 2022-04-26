@@ -9,14 +9,14 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Personnel.Organization
 {
     public partial interface IOrganizationService
     {
-        Task<ResponseOutput<OrganizationGetOutput>> GetAsync(Guid id);
+        Task<OrganizationGetOutput> GetAsync(Guid id);
 
-        Task<ResponseOutput<List<OrganizationListOutput>>> GetListAsync(string key);
+        Task<List<OrganizationListOutput>> GetListAsync(string key);
 
-        Task<IResponseOutput> AddAsync(OrganizationAddInput input);
+        Task AddAsync(OrganizationAddInput input);
 
-        Task<IResponseOutput> UpdateAsync(OrganizationUpdateInput input);
+        Task UpdateAsync(OrganizationUpdateInput input);
 
-        Task<IResponseOutput> DeleteAsync(Guid id);
+        Task DeleteAsync(Guid id);
     }
 }

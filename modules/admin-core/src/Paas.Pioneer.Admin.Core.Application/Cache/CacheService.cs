@@ -34,7 +34,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Cache
         /// 缓存列表
         /// </summary>
         /// <returns></returns>
-        public ResponseOutput<List<object>> GetList()
+        public List<object> GetList()
         {
             var list = new List<object>();
             var redisAdminKeysType = _redisAdminKeys.GetType();
@@ -55,7 +55,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Cache
                     descriptionAttribute?.Description
                 });
             }
-            return ResponseOutput.Succees(list);
+            return list;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Cache
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> ClearAsync(CacheDeleteInput model)
+        public async Task ClearAsync(CacheDeleteInput model)
         {
             if (_appConfig.Tenant)
             {
@@ -71,7 +71,6 @@ namespace Paas.Pioneer.Admin.Core.Application.Cache
             }
             _logger.LogWarning($"{CurrentUser.Id}.{CurrentUser.Name}清除缓存[{model.cacheKey}]");
             await DelByPatternAsync(model.cacheKey);
-            return ResponseOutput.Succees("操作成功");
         }
 
         /// <summary>
