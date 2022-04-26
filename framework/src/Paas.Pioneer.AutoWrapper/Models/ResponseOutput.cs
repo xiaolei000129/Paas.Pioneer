@@ -14,7 +14,7 @@ namespace Paas.Pioneer.AutoWrapper
         /// <returns></returns>
         public static ResponseOutput<bool> Succees()
         {
-            return Succees<bool>();
+            return new ResponseOutput<bool>().Succees(true);
         }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace Paas.Pioneer.AutoWrapper
         /// <returns></returns>
         public static ResponseOutput<T> Succees<T>()
         {
-            return Succees<T>();
+            return new ResponseOutput<T>().Succees();
         }
 
         /// <summary>
@@ -138,9 +138,12 @@ namespace Paas.Pioneer.AutoWrapper
         /// 成功
         /// </summary>
         /// <param name="data">数据</param>
-        public ResponseOutput<bool> Succees()
+        public ResponseOutput<T> Succees()
         {
-            return ResponseOutput.Succees();
+            Success = true;
+            Msg = "操作成功";
+            Data = default(T);
+            return this;
         }
 
         /// <summary>

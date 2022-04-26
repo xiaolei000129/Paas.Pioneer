@@ -48,12 +48,6 @@ namespace Paas.Pioneer.Domain.Shared
                 }
                 context.Result = new ObjectResult(_result.Succees(objectResult.Value));
             }
-
-            // 没有返回值
-            if (context.Result is EmptyResult)
-            {
-                context.Result = new ObjectResult(_result.Succees());
-            }
         }
     }
 }

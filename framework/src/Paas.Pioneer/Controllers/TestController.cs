@@ -64,7 +64,7 @@ namespace Paas.Pioneer.Controllers
         }
 
         [HttpGet("EmptyTaskResponseOutput")]
-        public ResponseOutput<bool> EmptyTaskResponseOutput()
+        public IResponseOutput EmptyTaskResponseOutput()
         {
             return ResponseOutput.Succees();
         }

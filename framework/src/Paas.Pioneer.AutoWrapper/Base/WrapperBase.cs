@@ -67,16 +67,13 @@ namespace Paas.Pioneer.AutoWrapper.Base
 
                 //泛型的特殊处理
                 var returnType = controllerActionDescriptor.MethodInfo.ReturnType;
-                if (returnType == typeof(Task) || returnType == typeof(Task<>) || returnType == typeof(ValueTask<>))
+                if (returnType == typeof(Task) || returnType == typeof(Task<>) || returnType == typeof(ValueTask<>) || returnType.GetGenericArguments().Any())
                 {
-                    if (returnType.GetGenericArguments().Any())
-                    {
-                        returnType = returnType.GetGenericArguments().FirstOrDefault();
-                    }
+                    returnType = returnType.GetGenericArguments().FirstOrDefault();
                 }
 
                 //如果终结点已经是ResponseOutput<T>则不进行包装处理
-                if (returnType.IsGenericType && returnType == typeof(ResponseOutput<>))
+                if (returnType != null && (returnType == typeof(IResponseOutput) || returnType == typeof(IResponseOutput<>)))
                 {
                     await awm.RevertResponseBodyStreamAsync(memoryStream, originalResponseBodyStream);
                     return;

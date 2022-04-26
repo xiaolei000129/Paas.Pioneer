@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using Volo.Abp.DependencyInjection;
 
 namespace Paas.Pioneer.AutoWrapper
 {
@@ -30,12 +29,6 @@ namespace Paas.Pioneer.AutoWrapper
         /// 返回数据
         /// </summary>
         T Data { get; }
-
-        /// <summary>
-        /// 成功
-        /// </summary>
-        /// <param name="data">数据</param>
-        ResponseOutput<bool> Succees();
 
         /// <summary>
         /// 成功
