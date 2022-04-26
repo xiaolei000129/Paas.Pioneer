@@ -4,9 +4,10 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.LoginLog;
 using Paas.Pioneer.Admin.Core.Application.Contracts.LoginLog.Dto;
 using Paas.Pioneer.Admin.Core.Application.Contracts.LoginLog.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
 {

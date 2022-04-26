@@ -15,7 +15,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="5.2.1" />
-		<PackageReference Include="Paas.Pioneer.Domain" Version="5.2.2" />
+		<PackageReference Include="Paas.Pioneer.Domain" Version="5.2.3" />
 	</ItemGroup>
 
 	<ItemGroup>

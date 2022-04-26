@@ -15,7 +15,7 @@ using Paas.Pioneer.Admin.Core.Domain.Shared.Helpers;
 using Paas.Pioneer.Admin.Core.Domain.Shared.TextTemplatingDefinition;
 using Paas.Pioneer.Admin.Core.Domain.View;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;
@@ -28,6 +28,7 @@ using Volo.Abp;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.TextTemplating;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
 {

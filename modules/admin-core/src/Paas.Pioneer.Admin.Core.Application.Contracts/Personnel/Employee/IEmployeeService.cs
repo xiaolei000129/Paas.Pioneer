@@ -2,9 +2,10 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.Personnel.Employee.Dto;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Personnel.Employee.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Personnel.Employee.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Threading.Tasks;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.Contracts.Personnel.Employee
 {

@@ -5,7 +5,7 @@ using Paas.Pioneer.Admin.Core.Domain.DictionaryType;
 using Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions;
 using Paas.Pioneer.Admin.Core.EntityFrameworkCore.EntityFrameworkCore;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;
@@ -13,6 +13,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Volo.Abp.EntityFrameworkCore;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.DictionaryType
 {

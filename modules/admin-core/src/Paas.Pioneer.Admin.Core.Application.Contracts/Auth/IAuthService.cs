@@ -1,6 +1,6 @@
 using Paas.Pioneer.Admin.Core.Application.Contracts.Auth.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Auth.Dto.Output;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

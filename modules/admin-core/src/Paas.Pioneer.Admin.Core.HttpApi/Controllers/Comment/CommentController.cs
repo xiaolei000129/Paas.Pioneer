@@ -3,11 +3,12 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.Comment.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Comment.Dto.Output;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Comment;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
 {

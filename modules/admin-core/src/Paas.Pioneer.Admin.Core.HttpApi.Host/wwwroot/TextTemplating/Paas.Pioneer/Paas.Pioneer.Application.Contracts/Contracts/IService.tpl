@@ -1,7 +1,7 @@
 ﻿using Paas.Pioneer.Admin.Core.Application.Contracts.{{model.taxon}}.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.{{model.taxon}}.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

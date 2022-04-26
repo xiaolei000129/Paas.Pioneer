@@ -7,12 +7,13 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.User.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.User.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Configs;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Helpers;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
 {

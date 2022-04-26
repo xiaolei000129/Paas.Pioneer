@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Personnel.Organization;
 using Volo.Abp.AspNetCore.Mvc;
 using System;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Personnel.Organization.Dto.Output;
 using System.Collections.Generic;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Personnel.Organization.Dto.Input;

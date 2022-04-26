@@ -2,7 +2,7 @@
 using Paas.Pioneer.Admin.Core.Application.Contracts.{{ model.taxon }}.Dto.Output;
 using Paas.Pioneer.Admin.Core.Domain.BaseExtensions;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;

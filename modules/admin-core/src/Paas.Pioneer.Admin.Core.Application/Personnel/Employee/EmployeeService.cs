@@ -6,12 +6,13 @@ using Paas.Pioneer.Admin.Core.Domain.Personnel.Employee;
 using Paas.Pioneer.Admin.Core.Domain.Personnel.Organization;
 using Paas.Pioneer.Admin.Core.Domain.Personnel.Position;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Services;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.Personnel.Employee
 {

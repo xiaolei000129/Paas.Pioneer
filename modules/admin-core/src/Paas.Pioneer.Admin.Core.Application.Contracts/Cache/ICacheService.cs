@@ -1,5 +1,5 @@
 using Paas.Pioneer.Admin.Core.Application.Contracts.Cache.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;

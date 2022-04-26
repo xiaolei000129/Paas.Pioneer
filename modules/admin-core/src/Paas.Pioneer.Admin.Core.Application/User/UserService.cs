@@ -11,7 +11,7 @@ using Paas.Pioneer.Admin.Core.Domain.User;
 using Paas.Pioneer.Admin.Core.Domain.UserRole;
 using Paas.Pioneer.Domain.Shared.Configs;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Helpers;
 using System;
 using System.Collections.Generic;
@@ -22,6 +22,7 @@ using Volo.Abp;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Data;
 using Volo.Abp.Domain.Repositories;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.User
 {

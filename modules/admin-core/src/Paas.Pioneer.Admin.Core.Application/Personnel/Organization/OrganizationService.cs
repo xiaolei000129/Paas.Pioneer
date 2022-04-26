@@ -2,7 +2,7 @@
 using Paas.Pioneer.Admin.Core.Application.Contracts.Personnel.Organization.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Personnel.Organization.Dto.Output;
 using Paas.Pioneer.Admin.Core.Domain.Personnel.Organization;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;

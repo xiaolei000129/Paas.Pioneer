@@ -4,7 +4,7 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.Document.Dto.Output;
 using Paas.Pioneer.Admin.Core.Domain.Document;
 using Paas.Pioneer.Admin.Core.Domain.DocumentImage;
 using Paas.Pioneer.Admin.Core.Domain.Shared.Enum;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;

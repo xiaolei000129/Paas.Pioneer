@@ -1,10 +1,11 @@
 ﻿using Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary
 {

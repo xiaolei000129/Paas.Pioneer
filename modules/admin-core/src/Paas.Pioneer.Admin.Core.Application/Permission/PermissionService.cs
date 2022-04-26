@@ -14,7 +14,7 @@ using Paas.Pioneer.Admin.Core.Domain.User;
 using Paas.Pioneer.Admin.Core.Domain.UserRole;
 using Paas.Pioneer.Domain.Shared.Auth;
 using Paas.Pioneer.Domain.Shared.Configs;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;

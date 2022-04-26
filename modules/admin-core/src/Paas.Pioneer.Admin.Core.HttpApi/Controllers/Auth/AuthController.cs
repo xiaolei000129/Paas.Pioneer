@@ -12,7 +12,7 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.LoginLog.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.User;
 using Paas.Pioneer.Admin.Core.Application.Contracts.User.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Auth;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using Paas.Pioneer.Domain.Shared.Helpers;
 using System;

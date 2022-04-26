@@ -5,13 +5,14 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.Role.Dto.Output;
 using Paas.Pioneer.Admin.Core.Domain.Role;
 using Paas.Pioneer.Admin.Core.Domain.RolePermission;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.Role
 {

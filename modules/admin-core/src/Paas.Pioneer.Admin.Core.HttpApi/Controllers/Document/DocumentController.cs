@@ -5,7 +5,7 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.Document;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Document.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Document.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Configs;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Helpers;
 using System;
 using System.Collections.Generic;

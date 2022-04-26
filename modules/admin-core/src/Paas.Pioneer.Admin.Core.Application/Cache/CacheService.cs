@@ -4,7 +4,7 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.Cache;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Cache.Dto.Input;
 using Paas.Pioneer.Admin.Core.Domain.Shared.RedisKey;
 using Paas.Pioneer.Domain.Shared.Configs;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;

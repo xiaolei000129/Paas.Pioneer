@@ -5,7 +5,7 @@ using Paas.Pioneer.Admin.Core.Domain.{{ model.taxon }};
 using Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions;
 using Paas.Pioneer.Admin.Core.EntityFrameworkCore.EntityFrameworkCore;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;

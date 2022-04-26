@@ -5,10 +5,11 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.Role.Dto;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Role.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Role.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
 {
