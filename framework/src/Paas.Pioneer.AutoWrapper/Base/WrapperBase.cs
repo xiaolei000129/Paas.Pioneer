@@ -82,7 +82,9 @@ namespace Paas.Pioneer.AutoWrapper.Base
                 var bodyAsText = await awm.ReadResponseBodyStreamAsync(memoryStream);
                 context.Response.Body = originalResponseBodyStream;
 
-                if (context.Response.StatusCode != Status304NotModified && context.Response.StatusCode != Status204NoContent)
+                UpdateResponseStatusCode(context);
+
+                if (context.Response.StatusCode != Status304NotModified || context.Response.StatusCode != Status204NoContent)
                 {
                     if (!_options.IsApiOnly
                         && bodyAsText.IsHtml()
@@ -119,6 +121,19 @@ namespace Paas.Pioneer.AutoWrapper.Base
             finally
             {
 
+            }
+        }
+
+        private void UpdateResponseStatusCode(HttpContext context)
+        {
+            // 过滤跨域
+            if (string.Compare(context.Request.Method, "OPTIONS") == 0)
+            {
+                return;
+            }
+            if (context.Response.StatusCode == Status204NoContent)
+            {
+                context.Response.StatusCode = Status200OK;
             }
         }
 
