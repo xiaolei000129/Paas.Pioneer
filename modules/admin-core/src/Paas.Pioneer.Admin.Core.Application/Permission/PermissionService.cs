@@ -379,7 +379,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
                     a.Label,
                     Apis = apis.Where(b => b.ParentId == a.Id).Select(b => new { b.Id, b.Label })
                 });
-            return ResponseOutput.Succees(menus);
+            return menus;
         }
 
         public async Task<List<Guid>> GetRolePermissionListAsync(Guid roleId)
