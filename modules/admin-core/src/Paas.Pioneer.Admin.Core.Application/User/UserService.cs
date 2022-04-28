@@ -22,6 +22,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Data;
 using Volo.Abp.Domain.Repositories;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
+using EasyCaching.Core;
 
 namespace Paas.Pioneer.Admin.Core.Application.User
 {
@@ -36,6 +37,7 @@ namespace Paas.Pioneer.Admin.Core.Application.User
         private readonly ITenantRepository _tenantRepository;
         private readonly RedisAdminKeys _redisAdminKeys;
         private readonly IRoleRepository _roleRepository;
+        private readonly IRedisCachingProvider _redisCachingProvider;
 
         public UserService(
             IOptions<AppConfig> appConfig,
@@ -43,7 +45,8 @@ namespace Paas.Pioneer.Admin.Core.Application.User
             IUserRoleRepository userRoleRepository,
             ITenantRepository tenantRepository,
             RedisAdminKeys redisAdminKeys,
-            IRoleRepository roleRepository
+            IRoleRepository roleRepository,
+            IRedisCachingProvider redisCachingProvider
         )
         {
             _appConfig = appConfig.Value;
@@ -52,6 +55,7 @@ namespace Paas.Pioneer.Admin.Core.Application.User
             _tenantRepository = tenantRepository;
             _redisAdminKeys = redisAdminKeys;
             _roleRepository = roleRepository;
+            _redisCachingProvider = redisCachingProvider;
         }
 
         #region 获取登录人相关信息
@@ -244,7 +248,7 @@ namespace Paas.Pioneer.Admin.Core.Application.User
             await _userRepository.UpdateAsync(entity);
 
             //清除用户缓存
-            await RedisHelper.DelAsync(string.Format(_redisAdminKeys.UserInfo, input.Id));
+            await _redisCachingProvider.KeyDelAsync(string.Format(_redisAdminKeys.UserInfo, input.Id));
         }
 
         #endregion

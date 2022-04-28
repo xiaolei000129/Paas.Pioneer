@@ -22,6 +22,7 @@ using Volo.Abp.Data;
 using Lazy.SlideCaptcha.Core;
 using static Lazy.SlideCaptcha.Core.ValidateResult;
 using Volo.Abp;
+using EasyCaching.Core;
 
 namespace Paas.Pioneer.Admin.Core.Application.Auth
 {
@@ -34,6 +35,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
         private readonly IViewRepository _viewRepository;
         private readonly RedisAdminKeys _redisAdminKeys;
         private readonly ICaptcha _captcha;
+        private readonly IRedisCachingProvider _redisCachingProvider;
 
         public AuthService(IOptions<AppConfig> appConfig,
             IUserRepository userRepository,
@@ -41,7 +43,8 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
             ITenantRepository tenantRepository,
             ICaptcha captcha,
             IViewRepository viewRepository,
-            RedisAdminKeys redisAdminKeys)
+            RedisAdminKeys redisAdminKeys,
+            IRedisCachingProvider redisCachingProvider)
         {
             _appConfig = appConfig.Value;
             _userRepository = userRepository;
@@ -50,6 +53,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
             _captcha = captcha;
             _viewRepository = viewRepository;
             _redisAdminKeys = redisAdminKeys;
+            _redisCachingProvider = redisCachingProvider;
         }
 
         public async Task<GetPassWordEncryptKeyOutput> GetPassWordEncryptKeyAsync()
@@ -58,7 +62,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
             var guid = Guid.NewGuid().ToString("N");
             var key = string.Format(_redisAdminKeys.PassWordEncryptKey, guid);
             var encyptKey = StringHelper.GenerateRandom(8);
-            await RedisHelper.SetAsync(key, encyptKey, TimeSpan.FromMinutes(5));
+            await _redisCachingProvider.StringSetAsync(key, encyptKey, TimeSpan.FromMinutes(5));
             var data = new GetPassWordEncryptKeyOutput
             {
                 Key = guid,
@@ -154,16 +158,16 @@ namespace Paas.Pioneer.Admin.Core.Application.Auth
             if (!input.PasswordKey.IsNullOrEmpty())
             {
                 var passwordEncryptKey = string.Format(_redisAdminKeys.PassWordEncryptKey, input.PasswordKey);
-                var existsPasswordKey = await RedisHelper.ExistsAsync(passwordEncryptKey);
+                var existsPasswordKey = await _redisCachingProvider.KeyExistsAsync(passwordEncryptKey);
                 if (existsPasswordKey)
                 {
-                    var secretKey = await RedisHelper.GetAsync(passwordEncryptKey);
+                    var secretKey = await _redisCachingProvider.StringGetAsync(passwordEncryptKey);
                     if (secretKey.IsNullOrEmpty())
                     {
                         throw new BusinessException("解密失败！");
                     }
                     input.Password = DesEncrypt.Decrypt(input.Password, secretKey);
-                    await RedisHelper.DelAsync(passwordEncryptKey);
+                    await _redisCachingProvider.KeyDelAsync(passwordEncryptKey);
                 }
                 else
                 {

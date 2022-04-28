@@ -26,6 +26,7 @@ using Volo.Abp;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.MultiTenancy;
+using EasyCaching.Core;
 
 namespace Paas.Pioneer.Admin.Core.Application.Permission
 {
@@ -40,6 +41,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
         private readonly IUserRepository _userRepository;
         private readonly RedisAdminKeys _redisAdminKeys;
         private readonly AppConfig _appConfig;
+        private readonly IRedisCachingProvider _redisCachingProvider;
 
         public PermissionService(
             IOptions<AppConfig> appConfig,
@@ -50,7 +52,8 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
             IUserRoleRepository userRoleRepository,
             IPermissionApiRepository permissionApiRepository,
             IUserRepository userRepository,
-            RedisAdminKeys redisAdminKeys
+            RedisAdminKeys redisAdminKeys,
+            IRedisCachingProvider redisCachingProvider
         )
         {
             _permissionRepository = permissionRepository;
@@ -62,6 +65,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
             _userRepository = userRepository;
             _redisAdminKeys = redisAdminKeys;
             _appConfig = appConfig.Value;
+            _redisCachingProvider = redisCachingProvider;
         }
 
         public async Task<PermissionGetGroupOutput> GetGroupAsync(Guid id)
@@ -332,7 +336,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
             var userIds = await _userRoleRepository.GetUserIdListByRoleIdAsync(input.RoleId);
             if (userIds.Any())
             {
-                await RedisHelper.DelAsync(userIds.Select(x => string.Format(_redisAdminKeys.UserPermissions, x)).ToArray());
+                foreach (var key in userIds.Select(x => string.Format(_redisAdminKeys.UserPermissions, x)))
+                {
+                    await _redisCachingProvider.KeyDelAsync(key);
+                }
             }
         }
 
@@ -451,7 +458,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
                 var userIds = await _userRepository.GetUserIdListByTenantIdAsync(input.TenantId);
                 if (userIds.Any())
                 {
-                    await RedisHelper.DelAsync(userIds.Select(x => string.Format(_redisAdminKeys.UserPermissions, x)).ToArray());
+                    foreach (var key in userIds.Select(x => string.Format(_redisAdminKeys.UserPermissions, x)))
+                    {
+                        await _redisCachingProvider.KeyDelAsync(key);
+                    }
                 }
             }
         }
