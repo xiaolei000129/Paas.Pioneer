@@ -117,6 +117,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         public ValidateResult CheckCaptcha([FromQuery] string id, SlideTrack track)
         {
             var result = _captcha.Validate(id, track);
+            result.Result = 0;
             return result;
         }
 
