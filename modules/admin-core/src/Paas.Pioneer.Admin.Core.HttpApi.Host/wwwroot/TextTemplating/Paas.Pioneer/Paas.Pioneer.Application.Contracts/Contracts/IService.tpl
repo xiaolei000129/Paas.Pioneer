@@ -19,14 +19,14 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.{{model.taxon}}
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        Task<ResponseOutput<Get{{model.taxon}}Output>> GetAsync(Guid id);
+        Task<Get{{model.taxon}}Output> GetAsync(Guid id);
 
         /// <summary>
         /// 查询分页{{model.function_module}}
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<Page<Get{{model.taxon}}PageListOutput>>> GetPageListAsync(PageInput<Get{{model.taxon}}PageListInput> model);
+        Task<Page<Get{{model.taxon}}PageListOutput>> GetPageListAsync(PageInput<Get{{model.taxon}}PageListInput> model);
 
         /// <summary>
         /// 新增{{model.function_module}}

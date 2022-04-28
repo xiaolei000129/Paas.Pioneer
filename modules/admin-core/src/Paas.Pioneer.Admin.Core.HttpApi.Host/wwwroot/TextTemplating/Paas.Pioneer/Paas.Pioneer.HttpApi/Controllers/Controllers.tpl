@@ -38,7 +38,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id">主键</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<Get{{model.taxon}}Output>> Get(Guid id)
+        public async Task<Get{{model.taxon}}Output> Get(Guid id)
         {
             return await _{{ initial_lower }}Service.GetAsync(id);
         }
@@ -49,7 +49,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="input">入参</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ResponseOutput<Page<Get{{model.taxon}}PageListOutput>>> GetPageList(PageInput<Get{{model.taxon}}PageListInput> input)
+        public async Task<Page<Get{{model.taxon}}PageListOutput>> GetPageList(PageInput<Get{{model.taxon}}PageListInput> input)
         {
             return await _{{ initial_lower }}Service.GetPageListAsync(input);
         }
@@ -62,7 +62,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         [HttpPost]
         public async Task Add([FromBody] Add{{model.taxon}}Input input)
         {
-            return await _{{ initial_lower }}Service.AddAsync(input);
+            await _{{ initial_lower }}Service.AddAsync(input);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         [HttpPut]
         public async Task Update([FromBody] Update{{model.taxon}}Input input)
         {
-            return await _{{ initial_lower }}Service.UpdateAsync(input);
+            await _{{ initial_lower }}Service.UpdateAsync(input);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         [HttpDelete]
         public async Task Delete(Guid id)
         {
-            return await _{{ initial_lower }}Service.DeleteAsync(id);
+            await _{{ initial_lower }}Service.DeleteAsync(id);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         [HttpPost]
         public async Task BatchSoftDelete([FromBody] Guid[] ids)
         {
-            return await _{{ initial_lower }}Service.BatchSoftDeleteAsync(ids);
+            await _{{ initial_lower }}Service.BatchSoftDeleteAsync(ids);
         }
     }
 }
