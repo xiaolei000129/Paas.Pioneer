@@ -27,5 +27,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.LowCodeTable
         Task<Page<LowCodeTableOutput>> GetLowCodeTablePageListAsync(PageInput<GetLowCodeTablePadedInput> input);
 
         Task GenerateCodeAsync(Guid id);
+
+        Task GenerateViewAsync(Guid id);
     }
 }

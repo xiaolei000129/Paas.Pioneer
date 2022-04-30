@@ -4,7 +4,6 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.{{model.taxon}}.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.{{model.taxon}}.Dto.Output;
 using Paas.Pioneer.Admin.Core.Domain.{{model.taxon}};
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;
@@ -14,6 +13,7 @@ using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
 {

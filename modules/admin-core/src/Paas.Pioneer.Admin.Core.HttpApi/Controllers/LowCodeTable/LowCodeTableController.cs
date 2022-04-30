@@ -127,5 +127,15 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         {
             await _lowCodeTableService.GenerateCodeAsync(id);
         }
+
+        /// <summary>
+        /// 生成View
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task GenerateView(Guid id)
+        {
+            await _lowCodeTableService.GenerateViewAsync(id);
+        }
     }
 }

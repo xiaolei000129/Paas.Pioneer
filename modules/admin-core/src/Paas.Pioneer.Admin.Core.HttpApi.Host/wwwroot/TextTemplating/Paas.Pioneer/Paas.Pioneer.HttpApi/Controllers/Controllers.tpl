@@ -8,6 +8,7 @@ using System;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
 {

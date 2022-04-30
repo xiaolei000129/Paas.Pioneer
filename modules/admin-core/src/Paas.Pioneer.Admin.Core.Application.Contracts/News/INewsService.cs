@@ -1,56 +1,57 @@
-﻿using Paas.Pioneer.Admin.Core.Application.Contracts.{{model.taxon}}.Dto.Input;
-using Paas.Pioneer.Admin.Core.Application.Contracts.{{model.taxon}}.Dto.Output;
+﻿using Paas.Pioneer.Admin.Core.Application.Contracts.News.Dto.Input;
+using Paas.Pioneer.Admin.Core.Application.Contracts.News.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
+using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
 
-namespace Paas.Pioneer.Admin.Core.Application.Contracts.{{model.taxon}}
+namespace Paas.Pioneer.Admin.Core.Application.Contracts.News
 {
     /// <summary>
-    /// {{model.function_module}}接口
+    /// 新闻管理接口
     /// </summary>
-    public interface I{{model.taxon}}Service : IApplicationService
+    public interface INewsService : IApplicationService
     {
         /// <summary>
-        /// 查询{{model.function_module}}
+        /// 查询新闻管理
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        Task<Get{{model.taxon}}Output> GetAsync(Guid id);
+        Task<GetNewsOutput> GetAsync(Guid id);
 
         /// <summary>
-        /// 查询分页{{model.function_module}}
+        /// 查询分页新闻管理
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<Page<Get{{model.taxon}}PageListOutput>> GetPageListAsync(PageInput<Get{{model.taxon}}PageListInput> model);
+        Task<Page<GetNewsPageListOutput>> GetPageListAsync(PageInput<GetNewsPageListInput> model);
 
         /// <summary>
-        /// 新增{{model.function_module}}
+        /// 新增新闻管理
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task AddAsync(Add{{model.taxon}}Input input);
+        Task AddAsync(AddNewsInput input);
 
         /// <summary>
-        /// 修改{{model.function_module}}
+        /// 修改新闻管理
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task UpdateAsync(Update{{model.taxon}}Input input);
+        Task UpdateAsync(UpdateNewsInput input);
 
         /// <summary>
-        /// 删除{{model.function_module}}
+        /// 删除新闻管理
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
         Task DeleteAsync(Guid id);
         
         /// <summary>
-        /// 批量删除{{model.function_module}}
+        /// 批量删除新闻管理
         /// </summary>
         /// <param name="ids">主键集合</param>
         /// <returns></returns>

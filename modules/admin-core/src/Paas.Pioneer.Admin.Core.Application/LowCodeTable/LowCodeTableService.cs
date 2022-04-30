@@ -214,7 +214,30 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 var generateCodeLowCodeTableOutput = ObjectMapper.Map<Ad_LowCodeTableEntity, GenerateCodeLowCodeTableOutput>(lowCodeTable);
                 generateCodeLowCodeTableOutput.LowCodeTableConfigList = ObjectMapper.Map<List<LowCodeTableColumnOutput>, List<GenerateCodeLowCodeTableConfigOutPut>>(getColumnList);
                 await GenerateCodeFileContentAsync(generateCodeLowCodeTableOutput);
-                //await GeneratePermissionAsync(generateCodeLowCodeTableOutput);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task GenerateViewAsync(Guid id)
+        {
+            try
+            {
+                var lowCodeTable = await _lowCodeTableRepository.GetAsync(id);
+                if (lowCodeTable == null)
+                {
+                    throw new BusinessException("数据错误");
+                }
+                var generateCodeLowCodeTableOutput = ObjectMapper.Map<Ad_LowCodeTableEntity, GenerateCodeLowCodeTableOutput>(lowCodeTable);
+                await GeneratePermissionAsync(generateCodeLowCodeTableOutput);
             }
             catch (Exception ex)
             {
@@ -225,6 +248,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
         /// <summary>
         /// 生成代码文件内容
         /// </summary>
+        /// <param name="model"></param>
         /// <returns></returns>
         private async Task GenerateCodeFileContentAsync(GenerateCodeLowCodeTableOutput model)
         {
@@ -310,6 +334,8 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
         /// <summary>
         /// 生成代码文件
         /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="fileContent"></param>
         /// <returns></returns>
         private async Task GenerateCodeFileAsync(string fileName, string fileContent)
         {
@@ -337,6 +363,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 Name = model.Taxon,
                 Path = $"admin/{model.Taxon}",
             };
+
             // 添加视图
             await _viewRepository.InsertAsync(view);
             #endregion
