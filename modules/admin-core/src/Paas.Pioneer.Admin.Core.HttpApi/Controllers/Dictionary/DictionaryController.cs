@@ -46,8 +46,8 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<Page<DictionaryPageListOutput>> GetPageList(PageInput<DictionaryInput> model)
+        [HttpPost]
+        public async Task<Page<DictionaryPageListOutput>> GetPageList([FromBody] PageInput<DictionaryInput> model)
         {
             return await _dictionaryService.GetPageListAsync(model);
         }

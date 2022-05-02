@@ -47,8 +47,8 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<Page<GetTenantPageListOutput>> GetPageList(PageInput<GetTenantsInput> model)
+        [HttpPost]
+        public async Task<Page<GetTenantPageListOutput>> GetPageList([FromBody] PageInput<GetTenantsInput> model)
         {
             return await _tenantServices.GetPageListAsync(model);
         }

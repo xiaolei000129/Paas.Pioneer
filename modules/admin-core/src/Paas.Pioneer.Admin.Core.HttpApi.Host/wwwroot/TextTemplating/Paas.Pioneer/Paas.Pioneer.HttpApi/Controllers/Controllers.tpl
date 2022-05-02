@@ -49,8 +49,8 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<Page<Get{{model.taxon}}PageListOutput>> GetPageList(PageInput<Get{{model.taxon}}PageListInput> input)
+        [HttpPost]
+        public async Task<Page<Get{{model.taxon}}PageListOutput>> GetPageList([FromBody] PageInput<Get{{model.taxon}}PageListInput> input)
         {
             return await _{{ initial_lower }}Service.GetPageListAsync(input);
         }

@@ -19,7 +19,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
     [Authorize]
     public class GridController : AbpController
     {
-        
+
         private readonly IGridService _gridService;
 
         /// <summary>
@@ -46,8 +46,8 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<Page<GetGridPageListOutput>> GetPageList(PageInput<GetGridPageListInput> input)
+        [HttpPost]
+        public async Task<Page<GetGridPageListOutput>> GetPageList([FromBody] PageInput<GetGridPageListInput> input)
         {
             return await _gridService.GetPageListAsync(input);
         }

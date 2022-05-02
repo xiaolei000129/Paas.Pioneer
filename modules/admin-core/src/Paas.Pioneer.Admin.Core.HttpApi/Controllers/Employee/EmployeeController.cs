@@ -47,9 +47,9 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         //[ResponseCache(Duration = 60)]
-        public async Task<Page<EmployeeListOutput>> GetPageList(PageInput<EmployeeDataOutput> input)
+        public async Task<Page<EmployeeListOutput>> GetPageList([FromBody] PageInput<EmployeeDataOutput> input)
         {
             return await _employeeService.GetPageListAsync(input);
         }

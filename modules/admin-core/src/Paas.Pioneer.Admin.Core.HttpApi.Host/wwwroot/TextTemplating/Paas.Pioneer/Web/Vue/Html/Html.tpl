@@ -264,6 +264,22 @@ export default {
   async mounted() {
     await this.onGetPageList()
   },
+  computed: {
+    avatar() {
+      const path = this.editForm.avatar
+        ? process.env.VUE_APP_AVATAR_URL + this.editForm.avatar
+        : this.avatarDefault;
+      return path;
+    },
+    // 上传图片路径
+    uploadUrl() {
+      return process.env.VUE_APP_BASE_API + "/admin/user/avatarupload";
+    },
+    // 请求令牌
+    token() {
+      return { Authorization: "Bearer " + this.$store.getters.token };
+    },
+  },
   methods: {
     formatCreatedTime(row, column, time) {
       return formatTime(time, 'YYYY-MM-DD HH:mm')
@@ -275,8 +291,7 @@ export default {
       this.onGetPageList()
     },
     // 显示添加界面
-    async onAdd(index, row) {
-      this.$refs["addForm"].resetFields();
+    onAdd() {
       this.addDialogFormVisible = true;
     },
     // 关闭添加
@@ -318,14 +333,6 @@ export default {
     // 选择
     onSelsChange(sels) {
       this.sels = sels
-    },
-    // 上传图片路径
-    uploadUrl() {
-      return process.env.VUE_APP_BASE_API + "/admin/user/avatarupload";
-    },
-    // 请求令牌
-    token() {
-      return { Authorization: "Bearer " + this.$store.getters.token };
     },
     // 上传成功
     onAvatarSuccess(res) {

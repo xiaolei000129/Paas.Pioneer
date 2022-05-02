@@ -19,7 +19,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
     [Authorize]
     public class NewsController : AbpController
     {
-        
+
         private readonly INewsService _newsService;
 
         /// <summary>
@@ -46,8 +46,8 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<Page<GetNewsPageListOutput>> GetPageList(PageInput<GetNewsPageListInput> input)
+        [HttpPost]
+        public async Task<Page<GetNewsPageListOutput>> GetPageList([FromBody] PageInput<GetNewsPageListInput> input)
         {
             return await _newsService.GetPageListAsync(input);
         }

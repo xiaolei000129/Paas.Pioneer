@@ -48,7 +48,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<Page<PositionListOutput>> GetPageList([FromBody]PageInput<PositionDataOutput> model)
+        public async Task<Page<PositionListOutput>> GetPageList([FromBody] PageInput<PositionDataOutput> model)
         {
             return await _positionService.GetPageListAsync(model);
         }

@@ -99,8 +99,8 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<Page<GetUserPageListOutput>> GetPageList(PageInput<UserModelInput> input)
+        [HttpPost]
+        public async Task<Page<GetUserPageListOutput>> GetPageList([FromBody] PageInput<UserModelInput> input)
         {
             return await _userService.GetPageListAsync(input);
         }

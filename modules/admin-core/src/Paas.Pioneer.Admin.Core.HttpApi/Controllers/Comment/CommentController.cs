@@ -19,7 +19,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
     [Authorize]
     public class CommentController : AbpController
     {
-        
+
         private readonly ICommentService _commentService;
 
         /// <summary>
@@ -46,8 +46,8 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<Page<GetCommentPageListOutput>> GetPageList(PageInput<GetCommentPageListInput> input)
+        [HttpPost]
+        public async Task<Page<GetCommentPageListOutput>> GetPageList([FromBody] PageInput<GetCommentPageListInput> input)
         {
             return await _commentService.GetPageListAsync(input);
         }
@@ -60,7 +60,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         [HttpPost]
         public async Task Add([FromBody] AddCommentInput input)
         {
-             await _commentService.AddAsync(input);
+            await _commentService.AddAsync(input);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         [HttpPut]
         public async Task Update([FromBody] UpdateCommentInput input)
         {
-             await _commentService.UpdateAsync(input);
+            await _commentService.UpdateAsync(input);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         [HttpDelete]
         public async Task Delete(Guid id)
         {
-             await _commentService.DeleteAsync(id);
+            await _commentService.DeleteAsync(id);
         }
 
         /// <summary>

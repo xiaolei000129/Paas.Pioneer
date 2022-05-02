@@ -37,8 +37,8 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<Page<LowCodeTableOutput>> GetPageList(PageInput<GetLowCodeTablePadedInput> input)
+        [HttpPost]
+        public async Task<Page<LowCodeTableOutput>> GetPageList([FromBody] PageInput<GetLowCodeTablePadedInput> input)
         {
             return await _lowCodeTableService.GetLowCodeTablePageListAsync(input);
         }

@@ -72,8 +72,8 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <param name="model">分页模型</param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<Page<ViewGetOutput>> GetPageList(PageInput<ViewModel> model)
+        [HttpPost]
+        public async Task<Page<ViewGetOutput>> GetPageList([FromBody] PageInput<ViewModel> model)
         {
             return await _viewService.GetPageListAsync(model);
         }

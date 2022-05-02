@@ -4,7 +4,7 @@ const apiPrefix = `${process.env.VUE_APP_BASE_API}/${scope}/{{model.taxon}}/`
 
 // {{model.function_module}}管理
 export const getPageList = (params, config = {}) => {
-    return request.post(apiPrefix + 'getPageList', params, config)
+    return request.post(apiPrefix + 'GetPageList', params, config)
 }
 export const get = (params, config = {}) => {
     return request.get(apiPrefix + 'get', { params: params, ...config })

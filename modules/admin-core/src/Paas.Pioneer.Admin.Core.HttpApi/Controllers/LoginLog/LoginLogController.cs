@@ -35,7 +35,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<Page<LoginLogOutput>> GetPageList(PageInput<LoginLogModel> model)
+        public async Task<Page<LoginLogOutput>> GetPageList([FromBody] PageInput<LoginLogModel> model)
         {
             return await _loginLogService.GetPageListAsync(model);
         }

@@ -30,8 +30,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.DictionaryType
 
             var key = model.Filter?.Name;
             var list = dbSet
-            .WhereIf(!key.IsNullOrEmpty(), a => a.Name.Contains(key) || a.Code.Contains(key))
-            .AsNoTracking();
+            .WhereIf(!key.IsNullOrEmpty(), a => a.Name.Contains(key) || a.Code.Contains(key));
 
             var data = new Page<DictionaryTypeOutput>()
             {

@@ -19,7 +19,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
     [Authorize]
     public class SlideshowController : AbpController
     {
-        
+
         private readonly ISlideshowService _slideshowService;
 
         /// <summary>
@@ -46,8 +46,8 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<Page<GetSlideshowPageListOutput>> GetPageList(PageInput<GetSlideshowPageListInput> input)
+        [HttpPost]
+        public async Task<Page<GetSlideshowPageListOutput>> GetPageList([FromBody] PageInput<GetSlideshowPageListInput> input)
         {
             return await _slideshowService.GetPageListAsync(input);
         }

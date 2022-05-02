@@ -29,7 +29,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.Dictionary
             var dictionaryTypeId = input.Filter?.DictionaryTypeId;
             var data = dbSet
             .WhereIf(dictionaryTypeId.HasValue && dictionaryTypeId != Guid.Empty, a => a.DictionaryTypeId == dictionaryTypeId)
-            .WhereIf(!key.IsNullOrEmpty(), a => a.Name.Contains(key) || a.Code.Contains(key)).AsNoTracking();
+            .WhereIf(!key.IsNullOrEmpty(), a => a.Name.Contains(key) || a.Code.Contains(key));
 
             var pageList = new Page<DictionaryPageListOutput>()
             {
