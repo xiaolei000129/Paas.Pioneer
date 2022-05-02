@@ -9,6 +9,8 @@ using System;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
+using System.Collections.Generic;
+using Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
 {
@@ -50,6 +52,17 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         public async Task<Page<DictionaryTypeOutput>> GetPageList([FromBody] PageInput<DictionaryTypeInput> model)
         {
             return await _dictionaryTypeService.GetPageListAsync(model);
+        }
+
+        /// <summary>
+        /// 查询Code列表
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<List<GetDictionaryOutput>> GetCodeList(GetCodeListInput input)
+        {
+            return await _dictionaryTypeService.GetCodeListAsync(input);
         }
 
         /// <summary>

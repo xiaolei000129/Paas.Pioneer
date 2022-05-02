@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Services;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.DictionaryType
 {
@@ -67,6 +68,11 @@ namespace Paas.Pioneer.Admin.Core.Application.DictionaryType
                 Name = x.Name,
             });
             return result;
+        }
+
+        public async Task<List<GetDictionaryOutput>> GetCodeListAsync(GetCodeListInput input)
+        {
+            return await _dictionaryTypeRepository.GetCodeListAsync(input);
         }
 
         /// <summary>

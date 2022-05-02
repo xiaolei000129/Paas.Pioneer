@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary.Dto.Input;
+using System;
 
-namespace Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary.Dto.Input
+namespace Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary.Dto.Output
 {
-    /// <summary>
-    /// 修改
-    /// </summary>
-    public class DictionaryUpdateInput
+    public class GetDictionaryOutput
     {
         /// <summary>
         /// 主键Id

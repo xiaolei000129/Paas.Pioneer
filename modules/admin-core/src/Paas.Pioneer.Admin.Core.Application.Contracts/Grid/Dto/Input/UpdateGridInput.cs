@@ -42,43 +42,25 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Grid.Dto.Input
         /// <summary>
         /// 拓展信息
         /// </summary>
-        [Required(ErrorMessage = "请输入拓展信息")]
         public string Expand { get; set; }
 
 
         /// <summary>
         /// 排序
         /// </summary>
-        [Required(ErrorMessage = "请输入排序")]
         public int Sort { get; set; }
 
 
         /// <summary>
         /// 描述
         /// </summary>
-        [Required(ErrorMessage = "请输入描述")]
         public string Description { get; set; }
-
-
-        /// <summary>
-        /// 修改时间
-        /// </summary>
-        [Required(ErrorMessage = "请输入修改时间")]
-        public DateTime? LastModificationTime { get; set; }
-
-
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        [Required(ErrorMessage = "请输入创建时间")]
-        public DateTime CreationTime { get; set; }
-
 
         /// <summary>
         /// 
         /// </summary>
-        [NotEqual("00000000-0000-0000-0000-000000000000", ErrorMessage = "请输入")]
-        [Required(ErrorMessage = "请输入")]
+        [NotEqual("00000000-0000-0000-0000-000000000000", ErrorMessage = "请输入Id")]
+        [Required(ErrorMessage = "请输入Id")]
         public Guid Id { get; set; }
 
     }

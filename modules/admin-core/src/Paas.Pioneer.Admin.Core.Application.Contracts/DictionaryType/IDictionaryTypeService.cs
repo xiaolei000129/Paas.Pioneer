@@ -1,12 +1,12 @@
 ﻿using Paas.Pioneer.Admin.Core.Application.Contracts.DictionaryType.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.DictionaryType.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.Contracts.DictionaryType
 {
@@ -23,5 +23,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.DictionaryType
         Task DeleteAsync(Guid id);
 
         Task BatchSoftDeleteAsync(IEnumerable<Guid> ids);
+
+        Task<List<GetDictionaryOutput>> GetCodeListAsync(GetCodeListInput input);
     }
 }

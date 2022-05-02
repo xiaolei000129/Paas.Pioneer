@@ -36,7 +36,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<DictionaryGetOutput> Get(Guid id)
+        public async Task<GetDictionaryOutput> Get(Guid id)
         {
             return await _dictionaryService.GetAsync(id);
         }

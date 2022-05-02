@@ -30,9 +30,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Dictionary
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<DictionaryGetOutput> GetAsync(Guid id)
+        public async Task<GetDictionaryOutput> GetAsync(Guid id)
         {
-            var result = await _dictionaryRepository.GetAsync(p => p.Id == id, x => new DictionaryGetOutput()
+            var result = await _dictionaryRepository.GetAsync(p => p.Id == id, x => new GetDictionaryOutput()
             {
                 Id = x.Id,
                 Code = x.Code,

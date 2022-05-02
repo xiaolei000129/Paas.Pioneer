@@ -16,7 +16,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<DictionaryGetOutput> GetAsync(Guid id);
+        Task<GetDictionaryOutput> GetAsync(Guid id);
 
         /// <summary>
         /// 分页获取
