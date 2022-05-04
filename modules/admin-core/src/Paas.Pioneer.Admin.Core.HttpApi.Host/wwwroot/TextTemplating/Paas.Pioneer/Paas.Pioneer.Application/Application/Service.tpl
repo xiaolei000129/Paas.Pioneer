@@ -4,7 +4,6 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.{{model.taxon}}.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.{{model.taxon}}.Dto.Output;
 using Paas.Pioneer.Admin.Core.Domain.{{model.taxon}};
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;
@@ -13,6 +12,8 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
 {
@@ -40,15 +41,15 @@ namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Get{{model.taxon}}Output>> GetAsync(Guid id)
+        public async Task<Get{{model.taxon}}Output> GetAsync(Guid id)
         {
-            var result = await _{{ initial_lower }}Repository.GetAsync(p=>p.Id==id, x => new Get{{model.taxon}}Output()
+            var result = await _{{ initial_lower }}Repository.GetAsync(p=>p.Id == id, x => new Get{{model.taxon}}Output()
             {
                 {{~ for item in model.low_code_table_config_list ~}}
                 {{ item.column_name }} = x.{{ item.column_name }},
                 {{~ end ~}}
             });
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
         /// <summary>
@@ -56,10 +57,15 @@ namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<Get{{model.taxon}}PageListOutput>>> GetPageListAsync(PageInput<Get{{model.taxon}}PageListInput> input)
+        public async Task<Page<Get{{model.taxon}}PageListOutput>> GetPageListAsync(PageInput<Get{{model.taxon}}PageListInput> input)
         {
-            var data = await _{{ initial_lower }}Repository.GetPageListAsync(model);
-            return ResponseOutput.Succees(data);
+            var data = await _{{ initial_lower }}Repository.GetResponseOutputPageListAsync(x => new Get{{model.taxon}}PageListOutput
+            {
+                {{~ for item in model.low_code_table_config_list ~}}
+                {{ item.column_name }} = x.{{ item.column_name }},
+                {{~ end ~}}
+            }, input: input);
+            return data;
         }
 
         /// <summary>
@@ -67,11 +73,10 @@ namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> AddAsync(Add{{model.taxon}}Input input)
+        public async Task AddAsync(Add{{model.taxon}}Input input)
         {
             var {{ initial_lower }} = ObjectMapper.Map<Add{{model.taxon}}Input, {{ model.low_code_table_name }}>(input);
             await _{{ initial_lower }}Repository.InsertAsync({{ initial_lower }});
-            return ResponseOutput.Succees("添加成功！");
         }
 
         /// <summary>
@@ -79,16 +84,15 @@ namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
         /// </summary>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> UpdateAsync(Update{{model.taxon}}Input input)
+        public async Task UpdateAsync(Update{{model.taxon}}Input input)
         {
             var entity = await _{{ initial_lower }}Repository.GetAsync(input.Id);
             if (entity?.Id == Guid.Empty)
             {
-                return ResponseOutput.Error("数据不存在！");
+                throw new BusinessException("数据不存在！");
             }
             ObjectMapper.Map(input, entity);
             await _{{ initial_lower }}Repository.UpdateAsync(entity);
-            return ResponseOutput.Succees("修改成功！");
         }
 
         /// <summary>
@@ -96,10 +100,9 @@ namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             await _{{ initial_lower }}Repository.DeleteAsync(m => m.Id == id);
-            return ResponseOutput.Succees("删除成功！");
         }
 
         /// <summary>
@@ -107,10 +110,9 @@ namespace Paas.Pioneer.Admin.Core.Application.{{model.taxon}}
         /// </summary>
         /// <param name="ids">主键集合</param>
         /// <returns></returns>
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(IEnumerable<Guid> ids)
+        public async Task BatchSoftDeleteAsync(IEnumerable<Guid> ids)
         {
             await _{{ initial_lower }}Repository.DeleteAsync(x => ids.Contains(x.Id));
-            return ResponseOutput.Succees("删除成功！");
         }
     }
 }

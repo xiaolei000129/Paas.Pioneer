@@ -23,11 +23,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
-		<PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="5.1.1" />
-		<PackageReference Include="Volo.Abp.Autofac" Version="5.1.1" />
-		<PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="5.1.1" />
-		<PackageReference Include="Paas.Pioneer.Knife4jUI.Swagger" Version="5.1.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
+		<PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.Autofac" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="5.2.1" />
+		<PackageReference Include="Paas.Pioneer.Knife4jUI.Swagger" Version="5.2.5" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -105,37 +105,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="wwwroot\captcha\" />
 		<Folder Include="wwwroot\upload\" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Update="wwwroot\captcha\jigsaw\1.jpg">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="wwwroot\captcha\jigsaw\2.jpg">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="wwwroot\captcha\jigsaw\3.jpg">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="wwwroot\captcha\jigsaw\templates\1.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="wwwroot\captcha\jigsaw\templates\2.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="wwwroot\captcha\jigsaw\templates\3.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="wwwroot\captcha\jigsaw\templates\4.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="wwwroot\captcha\jigsaw\templates\5.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="wwwroot\captcha\jigsaw\templates\6.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
 	</ItemGroup>
 
 	<ProjectExtensions>

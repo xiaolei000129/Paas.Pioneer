@@ -3,11 +3,13 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary.Dto.Output;
 using Paas.Pioneer.Admin.Core.Domain.Dictionary;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.Dictionary
 {
@@ -28,9 +30,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Dictionary
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<ResponseOutput<DictionaryGetOutput>> GetAsync(Guid id)
+        public async Task<GetDictionaryOutput> GetAsync(Guid id)
         {
-            var result = await _dictionaryRepository.GetAsync(p => p.Id == id, x => new DictionaryGetOutput()
+            var result = await _dictionaryRepository.GetAsync(p => p.Id == id, x => new GetDictionaryOutput()
             {
                 Id = x.Id,
                 Code = x.Code,
@@ -40,7 +42,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Dictionary
                 Name = x.Name,
                 Value = x.Value,
             });
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
         /// <summary>
@@ -48,10 +50,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Dictionary
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<DictionaryPageListOutput>>> GetPageListAsync(PageInput<DictionaryInput> input)
+        public async Task<Page<DictionaryPageListOutput>> GetPageListAsync(PageInput<DictionaryInput> input)
         {
             var data = await _dictionaryRepository.GetPageListAsync(input);
-            return ResponseOutput.Succees(data);
+            return data;
         }
 
         /// <summary>
@@ -59,15 +61,14 @@ namespace Paas.Pioneer.Admin.Core.Application.Dictionary
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> AddAsync(DictionaryAddInput input)
+        public async Task AddAsync(DictionaryAddInput input)
         {
             if (await _dictionaryRepository.AnyAsync(x => x.DictionaryTypeId == input.DictionaryTypeId && x.Code == input.Code))
             {
-                return ResponseOutput.Error("字典编码已存在！");
+                throw new BusinessException("字典编码已存在！");
             }
             var dictionary = ObjectMapper.Map<DictionaryAddInput, Ad_DictionaryEntity>(input);
             await _dictionaryRepository.InsertAsync(dictionary);
-            return ResponseOutput.Succees("添加成功！");
         }
 
         /// <summary>
@@ -75,20 +76,19 @@ namespace Paas.Pioneer.Admin.Core.Application.Dictionary
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> UpdateAsync(DictionaryUpdateInput input)
+        public async Task UpdateAsync(DictionaryUpdateInput input)
         {
             var entity = await _dictionaryRepository.GetAsync(input.Id);
             if (entity?.Id == Guid.Empty)
             {
-                return ResponseOutput.Error("数据字典不存在！");
+                throw new BusinessException("数据字典不存在！");
             }
             if (await _dictionaryRepository.AnyAsync(x => x.Id != input.Id && x.DictionaryTypeId == input.DictionaryTypeId && x.Code == input.Code))
             {
-                return ResponseOutput.Error("字典编码已存在！");
+                throw new BusinessException("字典编码已存在！");
             }
             ObjectMapper.Map(input, entity);
             await _dictionaryRepository.UpdateAsync(entity);
-            return ResponseOutput.Succees("修改成功！");
         }
 
         /// <summary>
@@ -96,10 +96,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Dictionary
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             await _dictionaryRepository.DeleteAsync(m => m.Id == id);
-            return ResponseOutput.Succees("删除成功！");
         }
 
         /// <summary>
@@ -107,10 +106,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Dictionary
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(Guid[] ids)
+        public async Task BatchSoftDeleteAsync(Guid[] ids)
         {
             await _dictionaryRepository.DeleteAsync(x => ids.Contains(x.Id));
-            return ResponseOutput.Succees("删除成功！");
         }
     }
 }

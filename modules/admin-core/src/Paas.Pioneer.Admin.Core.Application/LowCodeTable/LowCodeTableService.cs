@@ -15,7 +15,6 @@ using Paas.Pioneer.Admin.Core.Domain.Shared.Helpers;
 using Paas.Pioneer.Admin.Core.Domain.Shared.TextTemplatingDefinition;
 using Paas.Pioneer.Admin.Core.Domain.View;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;
@@ -24,9 +23,11 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.TextTemplating;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
 {
@@ -63,47 +64,44 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
             _permissionApiRepository = permissionApiRepository;
         }
 
-        public async Task<IResponseOutput> AddLowCodeTableAsync(AddLowCodeTableInput input)
+        public async Task AddLowCodeTableAsync(AddLowCodeTableInput input)
         {
             // 验证是否已存在
             bool isExist = await _lowCodeTableRepository.AnyAsync(x => x.LowCodeTableName == input.LowCodeTableName);
             if (isExist)
-                return ResponseOutput.Error<bool>(msg: "已经存在该表");
+                throw new BusinessException("已经存在该表");
 
             var entity = ObjectMapper.Map<AddLowCodeTableInput, Ad_LowCodeTableEntity>(input);
             await _lowCodeTableRepository.InsertAsync(entity);
-            return ResponseOutput.Succees(true);
         }
 
-        public async Task<IResponseOutput> EditLowCodeTableAsync(EditLowCodeTableInput input)
+        public async Task EditLowCodeTableAsync(EditLowCodeTableInput input)
         {
             // 验证除自身外是否已存在
             bool isExist = await _lowCodeTableRepository
                 .AnyAsync(x => x.LowCodeTableName == input.LowCodeTableName && x.Id != input.Id);
 
             if (isExist)
-                return ResponseOutput.Error<bool>(msg: "已经存在该表");
+                throw new BusinessException("已经存在该表");
 
             var table = await _lowCodeTableRepository.GetAsync(input.Id);
             ObjectMapper.Map(input, table);
 
             await _lowCodeTableRepository.UpdateAsync(table);
-            return ResponseOutput.Succees(true);
         }
 
-        public async Task<IResponseOutput> DelLowCodeTableAsync(Guid id)
+        public async Task DelLowCodeTableAsync(Guid id)
         {
             await _lowCodeTableRepository.DeleteAsync(m => m.Id == id);
-            return ResponseOutput.Succees(true);
         }
 
-        public async Task<ResponseOutput<Page<LowCodeTableOutput>>> GetLowCodeTablePageListAsync(PageInput<GetLowCodeTablePadedInput> input)
+        public async Task<Page<LowCodeTableOutput>> GetLowCodeTablePageListAsync(PageInput<GetLowCodeTablePadedInput> input)
         {
             var data = await _lowCodeTableRepository.GetLowCodeTablePageListAsync(input);
-            return ResponseOutput.Succees(data);
+            return data;
         }
 
-        public async Task<IResponseOutput<LowCodeTableOutput>> GetAsync(Guid id)
+        public async Task<LowCodeTableOutput> GetAsync(Guid id)
         {
             var result = await _lowCodeTableRepository.GetAsync(x => x.Id == id, x => new LowCodeTableOutput()
             {
@@ -116,19 +114,18 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 MenuName = x.MenuName,
                 Taxon = x.Taxon
             });
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> BatchDeleteAsync(IEnumerable<Guid> ids)
+        public async Task BatchDeleteAsync(IEnumerable<Guid> ids)
         {
             await _lowCodeTableRepository.DeleteAsync(x => ids.Contains(x.Id));
-            return ResponseOutput.Succees();
         }
 
-        public async Task<IResponseOutput<IEnumerable<LowCodeTableEntityOutput>>> GetTableEntityListAsync()
+        public async Task<IEnumerable<LowCodeTableEntityOutput>> GetTableEntityListAsync()
         {
             var _dbContext = await _lowCodeTableRepository.GetDbContextAsync();
-            return ResponseOutput.Succees(_dbContext.Model.GetEntityTypes().Select(u =>
+            return _dbContext.Model.GetEntityTypes().Select(u =>
                 {
                     var constructorArgument = ((ConstructorBinding)u.ConstructorBinding)?
                          .RuntimeType?
@@ -141,30 +138,30 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                         TableName = u.GetDefaultTableName(),
                         TableComment = constructorArgument?.Value?.ToString(),
                     };
-                }));
+                });
         }
 
-        public async Task<IResponseOutput<List<LowCodeTableColumnOutput>>> GetColumnListByTableNameAsync(Guid id)
+        public async Task<List<LowCodeTableColumnOutput>> GetColumnListByTableNameAsync(Guid id)
         {
             var _dbContext = await _lowCodeTableRepository.GetDbContextAsync();
             var lowCodeTableName = await _lowCodeTableRepository.GetAsync(x => x.Id == id, x => x.LowCodeTableName);
 
             if (lowCodeTableName == null)
             {
-                return ResponseOutput.Error<List<LowCodeTableColumnOutput>>("数据错误");
+                throw new BusinessException("数据错误");
             }
             // 获取实体类型属性
             var entityType = _dbContext.Model.GetEntityTypes().FirstOrDefault(u => u.ClrType.Name == lowCodeTableName);
             if (entityType == null)
             {
-                return ResponseOutput.Error<List<LowCodeTableColumnOutput>>("数据错误");
+                throw new BusinessException("数据错误");
             }
 
             // 获取原始类型属性
             var type = entityType.ClrType;
             if (type == null)
             {
-                return ResponseOutput.Error<List<LowCodeTableColumnOutput>>("数据错误");
+                throw new BusinessException("数据错误");
             }
             // 获取实体字段列表
             List<LowCodeTableColumnOutput> lowCodeTableColumnList = type.GetProperties().Select(propertyInfo => entityType.FindProperty(propertyInfo.Name))
@@ -200,38 +197,57 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 }
             }
             // 按原始类型的顺序获取所有实体类型属性（不包含导航属性，会返回null）
-            return ResponseOutput.Succees(lowCodeTableColumnList);
+            return lowCodeTableColumnList;
         }
 
-        public async Task<IResponseOutput> GenerateCodeAsync(Guid id)
+        public async Task GenerateCodeAsync(Guid id)
         {
             try
             {
                 var lowCodeTable = await _lowCodeTableRepository.GetAsync(id);
                 if (lowCodeTable == null)
                 {
-                    return ResponseOutput.Error("数据错误");
+                    throw new BusinessException("数据错误");
                 }
                 var getColumnList = await GetColumnListByTableNameAsync(id);
-                if (!getColumnList.Success)
+                var generateCodeLowCodeTableOutput = ObjectMapper.Map<Ad_LowCodeTableEntity, GenerateCodeLowCodeTableOutput>(lowCodeTable);
+                generateCodeLowCodeTableOutput.LowCodeTableConfigList = ObjectMapper.Map<List<LowCodeTableColumnOutput>, List<GenerateCodeLowCodeTableConfigOutPut>>(getColumnList);
+                await GenerateCodeFileContentAsync(generateCodeLowCodeTableOutput);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task GenerateViewAsync(Guid id)
+        {
+            try
+            {
+                var lowCodeTable = await _lowCodeTableRepository.GetAsync(id);
+                if (lowCodeTable == null)
                 {
-                    return getColumnList;
+                    throw new BusinessException("数据错误");
                 }
                 var generateCodeLowCodeTableOutput = ObjectMapper.Map<Ad_LowCodeTableEntity, GenerateCodeLowCodeTableOutput>(lowCodeTable);
-                generateCodeLowCodeTableOutput.LowCodeTableConfigList = ObjectMapper.Map<List<LowCodeTableColumnOutput>, List<GenerateCodeLowCodeTableConfigOutPut>>(getColumnList.Data);
-                await GenerateCodeFileContentAsync(generateCodeLowCodeTableOutput);
                 await GeneratePermissionAsync(generateCodeLowCodeTableOutput);
             }
             catch (Exception ex)
             {
                 throw;
             }
-            return ResponseOutput.Succees("生成成功");
         }
 
         /// <summary>
         /// 生成代码文件内容
         /// </summary>
+        /// <param name="model"></param>
         /// <returns></returns>
         private async Task GenerateCodeFileContentAsync(GenerateCodeLowCodeTableOutput model)
         {
@@ -299,7 +315,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
             RazorTestTemplatesConsts.PaasPioneerEntityFrameworkCoreRepository, model);
 
             /// 生成仓储
-            await GenerateCodeFileAsync(GenerateCodeFileUrl.PaasPioneerEntityFrameworkCoreRepository($"{model.Taxon}/{model.Taxon}Repository.cs"), resultEntityFrameworkCoreRepository);
+            await GenerateCodeFileAsync(GenerateCodeFileUrl.PaasPioneerEntityFrameworkCoreRepository($"{model.Taxon}/EfCore{model.Taxon}Repository.cs"), resultEntityFrameworkCoreRepository);
 
             var resultVueJs = await _templateRenderer.RenderAsync(
             RazorTestTemplatesConsts.VueJs, model);
@@ -317,10 +333,12 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
         /// <summary>
         /// 生成代码文件
         /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="fileContent"></param>
         /// <returns></returns>
         private async Task GenerateCodeFileAsync(string fileName, string fileContent)
         {
-            string path = $"{AppContext.BaseDirectory.ToPath()}{fileName}";
+            string path = $"{AppContext.BaseDirectory}{fileName}";
             var dirPath = new DirectoryInfo(path).Parent.FullName;
             if (!Directory.Exists(dirPath))
                 Directory.CreateDirectory(dirPath);
@@ -334,8 +352,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
         private async Task GeneratePermissionAsync(GenerateCodeLowCodeTableOutput model)
         {
             #region 添加视图
-            // 添加视图
-            await _viewRepository.InsertAsync(new Ad_ViewEntity
+            var view = new Ad_ViewEntity
             {
                 ParentId = model.MenuParentId,
                 Cache = true,
@@ -343,8 +360,11 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 Description = model.Description,
                 Label = model.MenuName,
                 Name = model.Taxon,
-                Path = $"admin/{model.Taxon}",
-            });
+                Path = $"admin/{model.Taxon.ToLower()}",
+            };
+
+            // 添加视图
+            await _viewRepository.InsertAsync(view);
             #endregion
 
             #region 添加接口管理
@@ -352,7 +372,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
             var baseApi = new Ad_ApiEntity
             {
                 Enabled = true,
-                Label = $"{model.MenuName}管理",
+                Label = model.MenuName,
                 Path = model.Taxon.ToLower(),
                 CreationTime = DateTime.Now,
                 Description = model.Description,
@@ -433,29 +453,30 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
 
             #region 添加权限
             #region 添加分组
-            var permissionBase = new Ad_PermissionEntity
-            {
-                Type = EPermissionType.Group,
-                ParentId = Guid.Empty,
-                Closable = true,
-                Hidden = false,
-                Enabled = true,
-                Label = $"{model.MenuName}管理",
-                Description = model.Description,
-            };
-            await _permissionRepository.InsertAsync(permissionBase);
+            //var permissionBase = new Ad_PermissionEntity
+            //{
+            //    Type = EPermissionType.Group,
+            //    ParentId = Guid.Empty,
+            //    Closable = true,
+            //    Hidden = false,
+            //    Enabled = true,
+            //    Label = model.MenuName,
+            //    Description = model.Description,
+            //};
+            //await _permissionRepository.InsertAsync(permissionBase);
             #endregion
 
             #region 添加菜单
             var menuPermission = new Ad_PermissionEntity
             {
                 Type = EPermissionType.Menu,
-                ViewId = baseApi.Id,
-                ParentId = permissionBase.Id,
+                ViewId = view.Id,
+                // 默认到平台分组中
+                ParentId = new Guid("f60f1676-262f-4c1b-9ce7-e858cecf3270"),
                 Closable = true,
                 Hidden = false,
                 Enabled = true,
-                Label = $"{model.MenuName}管理",
+                Label = model.MenuName,
                 Path = $"/admin/{model.Taxon.ToLower()}",
                 Description = model.Description,
             };
@@ -471,7 +492,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 Hidden = false,
                 Enabled = true,
                 Label = $"获取{model.MenuName}",
-                Code = getApi.Path.ToLower().Replace("/", ":"),
+                Code = getApi.Path.TrimStart('/').ToLower().Replace("/", ":"),
                 Description = model.Description,
             };
             await _permissionRepository.InsertAsync(getPermission);
@@ -484,7 +505,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 Hidden = false,
                 Enabled = true,
                 Label = $"获取{model.MenuName}分页列表",
-                Code = getApiPageList.Path.ToLower().Replace("/", ":"),
+                Code = getApiPageList.Path.TrimStart('/').ToLower().Replace("/", ":"),
                 Description = model.Description,
             };
             await _permissionRepository.InsertAsync(getPermissionPageList);
@@ -497,7 +518,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 Hidden = false,
                 Enabled = true,
                 Label = $"添加{model.MenuName}",
-                Code = addApi.Path.ToLower().Replace("/", ":"),
+                Code = addApi.Path.TrimStart('/').ToLower().Replace("/", ":"),
                 Description = model.Description,
             };
             await _permissionRepository.InsertAsync(addPermission);
@@ -510,7 +531,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 Hidden = false,
                 Enabled = true,
                 Label = $"修改{model.MenuName}",
-                Code = updateApi.Path.ToLower().Replace("/", ":"),
+                Code = updateApi.Path.TrimStart('/').ToLower().Replace("/", ":"),
                 Description = model.Description,
             };
             await _permissionRepository.InsertAsync(updatePermission);
@@ -523,7 +544,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 Hidden = false,
                 Enabled = true,
                 Label = $"删除{model.MenuName}",
-                Code = deleteApi.Path.ToLower().Replace("/", ":"),
+                Code = deleteApi.Path.TrimStart('/').ToLower().Replace("/", ":"),
                 Description = model.Description,
             };
             await _permissionRepository.InsertAsync(deletePermission);
@@ -536,7 +557,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
                 Hidden = false,
                 Enabled = true,
                 Label = $"批量删除{model.MenuName}",
-                Code = batchSoftDeleteApi.Path.ToLower().Replace("/", ":"),
+                Code = batchSoftDeleteApi.Path.TrimStart('/').ToLower().Replace("/", ":"),
                 Description = model.Description,
             };
             await _permissionRepository.InsertAsync(batchSoftDeletePermission);

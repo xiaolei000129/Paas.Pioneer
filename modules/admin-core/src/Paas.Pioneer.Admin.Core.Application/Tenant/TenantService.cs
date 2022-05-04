@@ -8,17 +8,19 @@ using Paas.Pioneer.Admin.Core.Domain.RolePermission;
 using Paas.Pioneer.Admin.Core.Domain.User;
 using Paas.Pioneer.Admin.Core.Domain.UserRole;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Data;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.TenantManagement;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.Tenant
 {
@@ -48,11 +50,11 @@ namespace Paas.Pioneer.Admin.Core.Application.Tenant
             _permissionRepository = permissionRepository;
         }
 
-        public async Task<IResponseOutput> AddAsync(TenantAddInput input)
+        public async Task AddAsync(TenantAddInput input)
         {
             if (await _tenantRepository.AnyAsync(x => x.Name == input.Name.Trim()))
             {
-                return ResponseOutput.Error("租户已存在！");
+                throw new BusinessException("租户已存在！");
             }
             var entity = ObjectMapper.Map<TenantAddInput, Volo.Abp.TenantManagement.Tenant>(input);
             var tenant = await _tenantRepository.InsertAsync(entity, true);
@@ -89,10 +91,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Tenant
             tenant.SetProperty("UserId", user.Id);
             tenant.SetProperty("RoleId", role.Id);
             await _tenantRepository.UpdateAsync(tenant, true);
-            return ResponseOutput.Succees("操作成功");
         }
 
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(IEnumerable<Guid> ids)
+        public async Task BatchSoftDeleteAsync(IEnumerable<Guid> ids)
         {
             //删除用户
             await _userRepository.DeleteAsync(a => ids.Contains(a.TenantId.Value));
@@ -102,11 +103,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Tenant
 
             //删除租户
             await _tenantRepository.DeleteAsync(a => ids.Contains(a.Id));
-
-            return ResponseOutput.Succees("操作成功");
         }
 
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             var roleIds = await _roleRepository.GetListAsync(expression: x => x.TenantId == id, selector: x => x.Id, order: null);
             var userIds = await _userRepository.GetListAsync(expression: x => x.TenantId == id, selector: x => x.Id, order: null);
@@ -124,31 +123,29 @@ namespace Paas.Pioneer.Admin.Core.Application.Tenant
 
             //删除租户
             await _tenantRepository.HardDeleteAsync(a => a.Id == id);
-
-            return ResponseOutput.Succees();
         }
 
-        public async Task<ResponseOutput<TenantGetOutput>> GetAsync(Guid id)
+        public async Task<TenantGetOutput> GetAsync(Guid id)
         {
             var result = ObjectMapper.Map<Volo.Abp.TenantManagement.Tenant, TenantGetOutput>(await _tenantRepository.GetAsync(predicate: x => x.Id == id));
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
-        public async Task<ResponseOutput<Page<GetTenantPageListOutput>>> GetPageListAsync(PageInput<GetTenantsInput> input)
+        public async Task<Page<GetTenantPageListOutput>> GetPageListAsync(PageInput<GetTenantsInput> input)
         {
             var tenantQueryable = await _tenantRepository.GetQueryableAsync();
             var key = input.Filter?.Filter;
             var query = tenantQueryable.WhereIf(!key.IsNullOrEmpty(), x => x.Name.Contains(key));
             var tenantPageList = await query.OrderByDescending(x => x.CreationTime).Page(input.CurrentPage, input.PageSize).ToListAsync();
             var resultPageData = ObjectMapper.Map<List<Volo.Abp.TenantManagement.Tenant>, List<GetTenantPageListOutput>>(tenantPageList);
-            return ResponseOutput.Succees(new Page<GetTenantPageListOutput>
+            return new Page<GetTenantPageListOutput>
             {
                 Total = await query.CountAsync(),
                 List = resultPageData
-            });
+            };
         }
 
-        public async Task<IResponseOutput> SoftDeleteAsync(Guid id)
+        public async Task SoftDeleteAsync(Guid id)
         {
             //删除用户
             await _userRepository.DeleteAsync(a => a.TenantId == id);
@@ -158,20 +155,17 @@ namespace Paas.Pioneer.Admin.Core.Application.Tenant
 
             //删除租户
             await _tenantRepository.DeleteAsync(x => x.Id == id);
-
-            return ResponseOutput.Succees("删除成功");
         }
 
-        public async Task<IResponseOutput> UpdateAsync(TenantUpdateInput input)
+        public async Task UpdateAsync(TenantUpdateInput input)
         {
             var entity = await _tenantRepository.GetAsync(input.Id);
             if (entity == null)
             {
-                return ResponseOutput.Error("租户不存在！");
+                throw new BusinessException("租户不存在！");
             }
             ObjectMapper.Map(input, entity);
             await _tenantRepository.UpdateAsync(entity);
-            return ResponseOutput.Succees();
         }
     }
 }

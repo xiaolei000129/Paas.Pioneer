@@ -9,7 +9,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Dictionary
     {
         public _MapConfig()
         {
-            CreateMap<Ad_DictionaryEntity, DictionaryGetOutput>();
+            CreateMap<Ad_DictionaryEntity, GetDictionaryOutput>();
             CreateMap<DictionaryAddInput, Ad_DictionaryEntity>();
             CreateMap<DictionaryUpdateInput, Ad_DictionaryEntity>();
         }

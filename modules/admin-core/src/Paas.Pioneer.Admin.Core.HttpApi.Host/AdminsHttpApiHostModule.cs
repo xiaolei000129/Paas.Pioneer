@@ -1,3 +1,5 @@
+using Lazy.SlideCaptcha.Core.Resources;
+using Lazy.SlideCaptcha.Core.Resources.Handler;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -10,7 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Paas.Pioneer.Admin.Core.Application;
 using Paas.Pioneer.Admin.Core.Domain.Shared.MultiTenancy;
 using Paas.Pioneer.Admin.Core.EntityFrameworkCore.EntityFrameworkCore;
-using Paas.Pioneer.Admin.Core.HttpApi.Host.Filter;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Auth;
 using Paas.Pioneer.Knife4jUI.Swagger;
 using Paas.Pioneer.Middleware.Middleware.Extensions;
@@ -56,11 +58,12 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Host
 
             TextTemplatingScriban();
 
-            // 设置模型验证
-            context.Services.AddControllers(options =>
+            context.Services.AddSlideCaptcha(configuration, options =>
             {
-                // -1 为过滤器的优先级
-                options.Filters.Add<ModelValidAttribute>(-1);
+                for (int i = 1; i < 11; i++)
+                {
+                    options.Backgrounds.Add(new Resource(FileResourceHandler.TYPE, @$"wwwroot/captcha/images/background/{i}.jpg"));
+                }
             });
         }
 
@@ -117,14 +120,24 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Host
                 app.UseDeveloperExceptionPage();
             }
 
-            //全局日志中间件
-            app.UseLoggerMiddleware();
-
             // 生成全局唯一Id
             app.UseCorrelationId();
 
             //路由
             app.UseRouting();
+
+            // 格式化
+            app.UseApiResponseAndExceptionWrapper(new AutoWrapperOptions
+            {
+                ShowIsErrorFlagForSuccessfulResponse = true,
+                ExcludePaths = new AutoWrapperExcludePath[] {
+                    // 严格匹配
+                    new AutoWrapperExcludePath("/v1/api-docs", ExcludeMode.StartWith),
+                }
+            });
+
+            //全局日志中间件
+            app.UseLoggerMiddleware();
 
             //跨域
             app.UseCors();

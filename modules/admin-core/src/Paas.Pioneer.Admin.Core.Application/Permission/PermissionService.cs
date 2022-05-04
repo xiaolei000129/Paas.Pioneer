@@ -14,8 +14,7 @@ using Paas.Pioneer.Admin.Core.Domain.User;
 using Paas.Pioneer.Admin.Core.Domain.UserRole;
 using Paas.Pioneer.Domain.Shared.Auth;
 using Paas.Pioneer.Domain.Shared.Configs;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
-using Paas.Pioneer.Domain.Shared.Extensions;
+using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,9 +22,11 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.MultiTenancy;
+using EasyCaching.Core;
 
 namespace Paas.Pioneer.Admin.Core.Application.Permission
 {
@@ -40,6 +41,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
         private readonly IUserRepository _userRepository;
         private readonly RedisAdminKeys _redisAdminKeys;
         private readonly AppConfig _appConfig;
+        private readonly IRedisCachingProvider _redisCachingProvider;
 
         public PermissionService(
             IOptions<AppConfig> appConfig,
@@ -50,7 +52,8 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
             IUserRoleRepository userRoleRepository,
             IPermissionApiRepository permissionApiRepository,
             IUserRepository userRepository,
-            RedisAdminKeys redisAdminKeys
+            RedisAdminKeys redisAdminKeys,
+            IRedisCachingProvider redisCachingProvider
         )
         {
             _permissionRepository = permissionRepository;
@@ -62,9 +65,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
             _userRepository = userRepository;
             _redisAdminKeys = redisAdminKeys;
             _appConfig = appConfig.Value;
+            _redisCachingProvider = redisCachingProvider;
         }
 
-        public async Task<ResponseOutput<PermissionGetGroupOutput>> GetGroupAsync(Guid id)
+        public async Task<PermissionGetGroupOutput> GetGroupAsync(Guid id)
         {
             var result = await _permissionRepository.GetAsync(expression: x => x.Id == id, selector: x => new PermissionGetGroupOutput()
             {
@@ -76,12 +80,12 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
                 ParentId = x.ParentId,
                 Type = x.Type,
             });
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
-        public async Task<ResponseOutput<PermissionGetMenuOutput>> GetMenuAsync(Guid id)
+        public async Task<PermissionGetMenuOutput> GetMenuAsync(Guid id)
         {
-            var result = await _permissionRepository.GetAsync(expression: x => x.Id == id, selector: x => new PermissionGetMenuOutput()
+            return await _permissionRepository.GetAsync(expression: x => x.Id == id, selector: x => new PermissionGetMenuOutput()
             {
                 Id = x.Id,
                 Closable = x.Closable,
@@ -96,10 +100,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
                 Type = x.Type,
                 ViewId = x.ViewId,
             });
-            return ResponseOutput.Succees(result);
         }
 
-        public async Task<ResponseOutput<PermissionGetApiOutput>> GetApiAsync(Guid id)
+        public async Task<PermissionGetApiOutput> GetApiAsync(Guid id)
         {
             var result = await _permissionRepository.GetAsync(expression: x => x.Id == id, selector: x => new PermissionGetApiOutput()
             {
@@ -112,10 +115,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
                 ParentId = x.ParentId,
                 Type = x.Type,
             });
-            return ResponseOutput.Succees(result);
+            return result;
         }
 
-        public async Task<ResponseOutput<PermissionGetDotOutput>> GetDotAsync(Guid id)
+        public async Task<PermissionGetDotOutput> GetDotAsync(Guid id)
         {
             var output = await _permissionRepository.GetAsync(expression: x => x.Id == id, selector: x => new PermissionGetDotOutput()
             {
@@ -128,10 +131,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
                 Type = x.Type,
             });
             output.ApiIds = await _permissionApiRepository.GetApiIdListByPermissionIdAsync(id);
-            return ResponseOutput.Succees(output);
+            return output;
         }
 
-        public async Task<ResponseOutput<List<PermissionListOutput>>> GetListAsync(string key, DateTime? start, DateTime? end)
+        public async Task<List<PermissionListOutput>> GetListAsync(string key, DateTime? start, DateTime? end)
         {
             if (end.HasValue)
             {
@@ -139,7 +142,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
             }
 
             Expression<Func<Ad_PermissionEntity, bool>> predicate = x => true;
-            if (key.NotNull())
+            if (!key.IsNullOrEmpty())
             {
                 predicate = predicate.And(a => a.Path.Contains(key) || a.Label.Contains(key));
             }
@@ -164,37 +167,32 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
 
             var apis = await _permissionApiRepository.GetListAsync();
 
-            foreach (var item in list.Data)
+            foreach (var item in list)
             {
                 item.ApiPaths = string.Join(";", apis.Where(b => b.PermissionId == item.Id).Select(b => b.Id));
             }
             return list;
         }
 
-        public async Task<IResponseOutput> AddGroupAsync(PermissionAddGroupInput input)
+        public async Task AddGroupAsync(PermissionAddGroupInput input)
         {
             var entity = ObjectMapper.Map<PermissionAddGroupInput, Ad_PermissionEntity>(input);
             await _permissionRepository.InsertAsync(entity);
-
-            return ResponseOutput.Succees("添加成功！");
         }
 
-        public async Task<IResponseOutput> AddMenuAsync(PermissionAddMenuInput input)
+        public async Task AddMenuAsync(PermissionAddMenuInput input)
         {
             var entity = ObjectMapper.Map<PermissionAddMenuInput, Ad_PermissionEntity>(input);
             await _permissionRepository.InsertAsync(entity);
-
-            return ResponseOutput.Succees("添加成功！");
         }
 
-        public async Task<IResponseOutput> AddApiAsync(PermissionAddApiInput input)
+        public async Task AddApiAsync(PermissionAddApiInput input)
         {
             var entity = ObjectMapper.Map<PermissionAddApiInput, Ad_PermissionEntity>(input);
             await _permissionRepository.InsertAsync(entity);
-            return ResponseOutput.Succees("添加成功！");
         }
 
-        public async Task<IResponseOutput> AddDotAsync(PermissionAddDotInput input)
+        public async Task AddDotAsync(PermissionAddDotInput input)
         {
             var entity = ObjectMapper.Map<PermissionAddDotInput, Ad_PermissionEntity>(input);
             var id = (await _permissionRepository.InsertAsync(entity)).Id;
@@ -204,45 +202,37 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
                 var permissionApis = input.ApiIds.Select(a => new Ad_PermissionApiEntity { PermissionId = id, ApiId = a });
                 await _permissionApiRepository.InsertManyAsync(permissionApis);
             }
-
-            return ResponseOutput.Succees("添加成功！");
         }
 
-        public async Task<IResponseOutput> UpdateGroupAsync(PermissionUpdateGroupInput input)
+        public async Task UpdateGroupAsync(PermissionUpdateGroupInput input)
         {
 
             var entity = await _permissionRepository.GetAsync(input.Id);
             entity = ObjectMapper.Map(input, entity);
             await _permissionRepository.UpdateAsync(entity);
-
-            return ResponseOutput.Succees("修改成功！");
         }
 
-        public async Task<IResponseOutput> UpdateMenuAsync(PermissionUpdateMenuInput input)
+        public async Task UpdateMenuAsync(PermissionUpdateMenuInput input)
         {
             var entity = await _permissionRepository.GetAsync(input.Id);
             entity = ObjectMapper.Map(input, entity);
             await _permissionRepository.UpdateAsync(entity);
-
-            return ResponseOutput.Succees("修改成功！");
         }
 
-        public async Task<IResponseOutput> UpdateApiAsync(PermissionUpdateApiInput input)
+        public async Task UpdateApiAsync(PermissionUpdateApiInput input)
         {
 
             var entity = await _permissionRepository.GetAsync(input.Id);
             entity = ObjectMapper.Map(input, entity);
             await _permissionRepository.UpdateAsync(entity);
-
-            return ResponseOutput.Succees("修改成功！");
         }
 
-        public async Task<IResponseOutput> UpdateDotAsync(PermissionUpdateDotInput input)
+        public async Task UpdateDotAsync(PermissionUpdateDotInput input)
         {
             var entity = await _permissionRepository.GetAsync(input.Id);
             if (!(entity?.Id != Guid.Empty))
             {
-                return ResponseOutput.Succees("权限点不存在！");
+                throw new BusinessException("权限点不存在！");
             }
 
             ObjectMapper.Map(input, entity);
@@ -255,18 +245,17 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
                 var permissionApis = input.ApiIds.Select(a => new Ad_PermissionApiEntity { PermissionId = entity.Id, ApiId = a });
                 await _permissionApiRepository.InsertManyAsync(permissionApis);
             }
-            return ResponseOutput.Succees("修改成功！");
         }
 
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             var list = await _permissionRepository.ToListAsync();
 
-            var model = list.Where(a => a.Id == id).FirstOrDefault();
+            var model = list.FirstOrDefault(a => a.Id == id);
 
             if (model == null)
             {
-                return ResponseOutput.Error("权限点不存在！");
+                throw new BusinessException("权限点不存在！");
             }
 
             var permissionData = ObjectMapper.Map<List<Ad_PermissionEntity>, List<PermissionDataOutput>>(list);
@@ -283,8 +272,6 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
 
             //删除相关权限
             await _permissionRepository.DeleteAsync(a => ids.Contains(a.Id));
-
-            return ResponseOutput.Succees("删除成功！");
         }
 
         /// <summary>
@@ -304,13 +291,13 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
             }
         }
 
-        public async Task<IResponseOutput> AssignAsync(PermissionAssignInput input)
+        public async Task AssignAsync(PermissionAssignInput input)
         {
             //分配权限的时候判断角色是否存在
             var exists = await _roleRepository.AnyAsync(a => a.Id == input.RoleId);
             if (!exists)
             {
-                return ResponseOutput.Succees("该角色不存在或已被删除！");
+                throw new BusinessException("该角色不存在或已被删除！");
             }
 
             //查询角色权限
@@ -349,12 +336,14 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
             var userIds = await _userRoleRepository.GetUserIdListByRoleIdAsync(input.RoleId);
             if (userIds.Any())
             {
-                await RedisHelper.DelAsync(userIds.Select(x => string.Format(_redisAdminKeys.UserPermissions, x)).ToArray());
+                foreach (var key in userIds.Select(x => string.Format(_redisAdminKeys.UserPermissions, x)))
+                {
+                    await _redisCachingProvider.KeyDelAsync(key);
+                }
             }
-            return ResponseOutput.Succees("保存成功！");
         }
 
-        public async Task<IResponseOutput> GetPermissionListAsync()
+        public async Task<object> GetPermissionListAsync()
         {
             Expression<Func<Ad_PermissionEntity, bool>> predicate = x => true;
 
@@ -374,11 +363,11 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
                 x => x.OrderBy(p => p.Sort));
 
 
-            var apis = permissions.Data
+            var apis = permissions
                 .Where(a => a.Type == EPermissionType.Dot)
                 .Select(a => new { a.Id, a.ParentId, a.Label });
 
-            var menus = permissions.Data
+            var menus = permissions
                 .Where(a => (new[] {
                     EPermissionType.Group,
                     EPermissionType.Menu
@@ -390,33 +379,33 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
                     a.Label,
                     Apis = apis.Where(b => b.ParentId == a.Id).Select(b => new { b.Id, b.Label })
                 });
-            return ResponseOutput.Succees(menus);
+            return menus;
         }
 
-        public async Task<ResponseOutput<List<Guid>>> GetRolePermissionListAsync(Guid roleId)
+        public async Task<List<Guid>> GetRolePermissionListAsync(Guid roleId)
         {
             var permissionIds = await _rolePermissionRepository.GetPermissionIdListByRoleIdAsync(roleId);
-            return ResponseOutput.Succees(permissionIds);
+            return permissionIds;
         }
 
-        public async Task<ResponseOutput<IEnumerable<Guid>>> GetTenantPermissionListAsync(Guid tenantId)
+        public async Task<IEnumerable<Guid>> GetTenantPermissionListAsync(Guid tenantId)
         {
             if (CurrentUser.FindClaim(ClaimAttributes.TenantType).Value != ETenantType.Platform.ToString())
             {
-                return ResponseOutput.Error<IEnumerable<Guid>>("权限不足");
+                throw new BusinessException("权限不足");
             }
             using (DataFilter.Disable<IMultiTenant>())
             {
                 var permissionIds = await _tenantPermissionRepository.GetPermissionIdListByTenantIdAsync(tenantId);
-                return ResponseOutput.Succees(permissionIds);
+                return permissionIds;
             }
         }
 
-        public async Task<IResponseOutput> SaveTenantPermissionsAsync(PermissionSaveTenantPermissionsInput input)
+        public async Task SaveTenantPermissionsAsync(PermissionSaveTenantPermissionsInput input)
         {
             if (CurrentUser.FindClaim(ClaimAttributes.TenantType).Value != ETenantType.Platform.ToString())
             {
-                return ResponseOutput.Error<IEnumerable<Guid>>("权限不足");
+                throw new BusinessException("权限不足");
             }
             using (DataFilter.Disable<IMultiTenant>())
             {
@@ -469,10 +458,12 @@ namespace Paas.Pioneer.Admin.Core.Application.Permission
                 var userIds = await _userRepository.GetUserIdListByTenantIdAsync(input.TenantId);
                 if (userIds.Any())
                 {
-                    await RedisHelper.DelAsync(userIds.Select(x => string.Format(_redisAdminKeys.UserPermissions, x)).ToArray());
+                    foreach (var key in userIds.Select(x => string.Format(_redisAdminKeys.UserPermissions, x)))
+                    {
+                        await _redisCachingProvider.KeyDelAsync(key);
+                    }
                 }
             }
-            return ResponseOutput.Succees("操作成功");
         }
     }
 }

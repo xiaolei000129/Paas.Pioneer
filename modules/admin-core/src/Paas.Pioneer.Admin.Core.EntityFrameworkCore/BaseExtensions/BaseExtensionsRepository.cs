@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Paas.Pioneer.Admin.Core.Domain.BaseExtensions;
 using Paas.Pioneer.Admin.Core.EntityFrameworkCore.EntityFrameworkCore;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;
@@ -18,6 +18,7 @@ using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
 {
@@ -113,7 +114,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
         /// <param name="expression">表达式</param>
         /// <param name="order">排序</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<List<TEntity>>> GetResponseOutputListAsync(
+        public async Task<List<TEntity>> GetResponseOutputListAsync(
             Expression<Func<TEntity, bool>> expression,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
             bool isTracking = false,
@@ -129,7 +130,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             {
                 dbSet = order(dbSet);
             }
-            return ResponseOutput.Succees(await dbSet.ToListAsync(cancellationToken));
+            return await dbSet.ToListAsync(cancellationToken);
         }
 
         /// <summary>
@@ -139,7 +140,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
         /// <param name="expression">表达式</param>
         /// <param name="order">排序</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<List<TResult>>> GetResponseOutputListAsync<TResult>(
+        public async Task<List<TResult>> GetResponseOutputListAsync<TResult>(
             Expression<Func<TEntity, bool>> expression,
             Expression<Func<TEntity, TResult>> selector,
             Func<IQueryable<TEntity>,
@@ -157,7 +158,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             {
                 dbSet = order(dbSet);
             }
-            return ResponseOutput.Succees(await dbSet.Select(selector).ToListAsync(cancellationToken));
+            return await dbSet.Select(selector).ToListAsync(cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +171,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<TResult>>> GetResponseOutputListAsync<TResult, TPageInput>(
+        public async Task<Page<TResult>> GetResponseOutputListAsync<TResult, TPageInput>(
             Expression<Func<TEntity, bool>> expression,
             Expression<Func<TEntity, TResult>> selector,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
@@ -186,13 +187,13 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             {
                 dbSet = order(dbSet);
             }
-            return ResponseOutput.Succees(new Page<TResult>
+            return new Page<TResult>
             {
                 Total = await dbSet.CountAsync(),
                 List = await dbSet
                     .Select(selector)
                     .ToListAsync(cancellationToken)
-            });
+            };
         }
 
         /// <summary>
@@ -203,7 +204,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<TEntity>>> GetResponseOutputPageListAsync<TPageInput>(
+        public async Task<Page<TEntity>> GetResponseOutputPageListAsync<TPageInput>(
             Func<IQueryable<TEntity>,
             IOrderedQueryable<TEntity>> order = null,
             PageInput<TPageInput> input = null,
@@ -217,13 +218,13 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             {
                 query = order(query);
             }
-            return ResponseOutput.Succees(new Page<TEntity>
+            return new Page<TEntity>
             {
                 Total = await query.CountAsync(),
                 List = await query
                     .Page(input.CurrentPage, input.PageSize)
                     .ToListAsync(cancellationToken)
-            });
+            };
         }
 
         /// <summary>
@@ -234,7 +235,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<TEntity>>> GetResponseOutputPageListAsync<TPageInput>(
+        public async Task<Page<TEntity>> GetResponseOutputPageListAsync<TPageInput>(
             Expression<Func<TEntity, bool>> expression,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
             PageInput<TPageInput> input = null,
@@ -251,13 +252,13 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             {
                 query = order(query);
             }
-            return ResponseOutput.Succees(new Page<TEntity>
+            return new Page<TEntity>
             {
                 Total = await query.CountAsync(),
                 List = await query
                     .Page(input.CurrentPage, input.PageSize)
                     .ToListAsync(cancellationToken)
-            });
+            };
         }
 
         /// <summary>
@@ -270,7 +271,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<TResult>>> GetResponseOutputPageListAsync<TResult, TPageInput>(
+        public async Task<Page<TResult>> GetResponseOutputPageListAsync<TResult, TPageInput>(
             Expression<Func<TEntity, TResult>> selector,
             Func<IQueryable<TEntity>,
             IOrderedQueryable<TEntity>> order = null,
@@ -285,14 +286,14 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             {
                 query = order(query);
             }
-            return ResponseOutput.Succees(new Page<TResult>
+            return new Page<TResult>
             {
                 Total = await query.CountAsync(),
                 List = await query
                     .Page(input.CurrentPage, input.PageSize)
                     .Select(selector)
                     .ToListAsync(cancellationToken)
-            });
+            };
         }
 
         /// <summary>
@@ -305,7 +306,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<TResult>>> GetResponseOutputPageListAsync<TResult, TPageInput>(
+        public async Task<Page<TResult>> GetResponseOutputPageListAsync<TResult, TPageInput>(
             Expression<Func<TEntity, bool>> expression,
             Expression<Func<TEntity, TResult>> selector,
             Func<IQueryable<TEntity>,
@@ -324,14 +325,14 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             {
                 query = order(query);
             }
-            return ResponseOutput.Succees(new Page<TResult>
+            return new Page<TResult>
             {
                 Total = await query.CountAsync(),
                 List = await query
                     .Page(input.CurrentPage, input.PageSize)
                     .Select(selector)
                     .ToListAsync(cancellationToken)
-            });
+            };
         }
 
         /// <summary>

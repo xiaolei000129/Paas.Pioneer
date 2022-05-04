@@ -1,6 +1,6 @@
 using Paas.Pioneer.Admin.Core.Application.Contracts.Auth.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Auth.Dto.Output;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,13 +13,11 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Auth
     /// </summary>
     public interface IAuthService : IApplicationService
     {
-        Task<ResponseOutput<AuthLoginOutput>> LoginAsync(AuthLoginInput input);
+        Task<AuthLoginOutput> LoginAsync(AuthLoginInput input);
 
-        Task<ResponseOutput<AuthUserInfoOutput>> GetUserInfoAsync();
+        Task<AuthUserInfoOutput> GetUserInfoAsync();
 
-        Task<ResponseOutput<AuthGetVerifyCodeOutput>> GetVerifyCodeAsync(string lastKey);
-
-        Task<ResponseOutput<GetPassWordEncryptKeyOutput>> GetPassWordEncryptKeyAsync();
+        Task<GetPassWordEncryptKeyOutput> GetPassWordEncryptKeyAsync();
 
         Task<IEnumerable<string>> GetPermissionsCodeListAsync(Guid? userId);
     }

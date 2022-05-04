@@ -1,4 +1,5 @@
-﻿using Paas.Pioneer.Redis;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Paas.Pioneer.Redis;
 using Volo.Abp.Modularity;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.VirtualFileSystem;

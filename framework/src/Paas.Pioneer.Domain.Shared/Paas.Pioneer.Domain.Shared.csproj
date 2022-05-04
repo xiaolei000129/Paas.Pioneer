@@ -14,10 +14,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.13" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.16" />
 		<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.0" />
-		<PackageReference Include="Volo.Abp.AspNetCore" Version="5.1.1" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.17.0" />
+		<PackageReference Include="Volo.Abp.AspNetCore" Version="5.2.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Provider\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Paas.Pioneer.AutoWrapper\Paas.Pioneer.AutoWrapper.csproj" />
 	</ItemGroup>
 
 </Project>

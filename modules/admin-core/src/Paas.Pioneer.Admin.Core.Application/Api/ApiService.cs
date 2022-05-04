@@ -3,14 +3,16 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.Api.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Api.Dto.Output;
 using Paas.Pioneer.Admin.Core.Domain.Api;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Services;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.Api
 {
@@ -28,9 +30,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<ResponseOutput<ApiGetOutput>> GetAsync(Guid id)
+        public async Task<ApiGetOutput> GetAsync(Guid id)
         {
-            return ResponseOutput.Succees(await _apiRepository.GetAsync(expression: x => x.Id == id, selector: x => new ApiGetOutput
+            return await _apiRepository.GetAsync(expression: x => x.Id == id, selector: x => new ApiGetOutput
             {
                 Id = x.Id,
                 Description = x.Description,
@@ -39,7 +41,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
                 Label = x.Label,
                 ParentId = x.ParentId,
                 Path = x.Path,
-            }));
+            });
         }
 
         /// <summary>
@@ -47,10 +49,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<ResponseOutput<List<ApiListOutput>>> GetListAsync(string key)
+        public async Task<List<ApiListOutput>> GetListAsync(string key)
         {
             Expression<Func<Ad_ApiEntity, bool>> expression = x => true;
-            if (key.NotNull())
+            if (!key.IsNullOrEmpty())
             {
                 expression = expression.And(a => a.Path.Contains(key) || a.Label.Contains(key));
             }
@@ -72,11 +74,11 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<ApiListOutput>>> GetPageListAsync(PageInput<ApiInput> input)
+        public async Task<Page<ApiListOutput>> GetPageListAsync(PageInput<ApiInput> input)
         {
             var key = input.Filter?.Label;
             Expression<Func<Ad_ApiEntity, bool>> expression = x => true;
-            if (key.NotNull())
+            if (!key.IsNullOrEmpty())
             {
                 expression = expression.And(a => a.Path.Contains(key) || a.Label.Contains(key));
             }
@@ -98,11 +100,10 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> AddAsync(ApiAddInput input)
+        public async Task AddAsync(ApiAddInput input)
         {
             var entity = ObjectMapper.Map<ApiAddInput, Ad_ApiEntity>(input);
             await _apiRepository.InsertAsync(entity);
-            return ResponseOutput.Succees("添加成功");
         }
 
         /// <summary>
@@ -110,16 +111,15 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> UpdateAsync(ApiUpdateInput input)
+        public async Task UpdateAsync(ApiUpdateInput input)
         {
             var entity = await _apiRepository.GetAsync(input.Id);
             if (entity == null)
             {
-                return ResponseOutput.Error("接口不存在！");
+                throw new BusinessException("接口不存在！");
             }
             ObjectMapper.Map(input, entity);
             await _apiRepository.UpdateAsync(entity);
-            return ResponseOutput.Succees("修改成功！");
         }
 
         /// <summary>
@@ -127,10 +127,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             await _apiRepository.DeleteAsync(id);
-            return ResponseOutput.Succees("删除成功");
         }
 
         /// <summary>
@@ -138,10 +137,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Api
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(IEnumerable<Guid> ids)
+        public async Task BatchSoftDeleteAsync(IEnumerable<Guid> ids)
         {
             await _apiRepository.DeleteManyAsync(ids);
-            return ResponseOutput.Succees("删除成功！");
         }
     }
 }

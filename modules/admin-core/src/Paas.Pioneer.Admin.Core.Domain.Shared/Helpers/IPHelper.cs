@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Paas.Pioneer.Domain.Shared.Extensions;
+using System;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
@@ -31,15 +32,15 @@ namespace Paas.Pioneer.Admin.Core.Domain.Shared.Helpers
             }
 
             string ip = request.Headers["X-Real-IP"].FirstOrDefault();
-            if (ip.IsNull())
+            if (ip.IsNullOrEmpty())
             {
                 ip = request.Headers["X-Forwarded-For"].FirstOrDefault();
             }
-            if (ip.IsNull())
+            if (ip.IsNullOrEmpty())
             {
                 ip = request.HttpContext?.Connection?.RemoteIpAddress?.ToString();
             }
-            if (ip.IsNull() || !IsIP(ip.Split(":")[0]))
+            if (ip.IsNullOrEmpty() || !IsIP(ip.Split(":")[0]))
             {
                 ip = "127.0.0.1";
             }

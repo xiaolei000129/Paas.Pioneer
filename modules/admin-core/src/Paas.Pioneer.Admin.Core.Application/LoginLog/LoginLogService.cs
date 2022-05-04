@@ -6,13 +6,14 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.LoginLog.Dto.Output;
 using Paas.Pioneer.Admin.Core.Domain.LoginLog;
 using Paas.Pioneer.Admin.Core.Domain.Shared.Helpers;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
 namespace Paas.Pioneer.Admin.Core.Application.LoginLog
 {
@@ -30,7 +31,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LoginLog
             _loginLogRepository = loginLogRepository;
         }
 
-        public async Task<ResponseOutput<Page<LoginLogOutput>>> GetPageListAsync(PageInput<LoginLogModel> input)
+        public async Task<Page<LoginLogOutput>> GetPageListAsync(PageInput<LoginLogModel> input)
         {
             var userId = input.Filter?.CreatedUserId;
             Expression<Func<Ad_LoginLogEntity, bool>> expression = x => true;
@@ -61,13 +62,13 @@ namespace Paas.Pioneer.Admin.Core.Application.LoginLog
         input);
         }
 
-        public async Task<ResponseOutput<Guid>> AddAsync(LoginLogAddInput input)
+        public async Task<Guid> AddAsync(LoginLogAddInput input)
         {
             var res = new ResponseOutput<Guid>();
             input.IP = IPHelper.GetIP(_context?.HttpContext?.Request);
 
             string ua = _context.HttpContext.Request.Headers["User-Agent"];
-            if (ua.NotNull())
+            if (!ua.IsNullOrEmpty())
             {
                 var client = UAParser.Parser.GetDefault().Parse(ua);
                 var device = client.Device.Family;
@@ -78,9 +79,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LoginLog
                 input.BrowserInfo = ua;
             }
             var entity = ObjectMapper.Map<LoginLogAddInput, Ad_LoginLogEntity>(input);
-            var id = (await _loginLogRepository.InsertAsync(entity)).Id;
-
-            return res.Succees(id);
+            return (await _loginLogRepository.InsertAsync(entity)).Id;
         }
     }
 }

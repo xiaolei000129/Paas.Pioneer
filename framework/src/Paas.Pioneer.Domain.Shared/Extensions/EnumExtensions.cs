@@ -9,7 +9,6 @@ namespace Paas.Pioneer.Domain.Shared.Extensions
 {
 	public static class EnumExtensions
 	{
-
 		/// <summary>
 		/// 下拉选项输出
 		/// </summary>
