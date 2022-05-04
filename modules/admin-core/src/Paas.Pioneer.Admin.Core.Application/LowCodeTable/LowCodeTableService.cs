@@ -15,7 +15,6 @@ using Paas.Pioneer.Admin.Core.Domain.Shared.Helpers;
 using Paas.Pioneer.Admin.Core.Domain.Shared.TextTemplatingDefinition;
 using Paas.Pioneer.Admin.Core.Domain.View;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
 using System.Collections.Generic;
@@ -316,7 +315,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
             RazorTestTemplatesConsts.PaasPioneerEntityFrameworkCoreRepository, model);
 
             /// 生成仓储
-            await GenerateCodeFileAsync(GenerateCodeFileUrl.PaasPioneerEntityFrameworkCoreRepository($"{model.Taxon}/{model.Taxon}Repository.cs"), resultEntityFrameworkCoreRepository);
+            await GenerateCodeFileAsync(GenerateCodeFileUrl.PaasPioneerEntityFrameworkCoreRepository($"{model.Taxon}/EfCore{model.Taxon}Repository.cs"), resultEntityFrameworkCoreRepository);
 
             var resultVueJs = await _templateRenderer.RenderAsync(
             RazorTestTemplatesConsts.VueJs, model);
@@ -373,7 +372,7 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
             var baseApi = new Ad_ApiEntity
             {
                 Enabled = true,
-                Label = $"{model.MenuName}管理",
+                Label = model.MenuName,
                 Path = model.Taxon.ToLower(),
                 CreationTime = DateTime.Now,
                 Description = model.Description,
@@ -454,17 +453,17 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
 
             #region 添加权限
             #region 添加分组
-            var permissionBase = new Ad_PermissionEntity
-            {
-                Type = EPermissionType.Group,
-                ParentId = Guid.Empty,
-                Closable = true,
-                Hidden = false,
-                Enabled = true,
-                Label = $"{model.MenuName}管理",
-                Description = model.Description,
-            };
-            await _permissionRepository.InsertAsync(permissionBase);
+            //var permissionBase = new Ad_PermissionEntity
+            //{
+            //    Type = EPermissionType.Group,
+            //    ParentId = Guid.Empty,
+            //    Closable = true,
+            //    Hidden = false,
+            //    Enabled = true,
+            //    Label = model.MenuName,
+            //    Description = model.Description,
+            //};
+            //await _permissionRepository.InsertAsync(permissionBase);
             #endregion
 
             #region 添加菜单
@@ -472,11 +471,12 @@ namespace Paas.Pioneer.Admin.Core.Application.LowCodeTable
             {
                 Type = EPermissionType.Menu,
                 ViewId = view.Id,
-                ParentId = permissionBase.Id,
+                // 默认到平台分组中
+                ParentId = new Guid("f60f1676-262f-4c1b-9ce7-e858cecf3270"),
                 Closable = true,
                 Hidden = false,
                 Enabled = true,
-                Label = $"{model.MenuName}管理",
+                Label = model.MenuName,
                 Path = $"/admin/{model.Taxon.ToLower()}",
                 Description = model.Description,
             };

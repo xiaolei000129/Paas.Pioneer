@@ -21,9 +21,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Grid
     /// <summary>
     /// 栅格管理服务
     /// </summary>
-     public class GridService : ApplicationService, IGridService
+    public class GridService : ApplicationService, IGridService
     {
-        
+
         private readonly IGridRepository _gridRepository;
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Grid
         /// <returns></returns>
         public async Task<GetGridOutput> GetAsync(Guid id)
         {
-            var result = await _gridRepository.GetAsync(p=>p.Id == id, x => new GetGridOutput()
+            var result = await _gridRepository.GetAsync(p => p.Id == id, x => new GetGridOutput()
             {
                 DictionaryId = x.DictionaryId,
                 GridType = x.GridType,
@@ -64,20 +64,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Grid
         /// <returns></returns>
         public async Task<Page<GetGridPageListOutput>> GetPageListAsync(PageInput<GetGridPageListInput> input)
         {
-            var data = await _gridRepository.GetResponseOutputPageListAsync(x => new GetGridPageListOutput
-            {
-                DictionaryId = x.DictionaryId,
-                GridType = x.GridType,
-                Name = x.Name,
-                Portrait = x.Portrait,
-                Expand = x.Expand,
-                Sort = x.Sort,
-                Description = x.Description,
-                LastModificationTime = x.LastModificationTime,
-                CreationTime = x.CreationTime,
-                Id = x.Id,
-            }, input: input);
-            return data;
+            return await _gridRepository.GetPageListAsync(input);
         }
 
         /// <summary>

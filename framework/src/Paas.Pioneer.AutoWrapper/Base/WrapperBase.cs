@@ -8,6 +8,9 @@ using Paas.Pioneer.AutoWrapper.Extensions;
 using Paas.Pioneer.AutoWrapper.Attributes;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using System.Linq;
+using Volo.Abp.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Paas.Pioneer.AutoWrapper.Base
 {
@@ -73,7 +76,7 @@ namespace Paas.Pioneer.AutoWrapper.Base
                 }
 
                 //如果终结点已经是ResponseOutput<T>则不进行包装处理
-                if (returnType != null && (returnType == typeof(IResponseOutput) || returnType == typeof(IResponseOutput<>)))
+                if (returnType != null && (returnType == typeof(IResponseOutput) || returnType == typeof(ResponseOutput) || returnType == typeof(IResponseOutput<>) || returnType == typeof(ResponseOutput<>)))
                 {
                     await awm.RevertResponseBodyStreamAsync(memoryStream, originalResponseBodyStream);
                     return;
@@ -83,6 +86,18 @@ namespace Paas.Pioneer.AutoWrapper.Base
                 context.Response.Body = originalResponseBodyStream;
 
                 UpdateResponseStatusCode(context);
+
+                // 判断是否为业务异常
+                if (context.Response.StatusCode == Status403Forbidden && context.Response.Headers.ContainsKey(AbpHttpConsts.AbpErrorFormat) && context.Response.Headers[AbpHttpConsts.AbpErrorFormat] == "true")
+                {
+                    context.Response.StatusCode = Status200OK;
+                    var errorBody = JObject.Parse(bodyAsText).SelectToken("error.code")?.ToString();
+                    if (errorBody == null)
+                    {
+                        errorBody = JObject.Parse(bodyAsText).SelectToken("error.message")?.ToString();
+                    }
+                    await awm.HandleErrorRequestAsync(context, errorBody, context.Response.StatusCode);
+                }
 
                 if (context.Response.StatusCode != Status304NotModified || context.Response.StatusCode != Status204NoContent)
                 {

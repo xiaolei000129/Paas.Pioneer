@@ -3,6 +3,7 @@ using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -55,11 +56,14 @@ namespace Paas.Pioneer.Controllers
         [HttpGet("Empty")]
         public void Empty()
         {
+            throw new BusinessException("已经存在该表");
         }
 
         [HttpGet("EmptyTask")]
         public Task EmptyTask()
         {
+            var a = "213f";
+            int.Parse(a);
             return Task.CompletedTask;
         }
 

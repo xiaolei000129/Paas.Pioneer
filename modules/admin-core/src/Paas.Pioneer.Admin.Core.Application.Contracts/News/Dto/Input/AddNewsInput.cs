@@ -1,5 +1,4 @@
 ﻿using System;
-using Paas.Pioneer.Domain.Shared.ModelValidation;
 using System.ComponentModel.DataAnnotations;
 namespace Paas.Pioneer.Admin.Core.Application.Contracts.News.Dto.Input
 {
@@ -40,14 +39,14 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.News.Dto.Input
         /// <summary>
         /// 隐藏
         /// </summary>
-        [Required(ErrorMessage = "请输入隐藏")]
+        //[Required(ErrorMessage = "请输入隐藏")]
         public bool Hidden { get; set; }
 
 
         /// <summary>
         /// 启用
         /// </summary>
-        [Required(ErrorMessage = "请输入启用")]
+        //[Required(ErrorMessage = "请输入启用")]
         public bool Enabled { get; set; }
 
 

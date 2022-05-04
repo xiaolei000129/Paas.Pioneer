@@ -57,6 +57,12 @@ namespace Paas.Pioneer.AutoWrapper
             await WriteFormattedResponseToHttpContextAsync(context, httpStatusCode, bodyText);
         }
 
+        public async Task HandleErrorRequestAsync(HttpContext context, string errorBody, int httpStatusCode)
+        {
+            var bodyText = ConvertToJSONString(_result.Error(errorBody));
+            await WriteFormattedResponseToHttpContextAsync(context, httpStatusCode, bodyText);
+        }
+
         public async Task HandleNotApiRequestAsync(HttpContext context)
         {
             string configErrorText = ResponseMessage.NotApiOnly;

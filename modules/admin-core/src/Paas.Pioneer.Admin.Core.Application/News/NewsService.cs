@@ -21,9 +21,9 @@ namespace Paas.Pioneer.Admin.Core.Application.News
     /// <summary>
     /// 新闻管理服务
     /// </summary>
-     public class NewsService : ApplicationService, INewsService
+    public class NewsService : ApplicationService, INewsService
     {
-        
+
         private readonly INewsRepository _newsRepository;
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Paas.Pioneer.Admin.Core.Application.News
         /// <returns></returns>
         public async Task<GetNewsOutput> GetAsync(Guid id)
         {
-            var result = await _newsRepository.GetAsync(p=>p.Id == id, x => new GetNewsOutput()
+            var result = await _newsRepository.GetAsync(p => p.Id == id, x => new GetNewsOutput()
             {
                 DictionaryId = x.DictionaryId,
                 Portrait = x.Portrait,
@@ -65,21 +65,7 @@ namespace Paas.Pioneer.Admin.Core.Application.News
         /// <returns></returns>
         public async Task<Page<GetNewsPageListOutput>> GetPageListAsync(PageInput<GetNewsPageListInput> input)
         {
-            var data = await _newsRepository.GetResponseOutputPageListAsync(x => new GetNewsPageListOutput
-            {
-                DictionaryId = x.DictionaryId,
-                Portrait = x.Portrait,
-                PushTime = x.PushTime,
-                NewsContent = x.NewsContent,
-                Hidden = x.Hidden,
-                Enabled = x.Enabled,
-                Sort = x.Sort,
-                Description = x.Description,
-                LastModificationTime = x.LastModificationTime,
-                CreationTime = x.CreationTime,
-                Id = x.Id,
-            }, input: input);
-            return data;
+            return await _newsRepository.GetPageListAsync(input);
         }
 
         /// <summary>

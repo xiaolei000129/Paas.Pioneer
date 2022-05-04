@@ -1,7 +1,7 @@
 ﻿using System;
-using Paas.Pioneer.Admin.Core.Application.Contracts.Grid.Dto.Input;
 using Paas.Pioneer.Admin.Core.Domain.Shared.Enum;
-using Paas.Pioneer.Domain.Shared.ModelValidation;
+using Paas.Pioneer.Domain.Shared.Extensions;
+
 namespace Paas.Pioneer.Admin.Core.Application.Contracts.Grid.Dto.Output
 {
     /// <summary>
@@ -15,12 +15,20 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Grid.Dto.Output
         /// </summary>
         public Guid DictionaryId { get; set; }
 
+        /// <summary>
+        /// 字典Id
+        /// </summary>
+        public string DictionaryName { get; set; }
 
         /// <summary>
         /// 栅格管理类型
         /// </summary>
         public EGridType GridType { get; set; }
 
+        /// <summary>
+        /// 栅格管理类型
+        /// </summary>
+        public string GridTypeName { get => this.GridType.ToDescription(); }
 
         /// <summary>
         /// 名称

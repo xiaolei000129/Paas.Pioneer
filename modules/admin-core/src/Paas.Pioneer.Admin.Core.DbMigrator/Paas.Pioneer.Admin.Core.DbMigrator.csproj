@@ -20,7 +20,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Volo.Abp.Autofac" Version="5.2.1" />
-		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.2.4" />
+		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.2.5" />
 		<ProjectReference Include="..\Paas.Pioneer.Admin.Core.Application.Contracts\Paas.Pioneer.Admin.Core.Application.Contracts.csproj" />
 		<ProjectReference Include="..\Paas.Pioneer.Admin.Core.EntityFrameworkCore\Paas.Pioneer.Admin.Core.EntityFrameworkCore.csproj" />
 	</ItemGroup>

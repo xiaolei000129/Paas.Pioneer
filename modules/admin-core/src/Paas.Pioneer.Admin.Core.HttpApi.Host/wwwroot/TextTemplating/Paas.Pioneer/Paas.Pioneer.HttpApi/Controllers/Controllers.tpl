@@ -83,7 +83,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id">主键</param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task Delete(Guid id)
+        public async Task SoftDelete(Guid id)
         {
             await _{{ initial_lower }}Service.DeleteAsync(id);
         }

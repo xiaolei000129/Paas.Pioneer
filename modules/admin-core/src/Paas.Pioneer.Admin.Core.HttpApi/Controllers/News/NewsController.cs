@@ -3,7 +3,6 @@ using Paas.Pioneer.Admin.Core.Application.Contracts.News.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.News.Dto.Output;
 using Paas.Pioneer.Admin.Core.Application.Contracts.News;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
@@ -80,7 +79,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// <param name="id">主键</param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task Delete(Guid id)
+        public async Task SoftDelete(Guid id)
         {
             await _newsService.DeleteAsync(id);
         }

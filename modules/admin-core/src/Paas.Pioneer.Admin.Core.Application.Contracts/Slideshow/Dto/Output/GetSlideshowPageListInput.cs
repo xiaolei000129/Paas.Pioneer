@@ -1,5 +1,7 @@
 ﻿using System;
-using Paas.Pioneer.Domain.Shared.ModelValidation;
+using Paas.Pioneer.Admin.Core.Domain.Shared.Enum;
+using Paas.Pioneer.Domain.Shared.Extensions;
+
 namespace Paas.Pioneer.Admin.Core.Application.Contracts.Slideshow.Dto.Output
 {
     /// <summary>
@@ -13,11 +15,21 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Slideshow.Dto.Output
         /// </summary>
         public Guid DictionaryId { get; set; }
 
+        /// <summary>
+        /// 字典名称
+        /// </summary>
+        public string DictionaryName { get; set; }
+
 
         /// <summary>
         /// 轮播图类型
         /// </summary>
-        public Paas.Pioneer.Admin.Core.Domain.Shared.Enum.ESlideshowType SlideshowType { get; set; }
+        public ESlideshowType SlideshowType { get; set; }
+
+        /// <summary>
+        /// 轮播图类型
+        /// </summary>
+        public string SlideshowTypeName { get => this.SlideshowType.ToDescription(); }
 
 
         /// <summary>
@@ -66,6 +78,5 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Slideshow.Dto.Output
         /// 
         /// </summary>
         public Guid Id { get; set; }
-
     }
 }

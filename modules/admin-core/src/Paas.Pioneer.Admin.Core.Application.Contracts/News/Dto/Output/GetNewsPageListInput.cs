@@ -13,6 +13,11 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.News.Dto.Output
         /// </summary>
         public Guid DictionaryId { get; set; }
 
+        /// <summary>
+        /// 字典名称
+        /// </summary>
+        public string DictionaryName { get; set; }
+
 
         /// <summary>
         /// 图片
@@ -72,6 +77,5 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.News.Dto.Output
         /// 
         /// </summary>
         public Guid Id { get; set; }
-
     }
 }

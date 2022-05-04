@@ -21,9 +21,9 @@ namespace Paas.Pioneer.Admin.Core.Application.Slideshow
     /// <summary>
     /// 幻灯片管理服务
     /// </summary>
-     public class SlideshowService : ApplicationService, ISlideshowService
+    public class SlideshowService : ApplicationService, ISlideshowService
     {
-        
+
         private readonly ISlideshowRepository _slideshowRepository;
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Slideshow
         /// <returns></returns>
         public async Task<GetSlideshowOutput> GetAsync(Guid id)
         {
-            var result = await _slideshowRepository.GetAsync(p=>p.Id == id, x => new GetSlideshowOutput()
+            var result = await _slideshowRepository.GetAsync(p => p.Id == id, x => new GetSlideshowOutput()
             {
                 DictionaryId = x.DictionaryId,
                 SlideshowType = x.SlideshowType,
@@ -64,20 +64,7 @@ namespace Paas.Pioneer.Admin.Core.Application.Slideshow
         /// <returns></returns>
         public async Task<Page<GetSlideshowPageListOutput>> GetPageListAsync(PageInput<GetSlideshowPageListInput> input)
         {
-            var data = await _slideshowRepository.GetResponseOutputPageListAsync(x => new GetSlideshowPageListOutput
-            {
-                DictionaryId = x.DictionaryId,
-                SlideshowType = x.SlideshowType,
-                Expand = x.Expand,
-                Title = x.Title,
-                Portrait = x.Portrait,
-                Sort = x.Sort,
-                Description = x.Description,
-                LastModificationTime = x.LastModificationTime,
-                CreationTime = x.CreationTime,
-                Id = x.Id,
-            }, input: input);
-            return data;
+            return await _slideshowRepository.GetPageListAsync(input);
         }
 
         /// <summary>
