@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
+using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.Autofac;
 using Volo.Abp.Modularity;
@@ -55,6 +56,12 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Host
             ConfigureCors(context, configuration);
 
             ConfigureAuthentication(context, configuration);
+
+            // “µŒÒ¥ÌŒÛÕÿ’π≈‰÷√
+            Configure<AbpExceptionHandlingOptions>(options =>
+            {
+                options.SendExceptionsDetailsToClients = true;
+            });
 
             TextTemplatingScriban();
 
