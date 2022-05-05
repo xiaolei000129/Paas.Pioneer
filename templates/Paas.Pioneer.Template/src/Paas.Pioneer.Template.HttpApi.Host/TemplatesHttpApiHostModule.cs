@@ -6,19 +6,20 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Auth;
 using Paas.Pioneer.Knife4jUI.Swagger;
 using Paas.Pioneer.Middleware.Middleware.Extensions;
 using Paas.Pioneer.Template.Application;
 using Paas.Pioneer.Template.Domain.Shared.MultiTenancy;
 using Paas.Pioneer.Template.EntityFrameworkCore.EntityFrameworkCore;
-using Paas.Pioneer.Template.HttpApi.Host.Filter;
 using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
+using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.Autofac;
 using Volo.Abp.Modularity;
@@ -48,11 +49,10 @@ namespace Paas.Pioneer.Template.HttpApi.Host
 
             ConfigureAuthentication(context, configuration);
 
-            // 设置模型验证
-            context.Services.AddControllers(options =>
+            // 业务错误拓展配置
+            Configure<AbpExceptionHandlingOptions>(options =>
             {
-                // -1 为过滤器的优先级
-                options.Filters.Add<ModelValidAttribute>(-1);
+                options.SendExceptionsDetailsToClients = true;
             });
         }
 
@@ -92,14 +92,24 @@ namespace Paas.Pioneer.Template.HttpApi.Host
                 app.UseDeveloperExceptionPage();
             }
 
-            //全局日志中间件
-            app.UseLoggerMiddleware();
-
             // 生成全局唯一Id
             app.UseCorrelationId();
 
             //路由
             app.UseRouting();
+
+            // 格式化
+            app.UseApiResponseAndExceptionWrapper(new AutoWrapperOptions
+            {
+                ShowIsErrorFlagForSuccessfulResponse = true,
+                ExcludePaths = new AutoWrapperExcludePath[] {
+                    // 严格匹配
+                    new AutoWrapperExcludePath("/v1/api-docs", ExcludeMode.StartWith),
+                }
+            });
+
+            //全局日志中间件
+            app.UseLoggerMiddleware();
 
             //跨域
             app.UseCors();

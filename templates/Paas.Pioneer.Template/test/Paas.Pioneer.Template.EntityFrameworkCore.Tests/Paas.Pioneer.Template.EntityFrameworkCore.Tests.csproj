@@ -7,7 +7,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Paas.Pioneer.Template.EntityFrameworkCore\Paas.Pioneer.Template.EntityFrameworkCore.csproj" />
 		<ProjectReference Include="..\Paas.Pioneer.Template.TestBase\Paas.Pioneer.Template.TestBase.csproj" />
-		<PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="5.2.0" />
+		<PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="5.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>

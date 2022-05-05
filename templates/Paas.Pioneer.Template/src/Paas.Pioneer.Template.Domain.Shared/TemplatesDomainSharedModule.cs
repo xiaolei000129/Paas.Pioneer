@@ -1,11 +1,13 @@
-﻿using Volo.Abp.Modularity;
+﻿using Paas.Pioneer.Redis;
+using Volo.Abp.Modularity;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.VirtualFileSystem;
 
 namespace Paas.Pioneer.Template.Domain.Shared
 {
     [DependsOn(
-        typeof(AbpTenantManagementDomainSharedModule)
+        typeof(AbpTenantManagementDomainSharedModule),
+        typeof(RedisModule)
         )]
     public class TemplatesDomainSharedModule : AbpModule
     {

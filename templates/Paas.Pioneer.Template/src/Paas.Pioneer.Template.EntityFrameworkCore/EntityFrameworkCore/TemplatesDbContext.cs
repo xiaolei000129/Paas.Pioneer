@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
+using System;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
@@ -22,6 +25,13 @@ namespace Paas.Pioneer.Template.EntityFrameworkCore.EntityFrameworkCore
         public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
 
         #endregion
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder
+            .ConfigureWarnings(b => b.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
+            .LogTo(Console.WriteLine, LogLevel.Information)
+            .EnableSensitiveDataLogging();
+
 
         public TemplatesDbContext(DbContextOptions<TemplatesDbContext> options)
             : base(options)
