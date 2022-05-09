@@ -2,6 +2,7 @@
 using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
@@ -53,8 +54,8 @@ namespace Paas.Pioneer.Controllers
             return Random.Shared.Next(-20, 55) >= 20;
         }
 
-        [HttpGet("Empty")]
-        public void Empty()
+        [HttpPost("Empty")]
+        public void Empty([FromBody] user user)
         {
             throw new BusinessException("已经存在该表");
         }
@@ -82,5 +83,14 @@ namespace Paas.Pioneer.Controllers
                 name = "dd"
             };
         }
+    }
+
+    public class user
+    {
+
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "请输入业务Id")]
+        public string Name { get; set; }
     }
 }

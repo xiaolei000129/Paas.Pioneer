@@ -13,43 +13,43 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Comment.Dto.Input
         /// 业务Id
         /// </summary>
         [Required(ErrorMessage = "请输入业务Id")]
-public Guid BusinessId { get; set; }
+        public Guid BusinessId { get; set; }
 
 
         /// <summary>
         /// 父级Id
         /// </summary>
         [Required(ErrorMessage = "请输入父级Id")]
-public Guid ParentId { get; set; }
+        public Guid ParentId { get; set; }
 
 
         /// <summary>
         /// 评论详情
         /// </summary>
         [Required(ErrorMessage = "请输入评论详情")]
-public string Details { get; set; }
+        public string Details { get; set; }
 
 
         /// <summary>
         /// 修改时间
         /// </summary>
         [Required(ErrorMessage = "请输入修改时间")]
-public DateTime? LastModificationTime { get; set; }
+        public DateTime? LastModificationTime { get; set; }
 
 
         /// <summary>
         /// 创建时间
         /// </summary>
         [Required(ErrorMessage = "请输入创建时间")]
-public DateTime CreationTime { get; set; }
+        public DateTime CreationTime { get; set; }
 
 
         /// <summary>
         /// 
         /// </summary>
         [NotEqual("00000000-0000-0000-0000-000000000000", ErrorMessage = "请输入")]
-[Required(ErrorMessage = "请输入")]
-public Guid Id { get; set; }
+        [Required(ErrorMessage = "请输入")]
+        public Guid Id { get; set; }
 
     }
 }
