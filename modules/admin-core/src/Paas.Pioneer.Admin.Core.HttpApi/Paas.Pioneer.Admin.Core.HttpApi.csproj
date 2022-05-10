@@ -18,7 +18,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Paas.Pioneer.Admin.Core.Application.Contracts\Paas.Pioneer.Admin.Core.Application.Contracts.csproj" />
-		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.2.5" />
+		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.2.6" />
 	</ItemGroup>
 
 	<ItemGroup>
