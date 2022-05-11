@@ -26,7 +26,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Client.ConsoleTestApp
                 application.Initialize();
 
                 var demo = application.ServiceProvider.GetRequiredService<ClientDemoService>();
-
+                await demo.RunAsync();
                 application.Shutdown();
                 await Task.Delay(1);
             }

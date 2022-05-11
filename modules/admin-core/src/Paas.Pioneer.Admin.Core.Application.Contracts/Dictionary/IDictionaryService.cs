@@ -1,11 +1,11 @@
 ﻿using Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary.Dto.Input;
 using Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
+using System.Collections.Generic;
 
 namespace Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary
 {
@@ -17,6 +17,13 @@ namespace Paas.Pioneer.Admin.Core.Application.Contracts.Dictionary
         /// <param name="id"></param>
         /// <returns></returns>
         Task<GetDictionaryOutput> GetAsync(Guid id);
+
+        /// <summary>
+        /// 获取列表
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<IEnumerable<GetDictionaryOutput>> GetListAsync(IEnumerable<Guid> ids);
 
         /// <summary>
         /// 分页获取

@@ -10,12 +10,16 @@
 		<NoWarn>$(NoWarn);NU5128</NoWarn>
 		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="AdminCodeHttpApiClientOptions.cs" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Paas.Pioneer.Admin.Core.Application.Contracts\Paas.Pioneer.Admin.Core.Application.Contracts.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
 		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi.Client" Version="5.2.1" />
 	</ItemGroup>
 
