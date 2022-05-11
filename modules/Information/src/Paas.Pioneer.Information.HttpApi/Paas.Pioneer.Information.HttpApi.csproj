@@ -9,6 +9,7 @@
 		<IncludeBuildOutput>true</IncludeBuildOutput>
 		<NoWarn>$(NoWarn);NU5128</NoWarn>
 		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -18,10 +19,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="5.2.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Controllers\" />
 	</ItemGroup>
 
 </Project>
