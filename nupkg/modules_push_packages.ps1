@@ -1,6 +1,6 @@
 . ".\modules.ps1"
 
-$apiKey = "oy2hrtlanfp4lnmoratqj223hz5pucmevhy7k3hpjmrzii"
+$apiKey = "oy2hrtlanfp4lnmoratqj223hz5pucmevhy7k3hpjmrzii1"
 
 # Publish all packages
 foreach ($project in $projects) {

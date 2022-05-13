@@ -12,11 +12,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Paas.Pioneer.Domain" Version="5.2.1" />
-		<PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="5.2.0" />
+		<PackageReference Include="Paas.Pioneer.Domain" Version="5.2.6" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="5.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Paas.Pioneer.Template.Application.Contracts\Paas.Pioneer.Template.Application.Contracts.csproj" />
 		<ProjectReference Include="..\Paas.Pioneer.Template.Domain.Shared\Paas.Pioneer.Template.Domain.Shared.csproj" />
 	</ItemGroup>
 

@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
+using System.Collections.Generic;
 
 namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
 {
@@ -39,6 +40,17 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         public async Task<GetDictionaryOutput> Get(Guid id)
         {
             return await _dictionaryService.GetAsync(id);
+        }
+
+        /// <summary>
+        /// 查询数据字典
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IEnumerable<GetDictionaryOutput>> GetList(Guid[] ids)
+        {
+            return await _dictionaryService.GetListAsync(ids);
         }
 
         /// <summary>

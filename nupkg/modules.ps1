@@ -20,6 +20,7 @@ $projects = (
     "modules\admin-core\src\Paas.Pioneer.Admin.Core.Domain.Shared",
     "modules\admin-core\src\Paas.Pioneer.Admin.Core.EntityFrameworkCore",
     "modules\admin-core\src\Paas.Pioneer.Admin.Core.HttpApi",
+    "modules\admin-core\src\Paas.Pioneer.Admin.Core.HttpApi.Client",
 
     # Mission
     "modules\mission\src\Paas.Pioneer.Mission.Application",

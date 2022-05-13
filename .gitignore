@@ -250,7 +250,3 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
-
-# 屏蔽不提交的项目
-**/modules/mission/**
-**/modules/user/**

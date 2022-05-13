@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Services;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
+using System.Collections.Generic;
 
 namespace Paas.Pioneer.Admin.Core.Application.Dictionary
 {
@@ -43,6 +44,20 @@ namespace Paas.Pioneer.Admin.Core.Application.Dictionary
                 Value = x.Value,
             });
             return result;
+        }
+
+        public Task<IEnumerable<GetDictionaryOutput>> GetListAsync(IEnumerable<Guid> ids)
+        {
+            return _dictionaryRepository.GetListAsync(expression: x => ids.Contains(x.Id), selector: x => new GetDictionaryOutput()
+            {
+                Id = x.Id,
+                Code = x.Code,
+                Description = x.Description,
+                DictionaryTypeId = x.DictionaryTypeId,
+                Enabled = x.Enabled,
+                Name = x.Name,
+                Value = x.Value,
+            });
         }
 
         /// <summary>

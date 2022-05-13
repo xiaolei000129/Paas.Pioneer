@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Paas.Pioneer.AutoWrapper;
 using System.Linq;
+using Volo.Abp;
 using Volo.Abp.DependencyInjection;
 
 namespace Paas.Pioneer.Domain.Shared
@@ -17,8 +16,7 @@ namespace Paas.Pioneer.Domain.Shared
                 return;
             }
             var errorMessage = modelState.Where(x => x.Value.Errors.Any()).Select(x => x.Value.Errors.FirstOrDefault().ErrorMessage).FirstOrDefault();
-            context.Result = new JsonResult(ResponseOutput.Error<object>(errorMessage));
-            context.HttpContext.Response.StatusCode = 200;
+            throw new BusinessException(errorMessage);
         }
     }
 }
