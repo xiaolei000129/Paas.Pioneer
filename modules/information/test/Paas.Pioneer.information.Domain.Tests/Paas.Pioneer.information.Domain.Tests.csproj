@@ -5,11 +5,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Paas.Pioneer.information.EntityFrameworkCore.Tests\Paas.Pioneer.information.EntityFrameworkCore.Tests.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.Information.EntityFrameworkCore.Tests\Paas.Pioneer.Information.EntityFrameworkCore.Tests.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
 	</ItemGroup>
 
 </Project>

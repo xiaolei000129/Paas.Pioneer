@@ -1,8 +1,8 @@
-﻿namespace Paas.Pioneer.information.Domain.Settings
+﻿namespace Paas.Pioneer.Information.Domain.Settings
 {
-    public static class informationsSettings
+    public static class InformationsSettings
     {
-        private const string Prefix = "informations";
+        private const string Prefix = "Informations";
 
         //Add your own setting names here. Example:
         //public const string MySetting1 = Prefix + ".MySetting1";

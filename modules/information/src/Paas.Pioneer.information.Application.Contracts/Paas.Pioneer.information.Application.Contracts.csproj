@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<PackageType>Paas.Pioneer.information.Application.Contracts</PackageType>
-		<PackageId>Paas.Pioneer.information.Application.Contracts</PackageId>
-		<Title>Paas.Pioneer.information.Application.Contracts</Title>
+		<PackageType>Paas.Pioneer.Information.Application.Contracts</PackageType>
+		<PackageId>Paas.Pioneer.Information.Application.Contracts</PackageId>
+		<Title>Paas.Pioneer.Information.Application.Contracts</Title>
 		<Authors>Paas.Pioneer</Authors>
-		<Description>Paas.Pioneer.information.Application.Contracts</Description>
+		<Description>Paas.Pioneer.Information.Application.Contracts</Description>
 		<TargetFramework>net6.0</TargetFramework>
 		<IncludeBuildOutput>true</IncludeBuildOutput>
 		<NoWarn>$(NoWarn);NU5128</NoWarn>
@@ -12,12 +12,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Paas.Pioneer.information.Domain.Shared\Paas.Pioneer.information.Domain.Shared.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.Information.Domain.Shared\Paas.Pioneer.Information.Domain.Shared.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Volo.Abp.ObjectExtending" Version="5.1.1" />
-		<PackageReference Include="Volo.Abp.TenantManagement.Application.Contracts" Version="5.1.1" />
+		<PackageReference Include="Volo.Abp.ObjectExtending" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Application.Contracts" Version="5.2.1" />
 	</ItemGroup>
 
 </Project>

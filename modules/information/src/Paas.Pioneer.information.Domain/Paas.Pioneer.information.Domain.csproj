@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<PackageType>Paas.Pioneer.information.Domain</PackageType>
-		<PackageId>Paas.Pioneer.information.Domain</PackageId>
-		<Title>Paas.Pioneer.information.Domain</Title>
+		<PackageType>Paas.Pioneer.Information.Domain</PackageType>
+		<PackageId>Paas.Pioneer.Information.Domain</PackageId>
+		<Title>Paas.Pioneer.Information.Domain</Title>
 		<Authors>Paas.Pioneer</Authors>
-		<Description>Paas.Pioneer.information.Domain</Description>
+		<Description>Paas.Pioneer.Information.Domain</Description>
 		<TargetFramework>net6.0</TargetFramework>
 		<IncludeBuildOutput>true</IncludeBuildOutput>
 		<NoWarn>$(NoWarn);NU5128</NoWarn>
@@ -12,12 +12,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Paas.Pioneer.Domain" Version="5.1.1" />
-		<PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="5.1.1" />
+		<PackageReference Include="Paas.Pioneer.Domain" Version="5.2.6" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="5.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Paas.Pioneer.information.Domain.Shared\Paas.Pioneer.information.Domain.Shared.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.Information.Application.Contracts\Paas.Pioneer.Information.Application.Contracts.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.Information.Domain.Shared\Paas.Pioneer.Information.Domain.Shared.csproj" />
 	</ItemGroup>
 
 </Project>

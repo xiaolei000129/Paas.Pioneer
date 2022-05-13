@@ -1,5 +1,5 @@
 ﻿using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
 
-namespace Paas.Pioneer.information.Domain.BaseExtensions
+namespace Paas.Pioneer.Information.Domain.BaseExtensions
 {
     public interface IBaseExtensionRepository<TEntity> where TEntity : Entity<Guid>, ISoftDelete
     {
@@ -19,7 +20,7 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
         /// <param name="expression"></param>
         /// <returns></returns>
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression,
-            CancellationToken cancellationToken = default(CancellationToken));
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 真实删除
@@ -28,7 +29,7 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<bool> HardDeleteAsync(Expression<Func<TEntity, bool>> expression,
-            CancellationToken cancellationToken = default(CancellationToken));
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取单个
@@ -37,7 +38,7 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取单个
@@ -47,7 +48,7 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
                     Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取列表数据
@@ -61,7 +62,7 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
                     Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取列表数据
@@ -70,11 +71,11 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<List<TEntity>>> GetResponseOutputListAsync(
+        Task<List<TEntity>> GetResponseOutputListAsync(
                     Expression<Func<TEntity, bool>> expression = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取列表数据
@@ -83,12 +84,12 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<List<TResult>>> GetResponseOutputListAsync<TResult>(
+        Task<List<TResult>> GetResponseOutputListAsync<TResult>(
                     Expression<Func<TEntity, bool>> expression = default,
                     Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取列表数据
@@ -100,12 +101,12 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<Page<TResult>>> GetResponseOutputListAsync<TResult, TPageInput>(
+        Task<Page<TResult>> GetResponseOutputListAsync<TResult, TPageInput>(
                     Expression<Func<TEntity, bool>> expression = default,
                     Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取分页数据
@@ -115,12 +116,12 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<Page<TEntity>>> GetResponseOutputPageListAsync<TPageInput>(
+        Task<Page<TEntity>> GetResponseOutputPageListAsync<TPageInput>(
                     Expression<Func<TEntity, bool>> expression = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
                     PageInput<TPageInput> input = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取分页数据
@@ -130,11 +131,11 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<Page<TEntity>>> GetResponseOutputPageListAsync<TPageInput>(
+        Task<Page<TEntity>> GetResponseOutputPageListAsync<TPageInput>(
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     PageInput<TPageInput> input = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取分页数据
@@ -146,13 +147,13 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<Page<TResult>>> GetResponseOutputPageListAsync<TResult, TPageInput>(
+        Task<Page<TResult>> GetResponseOutputPageListAsync<TResult, TPageInput>(
                     Expression<Func<TEntity, bool>> expression = default,
                     Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     PageInput<TPageInput> input = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取分页数据
@@ -164,12 +165,12 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        Task<ResponseOutput<Page<TResult>>> GetResponseOutputPageListAsync<TResult, TPageInput>(
+        Task<Page<TResult>> GetResponseOutputPageListAsync<TResult, TPageInput>(
                     Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     PageInput<TPageInput> input = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 批量更新,忽略指定属性
@@ -178,7 +179,7 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
         /// <param name="ignorePropertys">忽略属性</param>
         /// <returns></returns>
         Task BatchIgnoreUpdateAsync(IEnumerable<TEntity> entitys,
-            CancellationToken cancellationToken = default(CancellationToken),
+            CancellationToken cancellationToken = default,
             params Expression<Func<TEntity, object>>[] ignorePropertys);
 
         /// <summary>
@@ -188,7 +189,7 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
         /// <param name="ignorePropertys">忽略属性</param>
         /// <returns></returns>
         Task IgnoreUpdateAsync(TEntity entity,
-            CancellationToken cancellationToken = default(CancellationToken),
+            CancellationToken cancellationToken = default,
             params Expression<Func<TEntity, object>>[] ignorePropertys);
 
         /// <summary>
@@ -198,7 +199,7 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
         /// <param name="includePropertys">包含属性</param>
         /// <returns></returns>
         Task BatchIncludeUpdateAsync(IEnumerable<TEntity> entitys,
-            CancellationToken cancellationToken = default(CancellationToken),
+            CancellationToken cancellationToken = default,
             params Expression<Func<TEntity, object>>[] includePropertys);
 
         /// <summary>
@@ -208,7 +209,7 @@ namespace Paas.Pioneer.information.Domain.BaseExtensions
         /// <param name="includePropertys">包含属性</param>
         /// <returns></returns>
         Task IncludeUpdateAsync(TEntity entity,
-            CancellationToken cancellationToken = default(CancellationToken),
+            CancellationToken cancellationToken = default,
             params Expression<Func<TEntity, object>>[] includePropertys);
     }
 }

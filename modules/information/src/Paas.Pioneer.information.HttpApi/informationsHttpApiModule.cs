@@ -1,17 +1,17 @@
-﻿using Paas.Pioneer.information.Application.Contracts;
+﻿using Paas.Pioneer.Information.Application.Contracts;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.TenantManagement;
 
-namespace Paas.Pioneer.information.HttpApi
+namespace Paas.Pioneer.Information.HttpApi
 {
     [DependsOn(
-        typeof(informationsApplicationContractsModule),
+        typeof(InformationsApplicationContractsModule),
         typeof(AbpTenantManagementHttpApiModule),
         typeof(AbpFeatureManagementHttpApiModule)
         )]
-    public class informationsHttpApiModule : AbpModule
+    public class InformationsHttpApiModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {

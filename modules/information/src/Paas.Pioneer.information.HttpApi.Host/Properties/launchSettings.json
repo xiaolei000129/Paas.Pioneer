@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "Paas.Pioneer.information.HttpApi.Host": {
+    "Paas.Pioneer.Information.HttpApi.Host": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:44338",
+      "applicationUrl": "http://localhost:9001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

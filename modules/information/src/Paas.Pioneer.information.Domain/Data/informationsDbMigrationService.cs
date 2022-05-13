@@ -12,20 +12,20 @@ using Volo.Abp.DependencyInjection;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.TenantManagement;
 
-namespace Paas.Pioneer.information.Domain.Data
+namespace Paas.Pioneer.Information.Domain.Data
 {
-    public class informationsDbMigrationService : ITransientDependency
+    public class InformationsDbMigrationService : ITransientDependency
     {
-        public ILogger<informationsDbMigrationService> Logger { get; set; }
+        public ILogger<InformationsDbMigrationService> Logger { get; set; }
 
         private readonly IDataSeeder _dataSeeder;
-        private readonly IEnumerable<IinformationsDbSchemaMigrator> _dbSchemaMigrators;
+        private readonly IEnumerable<IInformationsDbSchemaMigrator> _dbSchemaMigrators;
         private readonly ITenantRepository _tenantRepository;
         private readonly ICurrentTenant _currentTenant;
 
-        public informationsDbMigrationService(
+        public InformationsDbMigrationService(
             IDataSeeder dataSeeder,
-            IEnumerable<IinformationsDbSchemaMigrator> dbSchemaMigrators,
+            IEnumerable<IInformationsDbSchemaMigrator> dbSchemaMigrators,
             ITenantRepository tenantRepository,
             ICurrentTenant currentTenant)
         {
@@ -34,7 +34,7 @@ namespace Paas.Pioneer.information.Domain.Data
             _tenantRepository = tenantRepository;
             _currentTenant = currentTenant;
 
-            Logger = NullLogger<informationsDbMigrationService>.Instance;
+            Logger = NullLogger<InformationsDbMigrationService>.Instance;
         }
 
         public async Task MigrateAsync()

@@ -1,16 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
+using System;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 
-namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
+namespace Paas.Pioneer.Information.EntityFrameworkCore.EntityFrameworkCore
 {
     [ReplaceDbContext(typeof(ITenantManagementDbContext))]
     [ConnectionStringName("Default")]
-    public class informationsDbContext :
-        AbpDbContext<informationsDbContext>,
+    public class InformationsDbContext :
+        AbpDbContext<InformationsDbContext>,
         ITenantManagementDbContext
     {
         /* Add DbSet properties for your Aggregate Roots / Entities here. */
@@ -23,7 +26,14 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
 
         #endregion
 
-        public informationsDbContext(DbContextOptions<informationsDbContext> options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder
+            .ConfigureWarnings(b => b.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
+            .LogTo(Console.WriteLine, LogLevel.Information)
+            .EnableSensitiveDataLogging();
+
+
+        public InformationsDbContext(DbContextOptions<InformationsDbContext> options)
             : base(options)
         {
 
@@ -41,7 +51,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore
 
             //builder.Entity<YourEntity>(b =>
             //{
-            //    b.ToTable(informationsConsts.DbTablePrefix + "YourEntities", informationsConsts.DbSchema);
+            //    b.ToTable(InformationsConsts.DbTablePrefix + "YourEntities", InformationsConsts.DbSchema);
             //    b.ConfigureByConvention(); //auto configure for the base class props
             //    //...
             //});

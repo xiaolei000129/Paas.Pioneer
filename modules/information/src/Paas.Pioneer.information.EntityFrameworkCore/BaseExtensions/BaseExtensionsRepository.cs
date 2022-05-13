@@ -2,10 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.Domain.Shared.Dto.Output;
 using Paas.Pioneer.Domain.Shared.Extensions;
-using Paas.Pioneer.information.Domain.BaseExtensions;
-using Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,14 +15,17 @@ using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
+using Paas.Pioneer.Domain.Shared.Dto.Output;
+using Paas.Pioneer.Information.EntityFrameworkCore.EntityFrameworkCore;
+using Paas.Pioneer.Information.Domain.BaseExtensions;
 
-namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
+namespace Paas.Pioneer.Information.EntityFrameworkCore.BaseExtensions
 {
-    public class BaseExtensionsRepository<TEntity> : EfCoreRepository<informationsDbContext, TEntity, Guid>, IBaseExtensionRepository<TEntity> where TEntity : Entity<Guid>, ISoftDelete
+    public class BaseExtensionsRepository<TEntity> : EfCoreRepository<InformationsDbContext, TEntity, Guid>, IBaseExtensionRepository<TEntity> where TEntity : Entity<Guid>, ISoftDelete
     {
-        private readonly IDbContextProvider<informationsDbContext> _dbContextProvider;
+        private readonly IDbContextProvider<InformationsDbContext> _dbContextProvider;
 
-        public BaseExtensionsRepository(IDbContextProvider<informationsDbContext> dbContextProvider)
+        public BaseExtensionsRepository(IDbContextProvider<InformationsDbContext> dbContextProvider)
          : base(dbContextProvider)
         {
             _dbContextProvider = dbContextProvider;
@@ -45,7 +45,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
             Func<IQueryable<TEntity>,
             IOrderedQueryable<TEntity>> order = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var dbSet = await BuilderQueryable(isTracking);
 
@@ -68,7 +68,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
             Expression<Func<TEntity, TResult>> selector,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var dbSet = await BuilderQueryable(isTracking);
 
@@ -91,7 +91,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
             Expression<Func<TEntity, TResult>> selector = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var dbSet = await BuilderQueryable(isTracking);
 
@@ -113,11 +113,11 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
         /// <param name="expression">表达式</param>
         /// <param name="order">排序</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<List<TEntity>>> GetResponseOutputListAsync(
+        public async Task<List<TEntity>> GetResponseOutputListAsync(
             Expression<Func<TEntity, bool>> expression,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var dbSet = await BuilderQueryable(isTracking);
 
@@ -129,7 +129,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
             {
                 dbSet = order(dbSet);
             }
-            return ResponseOutput.Succees(await dbSet.ToListAsync(cancellationToken));
+            return await dbSet.ToListAsync(cancellationToken);
         }
 
         /// <summary>
@@ -139,13 +139,13 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
         /// <param name="expression">表达式</param>
         /// <param name="order">排序</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<List<TResult>>> GetResponseOutputListAsync<TResult>(
+        public async Task<List<TResult>> GetResponseOutputListAsync<TResult>(
             Expression<Func<TEntity, bool>> expression,
             Expression<Func<TEntity, TResult>> selector,
             Func<IQueryable<TEntity>,
             IOrderedQueryable<TEntity>> order,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var dbSet = await BuilderQueryable(isTracking);
 
@@ -157,7 +157,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
             {
                 dbSet = order(dbSet);
             }
-            return ResponseOutput.Succees(await dbSet.Select(selector).ToListAsync(cancellationToken));
+            return await dbSet.Select(selector).ToListAsync(cancellationToken);
         }
 
         /// <summary>
@@ -170,12 +170,12 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<TResult>>> GetResponseOutputListAsync<TResult, TPageInput>(
+        public async Task<Page<TResult>> GetResponseOutputListAsync<TResult, TPageInput>(
             Expression<Func<TEntity, bool>> expression,
             Expression<Func<TEntity, TResult>> selector,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var dbSet = await BuilderQueryable(isTracking);
             if (expression != null)
@@ -186,13 +186,13 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
             {
                 dbSet = order(dbSet);
             }
-            return ResponseOutput.Succees(new Page<TResult>
+            return new Page<TResult>
             {
                 Total = await dbSet.CountAsync(),
                 List = await dbSet
                     .Select(selector)
                     .ToListAsync(cancellationToken)
-            });
+            };
         }
 
         /// <summary>
@@ -203,12 +203,12 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<TEntity>>> GetResponseOutputPageListAsync<TPageInput>(
+        public async Task<Page<TEntity>> GetResponseOutputPageListAsync<TPageInput>(
             Func<IQueryable<TEntity>,
             IOrderedQueryable<TEntity>> order = null,
             PageInput<TPageInput> input = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             IQueryable<TEntity> query = (await BuilderQueryable(isTracking))
              .WhereDynamicFilter(input.DynamicFilter);
@@ -217,13 +217,13 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
             {
                 query = order(query);
             }
-            return ResponseOutput.Succees(new Page<TEntity>
+            return new Page<TEntity>
             {
                 Total = await query.CountAsync(),
                 List = await query
                     .Page(input.CurrentPage, input.PageSize)
                     .ToListAsync(cancellationToken)
-            });
+            };
         }
 
         /// <summary>
@@ -234,12 +234,12 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<TEntity>>> GetResponseOutputPageListAsync<TPageInput>(
+        public async Task<Page<TEntity>> GetResponseOutputPageListAsync<TPageInput>(
             Expression<Func<TEntity, bool>> expression,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
             PageInput<TPageInput> input = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             IQueryable<TEntity> query = (await BuilderQueryable(isTracking))
              .WhereDynamicFilter(input.DynamicFilter);
@@ -251,13 +251,13 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
             {
                 query = order(query);
             }
-            return ResponseOutput.Succees(new Page<TEntity>
+            return new Page<TEntity>
             {
                 Total = await query.CountAsync(),
                 List = await query
                     .Page(input.CurrentPage, input.PageSize)
                     .ToListAsync(cancellationToken)
-            });
+            };
         }
 
         /// <summary>
@@ -270,13 +270,13 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<TResult>>> GetResponseOutputPageListAsync<TResult, TPageInput>(
+        public async Task<Page<TResult>> GetResponseOutputPageListAsync<TResult, TPageInput>(
             Expression<Func<TEntity, TResult>> selector,
             Func<IQueryable<TEntity>,
             IOrderedQueryable<TEntity>> order = null,
             PageInput<TPageInput> input = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             IQueryable<TEntity> query = (await BuilderQueryable(isTracking))
              .WhereDynamicFilter(input.DynamicFilter);
@@ -285,14 +285,14 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
             {
                 query = order(query);
             }
-            return ResponseOutput.Succees(new Page<TResult>
+            return new Page<TResult>
             {
                 Total = await query.CountAsync(),
                 List = await query
                     .Page(input.CurrentPage, input.PageSize)
                     .Select(selector)
                     .ToListAsync(cancellationToken)
-            });
+            };
         }
 
         /// <summary>
@@ -305,14 +305,14 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
         /// <param name="order">排序</param>
         /// <param name="input">入参</param>
         /// <returns></returns>
-        public async Task<ResponseOutput<Page<TResult>>> GetResponseOutputPageListAsync<TResult, TPageInput>(
+        public async Task<Page<TResult>> GetResponseOutputPageListAsync<TResult, TPageInput>(
             Expression<Func<TEntity, bool>> expression,
             Expression<Func<TEntity, TResult>> selector,
             Func<IQueryable<TEntity>,
             IOrderedQueryable<TEntity>> order = null,
             PageInput<TPageInput> input = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             IQueryable<TEntity> query = (await BuilderQueryable(isTracking))
              .WhereDynamicFilter(input.DynamicFilter);
@@ -324,14 +324,14 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
             {
                 query = order(query);
             }
-            return ResponseOutput.Succees(new Page<TResult>
+            return new Page<TResult>
             {
                 Total = await query.CountAsync(),
                 List = await query
                     .Page(input.CurrentPage, input.PageSize)
                     .Select(selector)
                     .ToListAsync(cancellationToken)
-            });
+            };
         }
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
         /// <param name="ignorePropertys">忽略属性</param>
         /// <returns></returns>
         public async Task BatchIgnoreUpdateAsync(IEnumerable<TEntity> entitys,
-            CancellationToken cancellationToken = default(CancellationToken),
+            CancellationToken cancellationToken = default,
             params Expression<Func<TEntity, object>>[] ignorePropertys)
         {
             var tDbContext = await GetDbContextAsync();
@@ -364,7 +364,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
         /// <param name="ignorePropertys">忽略属性</param>
         /// <returns></returns>
         public async Task IgnoreUpdateAsync(TEntity entity,
-                        CancellationToken cancellationToken = default(CancellationToken),
+                        CancellationToken cancellationToken = default,
                         params Expression<Func<TEntity, object>>[] ignorePropertys)
         {
             var tDbContext = await _dbContextProvider.GetDbContextAsync();
@@ -387,7 +387,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
         /// <param name="includePropertys">包含属性</param>
         /// <returns></returns>
         public async Task BatchIncludeUpdateAsync(IEnumerable<TEntity> entitys,
-            CancellationToken cancellationToken = default(CancellationToken),
+            CancellationToken cancellationToken = default,
             params Expression<Func<TEntity, object>>[] includePropertys)
         {
             var tDbContext = await _dbContextProvider.GetDbContextAsync();
@@ -408,7 +408,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
         /// <param name="includePropertys">包含属性</param>
         /// <returns></returns>
         public async Task IncludeUpdateAsync(TEntity entity,
-                        CancellationToken cancellationToken = default(CancellationToken),
+                        CancellationToken cancellationToken = default,
                         params Expression<Func<TEntity, object>>[] includePropertys)
         {
             var tDbContext = await _dbContextProvider.GetDbContextAsync();
@@ -429,7 +429,7 @@ namespace Paas.Pioneer.information.EntityFrameworkCore.BaseExtensions
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var dbSet = await GetDbSetAsync();
             return await dbSet.AnyAsync(expression, cancellationToken);

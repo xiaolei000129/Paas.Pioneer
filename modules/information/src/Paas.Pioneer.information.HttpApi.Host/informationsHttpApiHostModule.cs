@@ -6,36 +6,37 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Auth;
 using Paas.Pioneer.Knife4jUI.Swagger;
 using Paas.Pioneer.Middleware.Middleware.Extensions;
-using Paas.Pioneer.information.Application;
-using Paas.Pioneer.information.Domain.Shared.MultiTenancy;
-using Paas.Pioneer.information.EntityFrameworkCore.EntityFrameworkCore;
-using Paas.Pioneer.information.HttpApi.Host.Filter;
+using Paas.Pioneer.Information.Application;
+using Paas.Pioneer.Information.Domain.Shared.MultiTenancy;
+using Paas.Pioneer.Information.EntityFrameworkCore.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
+using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.Autofac;
 using Volo.Abp.Modularity;
 
-namespace Paas.Pioneer.information.HttpApi.Host
+namespace Paas.Pioneer.Information.HttpApi.Host
 {
     [DependsOn(
-        typeof(informationsHttpApiModule),
+        typeof(InformationsHttpApiModule),
         typeof(AbpAutofacModule),
         typeof(AbpAspNetCoreMultiTenancyModule),
-        typeof(informationsApplicationModule),
-        typeof(informationsEntityFrameworkCoreModule),
+        typeof(InformationsApplicationModule),
+        typeof(InformationsEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
         typeof(Knife4jUISwaggerModule),
         typeof(DomainSharedModule)
     )]
-    public class informationsHttpApiHostModule : AbpModule
+    public class InformationsHttpApiHostModule : AbpModule
     {
         private IConfiguration Configuration;
 
@@ -48,11 +49,10 @@ namespace Paas.Pioneer.information.HttpApi.Host
 
             ConfigureAuthentication(context, configuration);
 
-            // 设置模型验证
-            context.Services.AddControllers(options =>
+            // 业务错误拓展配置
+            Configure<AbpExceptionHandlingOptions>(options =>
             {
-                // -1 为过滤器的优先级
-                options.Filters.Add<ModelValidAttribute>(-1);
+                options.SendExceptionsDetailsToClients = true;
             });
         }
 
@@ -92,14 +92,24 @@ namespace Paas.Pioneer.information.HttpApi.Host
                 app.UseDeveloperExceptionPage();
             }
 
-            //全局日志中间件
-            app.UseLoggerMiddleware();
-
             // 生成全局唯一Id
             app.UseCorrelationId();
 
             //路由
             app.UseRouting();
+
+            // 格式化
+            app.UseApiResponseAndExceptionWrapper(new AutoWrapperOptions
+            {
+                ShowIsErrorFlagForSuccessfulResponse = true,
+                ExcludePaths = new AutoWrapperExcludePath[] {
+                    // 严格匹配
+                    new AutoWrapperExcludePath("/v1/api-docs", ExcludeMode.StartWith),
+                }
+            });
+
+            //全局日志中间件
+            app.UseLoggerMiddleware();
 
             //跨域
             app.UseCors();
