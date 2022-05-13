@@ -14,7 +14,7 @@ namespace Paas.Pioneer.Information.HttpApi.Controllers.News
     /// <summary>
     /// 新闻管理
     /// </summary>
-    [Route("api/admin/[controller]/[action]")]
+    [Route("api/info/[controller]/[action]")]
     [Authorize]
     public class NewsController : AbpController
     {

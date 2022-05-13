@@ -1,6 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
+using Paas.Pioneer.Information.Domain.Comment;
+using Paas.Pioneer.Information.Domain.Grid;
+using Paas.Pioneer.Information.Domain.News;
+using Paas.Pioneer.Information.Domain.Slideshow;
 using System;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
@@ -24,6 +28,13 @@ namespace Paas.Pioneer.Information.EntityFrameworkCore.EntityFrameworkCore
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
 
+        #endregion
+
+        #region 资讯管理
+        public DbSet<Information_CommentEntity> Information_CommentEntitys { get; set; }
+        public DbSet<Information_GridEntity> Information_GridEntitys { get; set; }
+        public DbSet<Information_NewsEntity> Information_NewsEntitys { get; set; }
+        public DbSet<Information_SlideshowEntity> Information_SlideshowEntitys { get; set; }
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

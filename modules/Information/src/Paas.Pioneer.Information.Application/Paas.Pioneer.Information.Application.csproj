@@ -18,7 +18,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Volo.Abp.TenantManagement.Application" Version="5.2.1" />
-		<PackageReference Include="Paas.Pioneer.Admin.Core.HttpApi.Client" Version="5.2.6" />
+		<PackageReference Include="Paas.Pioneer.Admin.Core.HttpApi.Client" Version="5.2.7" />
 	</ItemGroup>
 
 </Project>

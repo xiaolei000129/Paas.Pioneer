@@ -47,7 +47,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("/rpc/admin/Dictionary/GetList")]
         public async Task<IEnumerable<GetDictionaryOutput>> GetList(Guid[] ids)
         {
             return await _dictionaryService.GetListAsync(ids);

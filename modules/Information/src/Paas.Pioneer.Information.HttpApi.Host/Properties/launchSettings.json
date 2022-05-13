@@ -3,7 +3,7 @@
     "Paas.Pioneer.Information.HttpApi.Host": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:9001",
+      "applicationUrl": "http://localhost:9201",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

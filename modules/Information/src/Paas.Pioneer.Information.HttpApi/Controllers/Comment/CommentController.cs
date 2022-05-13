@@ -15,7 +15,7 @@ namespace Paas.Pioneer.Information.HttpApi.Controllers.Comment
     /// <summary>
     /// 评论管理
     /// </summary>
-    [Route("api/admin/[controller]/[action]")]
+    [Route("api/info/[controller]/[action]")]
     [Authorize]
     public class CommentController : AbpController
     {

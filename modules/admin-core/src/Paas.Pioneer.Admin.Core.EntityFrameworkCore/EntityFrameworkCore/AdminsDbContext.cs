@@ -2,16 +2,13 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Paas.Pioneer.Admin.Core.Domain.Api;
-using Paas.Pioneer.Admin.Core.Domain.Comment;
 using Paas.Pioneer.Admin.Core.Domain.Dictionary;
 using Paas.Pioneer.Admin.Core.Domain.DictionaryType;
 using Paas.Pioneer.Admin.Core.Domain.Document;
 using Paas.Pioneer.Admin.Core.Domain.DocumentImage;
-using Paas.Pioneer.Admin.Core.Domain.Grid;
 using Paas.Pioneer.Admin.Core.Domain.LoginLog;
 using Paas.Pioneer.Admin.Core.Domain.LowCodeTable;
 using Paas.Pioneer.Admin.Core.Domain.LowCodeTableConfig;
-using Paas.Pioneer.Admin.Core.Domain.News;
 using Paas.Pioneer.Admin.Core.Domain.Permission;
 using Paas.Pioneer.Admin.Core.Domain.PermissionApi;
 using Paas.Pioneer.Admin.Core.Domain.Personnel.Employee;
@@ -19,7 +16,6 @@ using Paas.Pioneer.Admin.Core.Domain.Personnel.Organization;
 using Paas.Pioneer.Admin.Core.Domain.Personnel.Position;
 using Paas.Pioneer.Admin.Core.Domain.Role;
 using Paas.Pioneer.Admin.Core.Domain.RolePermission;
-using Paas.Pioneer.Admin.Core.Domain.Slideshow;
 using Paas.Pioneer.Admin.Core.Domain.TenantPermission;
 using Paas.Pioneer.Admin.Core.Domain.User;
 using Paas.Pioneer.Admin.Core.Domain.UserRole;
@@ -62,14 +58,6 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.EntityFrameworkCore
         public DbSet<Pe_PositionEntity> Pe_PositionEntitys { get; set; }
         public DbSet<Ad_LowCodeTableConfigEntity> Ad_LowCodeTableConfigEntitys { get; set; }
         public DbSet<Ad_LowCodeTableEntity> Ad_LowCodeTableEntitys { get; set; }
-
-        
-        #region 资讯管理
-        public DbSet<Information_CommentEntity> Information_CommentEntitys { get; set; }
-        public DbSet<Information_GridEntity> Information_GridEntitys { get; set; }
-        public DbSet<Information_NewsEntity> Information_NewsEntitys { get; set; }
-        public DbSet<Information_SlideshowEntity> Information_SlideshowEntitys { get; set; }
-        #endregion
 
         // Tenant Management
         public DbSet<Volo.Abp.TenantManagement.Tenant> Tenants { get; set; }

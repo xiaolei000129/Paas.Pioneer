@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
-using Paas.Pioneer.AutoWrapper;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc;
@@ -15,7 +14,7 @@ namespace Paas.Pioneer.Information.HttpApi.Controllers.Slideshow
     /// <summary>
     /// 幻灯片管理
     /// </summary>
-    [Route("api/admin/[controller]/[action]")]
+    [Route("api/info/[controller]/[action]")]
     [Authorize]
     public class SlideshowController : AbpController
     {
