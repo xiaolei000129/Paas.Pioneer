@@ -3,7 +3,7 @@
     "Paas.Pioneer.Hangfire.HttpApi.Host": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:9100",
+      "applicationUrl": "http://localhost:9302",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

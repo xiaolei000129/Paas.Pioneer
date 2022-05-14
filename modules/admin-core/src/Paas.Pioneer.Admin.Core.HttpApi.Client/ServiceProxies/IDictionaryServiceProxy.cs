@@ -8,7 +8,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Client.ServiceProxies
 {
     public interface IDictionaryServiceProxy : IRefitServiceProxy
     {
-        [Get("/api/admin/Dictionary/GetList")]
+        [Get("/rpc/admin/Dictionary/GetList")]
         Task<IEnumerable<GetDictionaryOutput>> GetListAsync(Guid[] ids);
     }
 }

@@ -1,0 +1,19 @@
+version: "3.1"
+services:
+  paas.pioneer.information:
+    image: paas.pioneer.information
+    build: 
+        context: ../modules/information/
+        dockerfile: Dockerfile
+    volumes: 
+        - /home/docker/paasPioneer/paasPioneerInformation/logs:/app/Logs/
+        - /home/docker/paasPioneer/paasPioneerInformation/wwwroot:/app/wwwroot/
+        - /home/docker/paasPioneer/paasPioneerInformation/appsettings/appsettings.json:/app/appsettings.json
+    environment:
+        - Service__Port=9301
+    ports: 
+        - 9301:9301
+    restart: always
+    container_name:  paas.pioneer.information
+    hostname: paas.pioneer.information
+    privileged: true  
