@@ -10,9 +10,9 @@ services:
         - /home/docker/paasPioneer/paasPioneerHangfire/wwwroot:/app/wwwroot/
         - /home/docker/paasPioneer/paasPioneerHangfire/appsettings/appsettings.json:/app/appsettings.json
     environment:
-        - Service__Port=9100
+        - Service__Port=9202
     ports: 
-        - 9100:9100
+        - 9202:9202
     restart: always
     container_name: paas.pioneer.hangfire
     hostname: paas.pioneer.hangfire

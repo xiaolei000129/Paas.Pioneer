@@ -5,10 +5,10 @@
 
 path_current="$PWD"
 
-source "$path_current/helper.sh"
+source "../$path_current/helper.sh"
 
 # 变量区
-path_appsettings="/home/docker/paasPioneer/paasPioneerHangfire/appsettings"
+path_appsettings="/home/docker/paasPioneer/paasPioneerInformation/appsettings"
 
 path_file_appsettings="$path_appsettings/appsettings.json"
 
@@ -23,9 +23,9 @@ fun_init_appsettings()
 
   cat <<EOT > ${path_file_appsettings}
   {
-    "urls": "http://*:9202",
+    "urls": "http://*:9201",
     "App": {
-      "SelfUrl": "http://*:9202",
+      "SelfUrl": "http://*:9201",
       "CorsOrigins": "http://localhost:9000/,http://119.91.225.37/",
       "RedirectAllowedUrls": "http://localhost:4200,https://localhost:44307"
     },
@@ -56,6 +56,6 @@ if [ $? -eq 1 ] ;then
 fi
 
 # 启动项目
-docker-compose -f docker-compose-hangfire.yml  up -d --build  --force-recreate
+docker-compose -f docker-compose-admin-core.yml up -d --build  --force-recreate
 
-success "paasPioneerHangfire发布镜像成功，镜像Tag为lastest"
+success "adminCore发布镜像成功，镜像Tag为lastest"
