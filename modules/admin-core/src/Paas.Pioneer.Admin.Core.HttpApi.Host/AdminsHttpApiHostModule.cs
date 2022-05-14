@@ -140,7 +140,7 @@ namespace Paas.Pioneer.Admin.Core.HttpApi.Host
                 ExcludePaths = new AutoWrapperExcludePath[] {
                     // —œ∏Ò∆•≈‰
                     new AutoWrapperExcludePath("/v1/api-docs", ExcludeMode.StartWith),
-                    new AutoWrapperExcludePath("/rpc/", ExcludeMode.StartWith),
+                    new AutoWrapperExcludePath("/rpc/admin", ExcludeMode.StartWith),
                 }
             });
 
