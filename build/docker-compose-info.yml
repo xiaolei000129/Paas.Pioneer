@@ -1,6 +1,6 @@
 version: "3.1"
 services:
-  paas.pioneer.admincore:
+  paas.pioneer.information:
     image: paas.pioneer.information
     build: 
         context: ../modules/information/
