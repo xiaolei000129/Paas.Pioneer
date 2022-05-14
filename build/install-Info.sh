@@ -56,6 +56,6 @@ if [ $? -eq 1 ] ;then
 fi
 
 # 启动项目
-docker-compose -f docker-compose-admin-core.yml up -d --build  --force-recreate
+docker-compose -f docker-compose-info.yml up -d --build  --force-recreate
 
 success "adminCore发布镜像成功，镜像Tag为lastest"
