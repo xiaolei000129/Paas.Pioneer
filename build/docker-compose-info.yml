@@ -10,9 +10,9 @@ services:
         - /home/docker/paasPioneer/paasPioneerInformation/wwwroot:/app/wwwroot/
         - /home/docker/paasPioneer/paasPioneerInformation/appsettings/appsettings.json:/app/appsettings.json
     environment:
-        - Service__Port=9201
+        - Service__Port=9301
     ports: 
-        - 9201:9201
+        - 9301:9301
     restart: always
     container_name:  paas.pioneer.information
     hostname: paas.pioneer.information

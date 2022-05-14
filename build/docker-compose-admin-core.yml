@@ -10,9 +10,9 @@ services:
         - /home/docker/paasPioneer/adminCore/wwwroot:/app/wwwroot/
         - /home/docker/paasPioneer/adminCore/appsettings/appsettings.json:/app/appsettings.json
     environment:
-        - Service__Port=9200
+        - Service__Port=9300
     ports: 
-        - 9200:9200
+        - 9300:9300
     restart: always
     container_name:  paas.pioneer.admincore
     hostname: paas.pioneer.admincore
