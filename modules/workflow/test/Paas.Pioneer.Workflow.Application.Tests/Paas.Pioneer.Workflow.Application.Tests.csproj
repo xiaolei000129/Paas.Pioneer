@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Paas.Pioneer.Workflow.Application\Paas.Pioneer.Workflow.Application.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.Workflow.Domain.Tests\Paas.Pioneer.Workflow.Domain.Tests.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+	</ItemGroup>
+
+</Project>
