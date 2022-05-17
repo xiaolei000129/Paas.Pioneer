@@ -3,7 +3,7 @@
     "Paas.Pioneer.Workflow.HttpApi.Host": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:44338",
+      "applicationUrl": "http://localhost:9307",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

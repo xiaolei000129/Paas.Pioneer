@@ -26,6 +26,7 @@
 		<PackageReference Include="Volo.Abp.Autofac" Version="5.2.1" />
 		<PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="5.2.1" />
 		<PackageReference Include="Paas.Pioneer.Knife4jUI.Swagger" Version="5.2.6" />
+		<PackageReference Include="Elsa.Designer.Components.Web" Version="2.7.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -50,5 +51,8 @@
 		<None Include="NLog.config">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Include="Pages\_Host.cshtml" />
+		<None Include="Pages\_ViewImports.cshtml" />
+		<None Include="Views\_ViewImports.cshtml" />
 	</ItemGroup>
 </Project>

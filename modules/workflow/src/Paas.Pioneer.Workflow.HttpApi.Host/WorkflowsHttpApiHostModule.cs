@@ -1,14 +1,17 @@
+using Elsa;
+using Elsa.Persistence.EntityFramework.Core.Extensions;
+using Elsa.Persistence.EntityFramework.MySql;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Auth;
-using Paas.Pioneer.Knife4jUI.Swagger;
 using Paas.Pioneer.Middleware.Middleware.Extensions;
 using Paas.Pioneer.Workflow.Application;
 using Paas.Pioneer.Workflow.Domain.Shared.MultiTenancy;
@@ -21,7 +24,9 @@ using Volo.Abp;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
 using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.MultiTenancy;
+using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 using Volo.Abp.Autofac;
+using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 
 namespace Paas.Pioneer.Workflow.HttpApi.Host
@@ -33,12 +38,22 @@ namespace Paas.Pioneer.Workflow.HttpApi.Host
         typeof(WorkflowsApplicationModule),
         typeof(WorkflowsEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
-        typeof(Knife4jUISwaggerModule),
+        //typeof(Knife4jUISwaggerModule),
         typeof(DomainSharedModule)
     )]
     public class WorkflowsHttpApiHostModule : AbpModule
     {
         private IConfiguration Configuration;
+
+        public override void PreConfigureServices(ServiceConfigurationContext context)
+        {
+            PreConfigure<IMvcBuilder>(mvcBuilder =>
+            {
+                //https://github.com/abpframework/abp/pull/9299
+                mvcBuilder.AddControllersAsServices();
+                mvcBuilder.AddViewComponentsAsServices();
+            });
+        }
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
@@ -55,13 +70,57 @@ namespace Paas.Pioneer.Workflow.HttpApi.Host
                 options.SendExceptionsDetailsToClients = true;
             });
 
+            ConfigureAutoMapper();
+
             // 工作流
-            context.Services.AddElsa(options => options
-                    .AddConsoleActivities())
-                // 注册必要的服务来处理HTTP请求。  
-                //.AddHttpActivities()
-                // 注册定期调用包含基于时间的活动的工作流的托管服务。  
-                .BuildServiceProvider();
+            ConfigureElsa(context, configuration);
+        }
+
+        private void ConfigureAutoMapper()
+        {
+            Configure<AbpAutoMapperOptions>(options =>
+            {
+                options.AddMaps<WorkflowsHttpApiHostModule>();
+            });
+        }
+
+        private void ConfigureElsa(ServiceConfigurationContext context, IConfiguration configuration)
+        {
+            var elsaSection = configuration.GetSection("Elsa");
+
+            context.Services.AddElsa(elsa =>
+            {
+                elsa
+                    .UseEntityFrameworkPersistence(ef =>
+                        DbContextOptionsBuilderExtensions.UseMySql(ef,
+                            configuration.GetConnectionString("Default")))
+                    .AddConsoleActivities()
+                    .AddHttpActivities(elsaSection.GetSection("Server").Bind)
+                    .AddEmailActivities(elsaSection.GetSection("Smtp").Bind)
+                    .AddQuartzTemporalActivities()
+                    .AddJavaScriptActivities()
+                    .AddWorkflowsFrom<Startup>();
+            });
+
+            context.Services.AddElsaApiEndpoints();
+            context.Services.Configure<ApiVersioningOptions>(options =>
+            {
+                options.UseApiBehavior = false;
+            });
+
+            context.Services.AddCors(cors => cors.AddDefaultPolicy(policy => policy
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin()
+                .WithExposedHeaders("Content-Disposition"))
+            );
+
+            //Disable antiforgery validation for elsa
+            Configure<AbpAntiForgeryOptions>(options =>
+            {
+                options.AutoValidateFilter = type =>
+                    type.Assembly != typeof(Elsa.Server.Api.Endpoints.WorkflowRegistry.Get).Assembly;
+            });
         }
 
         private void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)
@@ -135,7 +194,7 @@ namespace Paas.Pioneer.Workflow.HttpApi.Host
             // 多租户
             if (MultiTenancyConsts.IsEnabled)
             {
-                app.UseMultiTenancy();
+                //app.UseMultiTenancy();
             }
 
             // 工作单元
@@ -144,10 +203,13 @@ namespace Paas.Pioneer.Workflow.HttpApi.Host
             // 授权
             app.UseAuthorization();
 
+            // 工作流
+            app.UseHttpActivities();
+
             // 配置末端点
             app.UseConfiguredEndpoints(endpoints =>
             {
-                endpoints.MapSwaggerUI();
+                endpoints.MapFallbackToPage("/_Host");
             });
         }
 
