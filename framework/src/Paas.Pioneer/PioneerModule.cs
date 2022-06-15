@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Auth;
+using Paas.Pioneer.DynamicProxy;
 using Paas.Pioneer.Knife4jUI.Swagger;
 using Paas.Pioneer.Middleware.Middleware.Extensions;
 using Paas.Pioneer.Redis;
@@ -30,7 +31,8 @@ namespace Paas.Pioneer
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
         typeof(Knife4jUISwaggerModule),
         typeof(DomainSharedModule),
-        typeof(RedisModule)
+        typeof(RedisModule),
+        typeof(DynamicProxyModule)
         )]
     public class PioneerModule : AbpModule
     {

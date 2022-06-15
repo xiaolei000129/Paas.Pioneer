@@ -42,6 +42,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Paas.Pioneer.Domain.Shared\Paas.Pioneer.Domain.Shared.csproj" />
+    <ProjectReference Include="..\Paas.Pioneer.DynamicProxy\Paas.Pioneer.DynamicProxy.csproj" />
     <ProjectReference Include="..\Paas.Pioneer.Knife4jUI.Swagger\Paas.Pioneer.Knife4jUI.Swagger.csproj">
       <TreatAsUsed>true</TreatAsUsed>
     </ProjectReference>

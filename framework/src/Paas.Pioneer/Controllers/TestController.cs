@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Paas.Pioneer.AutoWrapper;
+using Paas.Pioneer.DynamicProxy;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,10 +16,19 @@ namespace Paas.Pioneer.Controllers
     [ApiController]
     public class TestController : AbpController
     {
+        private readonly ProxyFactory _proxyFactory;
+        public TestController(ProxyFactory proxyFactory)
+        {
+            _proxyFactory = proxyFactory;
+        }
+
         // GET: api/<TestController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            // 从工厂获取代理类
+            var testService = _proxyFactory.Create<ITestService>();
+            testService.GetUserId();
             return new string[] { "value1", "value2" };
         }
 
