@@ -1,52 +1,81 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.Domain.Shared.Auth;
-using Paas.Pioneer.DynamicProxy;
 using Paas.Pioneer.Knife4jUI.Swagger;
 using Paas.Pioneer.Middleware.Middleware.Extensions;
-using Paas.Pioneer.Redis;
+using Paas.Pioneer.Message.Application;
+using Paas.Pioneer.Message.Domain.Shared.MultiTenancy;
+using Paas.Pioneer.Message.EntityFrameworkCore.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
-using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.AspNetCore.ExceptionHandling;
+using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.Autofac;
 using Volo.Abp.Modularity;
 
-namespace Paas.Pioneer
+namespace Paas.Pioneer.Message.HttpApi.Host
 {
     [DependsOn(
+        typeof(MessagesHttpApiModule),
         typeof(AbpAutofacModule),
-        typeof(AbpAspNetCoreMvcModule),
+        typeof(AbpAspNetCoreMultiTenancyModule),
+        typeof(MessagesApplicationModule),
+        typeof(MessagesEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
         typeof(Knife4jUISwaggerModule),
-        typeof(DomainSharedModule),
-        typeof(RedisModule),
-        typeof(DynamicProxyModule)
-        )]
-    public class PioneerModule : AbpModule
+        typeof(DomainSharedModule)
+    )]
+    public class MessagesHttpApiHostModule : AbpModule
     {
-        private const string DefaultCorsPolicyName = "Allow";
+        private IConfiguration Configuration;
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
+            var configuration = Configuration = context.Services.GetConfiguration();
             var hostingEnvironment = context.Services.GetHostingEnvironment();
 
-            var configuration = context.Services.GetConfiguration();
-
-            // Ê∑ªÂä†SignalRÊúçÂä°ÔºåRedisÂΩìÂ∫ïÁâà
-            context.Services.AddSignalR()
-                .AddStackExchangeRedis(configuration["ConnectionStrings:Redis"]);
+            ConfigureCors(context, configuration);
 
             ConfigureAuthentication(context, configuration);
+
+            // “µŒÒ¥ÌŒÛÕÿ’π≈‰÷√
+            Configure<AbpExceptionHandlingOptions>(options =>
+            {
+                options.SendExceptionsDetailsToClients = true;
+            });
+        }
+
+        private void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)
+        {
+            context.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+               {
+                   builder
+                       .WithOrigins(
+                           configuration["App:CorsOrigins"]
+                               .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                               .Select(o => o.RemovePostFix("/"))
+                               .ToArray()
+                       )
+                       .WithAbpExposedHeaders()
+                       .SetIsOriginAllowedToAllowWildcardSubdomains()
+                       .AllowAnyHeader()
+                       .AllowAnyMethod()
+                       .AllowCredentials();
+               });
+            });
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -54,47 +83,57 @@ namespace Paas.Pioneer
             var app = context.GetApplicationBuilder();
             var env = context.GetEnvironment();
 
-            // Âà§Êñ≠ÊòØÂê¶ÊµãËØïÊ®°Âºè
+            // ElasticApm
+            //app.UseAllElasticApm(Configuration);
+
+            // ≈–∂œ «∑Ò≤‚ ‘ƒ£ Ω
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            // ÁîüÊàêÂÖ®Â±ÄÂîØ‰∏ÄId
+            // …˙≥…»´æ÷Œ®“ªId
             app.UseCorrelationId();
 
-            //Ë∑ØÁî±
+            //¬∑”…
             app.UseRouting();
 
-            // Ê†ºÂºèÂåñ
+            // ∏Ò ΩªØ
             app.UseApiResponseAndExceptionWrapper(new AutoWrapperOptions
             {
                 ShowIsErrorFlagForSuccessfulResponse = true,
                 ExcludePaths = new AutoWrapperExcludePath[] {
-                    // ‰∏•Ê†ºÂåπÈÖç
+                    // —œ∏Ò∆•≈‰
                     new AutoWrapperExcludePath("/v1/api-docs", ExcludeMode.StartWith),
+                    new AutoWrapperExcludePath("/rpc/", ExcludeMode.StartWith),
                 }
             });
 
-            //ÂÖ®Â±ÄÊó•Âøó‰∏≠Èó¥‰ª∂
+            //»´æ÷»’÷æ÷–º‰º˛
             app.UseLoggerMiddleware();
 
-            //Ë∑®Âüü
+            //øÁ”Ú
             app.UseCors();
 
-            // È™åËØÅ
+            // —È÷§
             app.UseAuthentication();
 
             // Jwt
             app.UseJwtTokenMiddleware();
 
-            // Â∑•‰ΩúÂçïÂÖÉ
+            // ∂‡◊‚ªß
+            if (MultiTenancyConsts.IsEnabled)
+            {
+                app.UseMultiTenancy();
+            }
+
+            // π§◊˜µ•‘™
             app.UseUnitOfWork();
 
-            // ÊéàÊùÉ
+            //  ⁄»®
             app.UseAuthorization();
 
-            // ÈÖçÁΩÆÊú´Á´ØÁÇπ
+            // ≈‰÷√ƒ©∂Àµ„
             app.UseConfiguredEndpoints(endpoints =>
             {
                 endpoints.MapSwaggerUI();
@@ -102,11 +141,11 @@ namespace Paas.Pioneer
         }
 
         /// <summary>
-        /// ÈÖçÁΩÆÈ™åËØÅÊ®°Âºè
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="configuration"></param>
-        private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
+		/// ≈‰÷√—È÷§ƒ£ Ω
+		/// </summary>
+		/// <param name="context"></param>
+		/// <param name="configuration"></param>
+		private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
         {
             context.Services.AddAuthentication(options =>
             {
@@ -124,7 +163,7 @@ namespace Paas.Pioneer
                         // If the request is for our hub...
                         var path = context.HttpContext.Request.Path;
                         if (!string.IsNullOrEmpty(accessToken) &&
-                            (path.StartsWithSegments("/chat-hub")))
+                            path.StartsWithSegments("/chat-hub"))
                         {
                             // Read the token out of the query string
                             context.Token = accessToken;

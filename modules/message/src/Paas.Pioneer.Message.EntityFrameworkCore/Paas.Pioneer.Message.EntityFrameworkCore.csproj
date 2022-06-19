@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<PackageType>Paas.Pioneer.Message.EntityFrameworkCore</PackageType>
+		<PackageId>Paas.Pioneer.Message.EntityFrameworkCore</PackageId>
+		<Title>Paas.Pioneer.Message.EntityFrameworkCore</Title>
+		<Authors>Paas.Pioneer</Authors>
+		<Description>Paas.Pioneer.Message.EntityFrameworkCore</Description>
+		<TargetFramework>net6.0</TargetFramework>
+		<IncludeBuildOutput>true</IncludeBuildOutput>
+		<NoWarn>$(NoWarn);NU5128</NoWarn>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Paas.Pioneer.Message.Domain\Paas.Pioneer.Message.Domain.csproj" />
+		<PackageReference Include="Volo.Abp.EntityFrameworkCore.MySQL" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.TenantManagement.EntityFrameworkCore" Version="5.2.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+			<PrivateAssets>compile; build; native; contentfiles; analyzers; buildtransitive</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Migrations\" />
+	</ItemGroup>
+
+</Project>

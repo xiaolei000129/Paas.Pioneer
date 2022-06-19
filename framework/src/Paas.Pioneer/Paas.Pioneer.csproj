@@ -1,53 +1,55 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="ApiBrandingProvider.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="ApiBrandingProvider.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Remove="Configs\appconfig.json" />
-    <Content Remove="Configs\dbconfig.json" />
-    <Content Remove="Configs\jwtconfig.json" />
-    <Content Remove="Configs\uploadconfig.json" />
-    <Content Remove="NLog.config" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Remove="Configs\appconfig.json" />
+		<Content Remove="Configs\dbconfig.json" />
+		<Content Remove="Configs\jwtconfig.json" />
+		<Content Remove="Configs\uploadconfig.json" />
+		<Content Remove="NLog.config" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="Configs\appconfig.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\dbconfig.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\jwtconfig.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\uploadconfig.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="Configs\appconfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="Configs\dbconfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="Configs\jwtconfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="Configs\uploadconfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="NLog.config">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="5.2.1" />
-    <PackageReference Include="Volo.Abp.Autofac" Version="5.2.1" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="5.2.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.Autofac" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="5.2.1" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.StackExchangeRedis" Version="6.0.6" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Paas.Pioneer.Domain.Shared\Paas.Pioneer.Domain.Shared.csproj" />
-    <ProjectReference Include="..\Paas.Pioneer.DynamicProxy\Paas.Pioneer.DynamicProxy.csproj" />
-    <ProjectReference Include="..\Paas.Pioneer.Knife4jUI.Swagger\Paas.Pioneer.Knife4jUI.Swagger.csproj">
-      <TreatAsUsed>true</TreatAsUsed>
-    </ProjectReference>
-    <ProjectReference Include="..\Paas.Pioneer.Middleware\Paas.Pioneer.Middleware.csproj" />
-    <ProjectReference Include="..\Paas.Pioneer.Redis\Paas.Pioneer.Redis.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Paas.Pioneer.Domain.Shared\Paas.Pioneer.Domain.Shared.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.DynamicProxy\Paas.Pioneer.DynamicProxy.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.Knife4jUI.Swagger\Paas.Pioneer.Knife4jUI.Swagger.csproj">
+			<TreatAsUsed>true</TreatAsUsed>
+		</ProjectReference>
+		<ProjectReference Include="..\Paas.Pioneer.Middleware\Paas.Pioneer.Middleware.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.Redis\Paas.Pioneer.Redis.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.SignalR\Paas.Pioneer.SignalR.csproj" />
+	</ItemGroup>
 
 </Project>
