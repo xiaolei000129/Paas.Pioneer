@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EasyCaching.Core;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.DynamicProxy;
 using System;
@@ -17,15 +19,19 @@ namespace Paas.Pioneer.Controllers
     public class TestController : AbpController
     {
         private readonly ProxyFactory _proxyFactory;
-        public TestController(ProxyFactory proxyFactory)
+        private readonly IEasyCachingProvider _redisCachingProvider;
+        public TestController(ProxyFactory proxyFactory,
+            IEasyCachingProvider redisCachingProvider)
         {
             _proxyFactory = proxyFactory;
+            _redisCachingProvider = redisCachingProvider;
         }
 
         // GET: api/<TestController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            _redisCachingProvider.GetAsync<string>("key1");
             // 从工厂获取代理类
             var testService = _proxyFactory.Create<ITestService>();
             testService.GetUserId();

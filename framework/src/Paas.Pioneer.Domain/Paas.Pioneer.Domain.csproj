@@ -14,7 +14,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.4" />
-		<PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="5.2.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.6" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="5.3.0" />
 	</ItemGroup>
 </Project>

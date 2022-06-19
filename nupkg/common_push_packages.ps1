@@ -1,6 +1,6 @@
 . ".\common.ps1"
 
-$apiKey = "oy2hrtlanfp4lnmoratqj223hz5pucmevhy7k3hpjmrzii1"
+$apiKey = "oy2kugu4zvcfwcdu34qargcz36y4pczu7prxuoisih4kdm"
 
 # Publish all packages
 foreach ($project in $projects) {

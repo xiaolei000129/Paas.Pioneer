@@ -16,7 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi.Client" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi.Client" Version="5.3.0" />
 		<PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
 	</ItemGroup>
 

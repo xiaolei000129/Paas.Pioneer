@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<PackageType>Paas.Pioneer.Redis</PackageType>
@@ -13,8 +13,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EasyCaching.CSRedis" Version="1.6.0" />
-		<PackageReference Include="Volo.Abp.Caching" Version="5.2.1" />
+		<PackageReference Include="EasyCaching.CSRedis" Version="1.5.1" />
+		<PackageReference Include="Volo.Abp.Caching" Version="5.3.0" />
 	</ItemGroup>
 
 </Project>

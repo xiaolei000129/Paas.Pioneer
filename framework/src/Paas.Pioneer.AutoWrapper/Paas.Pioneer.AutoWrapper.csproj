@@ -16,6 +16,6 @@
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="Volo.Abp.AspNetCore" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.AspNetCore" Version="5.3.0" />
 	</ItemGroup>
 </Project>

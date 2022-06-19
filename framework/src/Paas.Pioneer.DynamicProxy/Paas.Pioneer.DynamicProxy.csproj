@@ -15,6 +15,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="System.Reflection.DispatchProxy" Version="4.7.1" />
-		<PackageReference Include="Volo.Abp.Core" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.Core" Version="5.3.0" />
 	</ItemGroup>
 </Project>
