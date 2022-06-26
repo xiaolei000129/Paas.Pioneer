@@ -1,6 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
+using Paas.Pioneer.Message.Domain.MessageData;
+using Paas.Pioneer.Message.Domain.MessageDetails;
+using Paas.Pioneer.Message.Domain.Notification;
+using Paas.Pioneer.Message.Domain.UserReadNotificationDetails;
 using System;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
@@ -23,6 +27,10 @@ namespace Paas.Pioneer.Message.EntityFrameworkCore.EntityFrameworkCore
         // Tenant Management
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
+        public DbSet<Mes_Data> Mes_Datas { get; set; }
+        public DbSet<Mes_Details> Mes_Detailss { get; set; }
+        public DbSet<Mes_Notification> Mes_Notifications { get; set; }
+        public DbSet<Mes_UserReadNotificationDetails> Mes_UserReadNotificationDetailss { get; set; }
 
         #endregion
 

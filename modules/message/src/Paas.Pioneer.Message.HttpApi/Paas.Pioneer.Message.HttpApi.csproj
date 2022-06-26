@@ -12,7 +12,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.2.9" />
+		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.3.1" />
 		<ProjectReference Include="..\Paas.Pioneer.Message.Application.Contracts\Paas.Pioneer.Message.Application.Contracts.csproj" />
 	</ItemGroup>
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Paas.Pioneer.Admin.Core.Domain.BaseExtensions;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
@@ -18,6 +17,7 @@ using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
 using Paas.Pioneer.Message.EntityFrameworkCore.EntityFrameworkCore;
+using Paas.Pioneer.Message.Domain.BaseExtensions;
 
 namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
 {
