@@ -4,7 +4,7 @@ using System.Linq;
 using Volo.Abp;
 using Volo.Abp.DependencyInjection;
 
-namespace Paas.Pioneer.Domain.Shared
+namespace Paas.Pioneer.Domain.Shared.Filter
 {
     public class ModelValidAttribute : ActionFilterAttribute, ITransientDependency
     {

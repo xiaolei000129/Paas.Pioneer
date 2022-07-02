@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.AutoWrapper.Attributes;
+using Paas.Pioneer.Domain.Shared.Filter;
 using System;
 using System.Linq;
 using System.Reflection;

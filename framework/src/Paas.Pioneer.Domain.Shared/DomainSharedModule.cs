@@ -1,12 +1,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Paas.Pioneer.AutoWrapper;
-using Paas.Pioneer.Domain.Shared;
 using Paas.Pioneer.Domain.Shared.ApplicationBuilderExtensions;
 using Paas.Pioneer.Domain.Shared.Configs;
+using Paas.Pioneer.Domain.Shared.Filter;
 using Volo.Abp;
 using Volo.Abp.Modularity;
 
-namespace Paas.Pioneer
+namespace Paas.Pioneer.Domain.Shared
 {
     [DependsOn(
         typeof(AutoWrapperModule)

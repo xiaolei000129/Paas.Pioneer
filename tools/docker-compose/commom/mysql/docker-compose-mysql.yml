@@ -9,6 +9,7 @@ services:
       - 3306:3306
     # 容器内部参数
     environment:
-      MYSQL_ROOT_PASSWORD: Xiaolei@520.com
+      MYSQL_ROOT_PASSWORD: "Xiaolei@520.com"
+      AllowPublicKeyRetrieval: "true"
     # 容器意外关闭进行重启操作
     restart: always 

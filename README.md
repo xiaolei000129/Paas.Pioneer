@@ -100,7 +100,7 @@ Paas.Pioneer使用ABP框架作为基础架构，通过业务划分模块，将�
 > 我们沿用了ABP的思路进模块化，在modules文件夹存放模块项目，模块项目通过Nuget包方式管理，同时通过Nuget引用达到聚合。
 
 - 更新模板&安装
-    - dotnet new --update-apply || dotnet new --install Paas.Pioneer.Template
+    - dotnet new --update-apply && dotnet new --install Paas.Pioneer.Template
 - 使用Paas.Pioneer.Template脚手架创建项目
     - dotnet new Paas.Pioneer.Template -n 项目名称<br/>
     示例：

@@ -5,7 +5,7 @@ using Paas.Pioneer.AutoWrapper;
 using Paas.Pioneer.AutoWrapper.Attributes;
 using System.Linq;
 
-namespace Paas.Pioneer.Domain.Shared
+namespace Paas.Pioneer.Domain.Shared.Filter
 {
     /// <summary>
     /// 返回结果格式化
@@ -27,12 +27,12 @@ namespace Paas.Pioneer.Domain.Shared
             }
 
             //如果包含NoWrapperAttribute则说明不需要对返回结果进行包装，直接返回原始值
-            if ((controllerActionDescriptor.ControllerTypeInfo.GetCustomAttributes(typeof(NoAutoWrapperAttribute), false)).Any())
+            if (controllerActionDescriptor.ControllerTypeInfo.GetCustomAttributes(typeof(NoAutoWrapperAttribute), false).Any())
             {
                 return;
             }
 
-            if ((controllerActionDescriptor.MethodInfo.GetCustomAttributes(typeof(NoAutoWrapperAttribute), false)).Any())
+            if (controllerActionDescriptor.MethodInfo.GetCustomAttributes(typeof(NoAutoWrapperAttribute), false).Any())
             {
                 return;
             }
@@ -42,7 +42,7 @@ namespace Paas.Pioneer.Domain.Shared
             {
                 var objectResult = context.Result as ObjectResult;
                 //如果返回结果已经是ResponseOutput<T>类型的则不需要进行再次包装了
-                if (objectResult == null || (objectResult.DeclaredType.IsGenericType && objectResult.DeclaredType?.GetGenericTypeDefinition() == typeof(ResponseOutput<>)))
+                if (objectResult == null || objectResult.DeclaredType.IsGenericType && objectResult.DeclaredType?.GetGenericTypeDefinition() == typeof(ResponseOutput<>))
                 {
                     return;
                 }
