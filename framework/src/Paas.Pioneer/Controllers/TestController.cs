@@ -73,7 +73,7 @@ namespace Paas.Pioneer.Controllers
         [HttpPost("Empty")]
         public void Empty([FromBody] user user)
         {
-            throw new BusinessException("已经存在该表");
+            //throw new BusinessException("已经存在该表");
         }
 
         [HttpGet("EmptyTask")]

@@ -97,6 +97,20 @@ namespace Paas.Pioneer.AutoWrapper.Base
                         errorBody = JObject.Parse(bodyAsText).SelectToken("error.message")?.ToString();
                     }
                     await awm.HandleErrorRequestAsync(context, errorBody, context.Response.StatusCode);
+                    return;
+                }
+
+                // 模型验证错误
+                if (context.Response.StatusCode == Status400BadRequest)
+                {
+                    context.Response.StatusCode = Status200OK;
+                    var errorBody = JObject.Parse(bodyAsText)?.
+                        SelectToken("errors")?.
+                        Last?.FirstOrDefault()?.
+                        FirstOrDefault()?.
+                        ToString();
+                    await awm.HandleErrorRequestAsync(context, errorBody, context.Response.StatusCode);
+                    return;
                 }
 
                 if (context.Response.StatusCode != Status304NotModified || context.Response.StatusCode != Status204NoContent)
