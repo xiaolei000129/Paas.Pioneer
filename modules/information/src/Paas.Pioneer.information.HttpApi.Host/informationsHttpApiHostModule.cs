@@ -23,6 +23,7 @@ using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.Autofac;
 using Volo.Abp.Modularity;
+using Paas.Pioneer.Domain.Shared;
 
 namespace Paas.Pioneer.Information.HttpApi.Host
 {

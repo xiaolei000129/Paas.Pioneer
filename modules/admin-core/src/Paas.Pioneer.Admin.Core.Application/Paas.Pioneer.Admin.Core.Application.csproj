@@ -1,13 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<PackageType>Paas.Pioneer.Admin.Core.Application</PackageType>
-		<PackageId>Paas.Pioneer.Admin.Core.Application</PackageId>
 		<Title>Paas.Pioneer.Admin.Core.Application</Title>
 		<Authors>Paas.Pioneer</Authors>
 		<Description>Paas.Pioneer.Admin.Core.Application</Description>
 		<TargetFramework>net6.0</TargetFramework>
-		<IncludeBuildOutput>true</IncludeBuildOutput>
-		<NoWarn>$(NoWarn);NU5128</NoWarn>
 		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
@@ -22,8 +18,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="5.2.1" />
-		<PackageReference Include="Volo.Abp.TenantManagement.Application" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="5.3.1" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Application" Version="5.3.1" />
 	</ItemGroup>
 
 </Project>

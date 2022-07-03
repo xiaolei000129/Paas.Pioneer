@@ -21,23 +21,20 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.Personnel.Employee
 {
     public class EfCoreEmployeeRepository : BaseExtensionsRepository<Pe_EmployeeEntity>, IEmployeeRepository
     {
-        private readonly IRepository<Pe_EmployeeEntity, Guid> _employeeRepository;
         private readonly IRepository<Pe_OrganizationEntity, Guid> _organizationRepository;
         private readonly IRepository<Pe_PositionEntity, Guid> _positionRepository;
         public EfCoreEmployeeRepository(IDbContextProvider<AdminsDbContext> dbContextProvider,
-            IRepository<Pe_EmployeeEntity, Guid> employeeRepository,
             IRepository<Pe_OrganizationEntity, Guid> organizationRepository,
             IRepository<Pe_PositionEntity, Guid> positionRepository)
             : base(dbContextProvider)
         {
-            _employeeRepository = employeeRepository;
             _organizationRepository = organizationRepository;
             _positionRepository = positionRepository;
         }
 
         public async Task<Page<EmployeeListOutput>> GetEmployeePageListAsync(PageInput<EmployeeDataOutput> input)
         {
-            var employeeQueryable = (await _employeeRepository.GetQueryableAsync()).WhereDynamicFilter(input.DynamicFilter)
+            var employeeQueryable = (await GetQueryableAsync()).WhereDynamicFilter(input.DynamicFilter)
             .AsNoTracking();
             var organizationQueryable = await _organizationRepository.GetQueryableAsync();
             var positionQueryable = await _positionRepository.GetQueryableAsync();

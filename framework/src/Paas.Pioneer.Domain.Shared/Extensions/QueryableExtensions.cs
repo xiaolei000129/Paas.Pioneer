@@ -1,9 +1,11 @@
 ﻿using Paas.Pioneer.Domain.Shared.BaseEnum;
 using Paas.Pioneer.Domain.Shared.Dto.Filters;
+using Paas.Pioneer.Domain.Shared.Dto.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Reflection;
 
 namespace Paas.Pioneer.Domain.Shared.Extensions
 {
@@ -17,9 +19,9 @@ namespace Paas.Pioneer.Domain.Shared.Extensions
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static IQueryable<T> WhereDynamicFilter<T>(this IQueryable<T> query, DynamicQueryGroup group)
+        public static IQueryable<T> WhereDynamicFilter<T>(this IQueryable<T> query, DynamicFilterInfo group)
         {
-            if (group == null || (group.Conditions.IsNullOrEmpty() && group.Groups.IsNullOrEmpty()))
+            if (group == null || (group.Condition == null && group.Groups.IsNullOrEmpty()))
             {
                 return query;
             }
@@ -31,16 +33,13 @@ namespace Paas.Pioneer.Domain.Shared.Extensions
             return query.Where(whereClause, lstValues.ToArray());
         }
 
-        private static void Travel(this DynamicQueryGroup group,
-            Action<DynamicQueryGroup, DynamicQueryCondition> conditionAction
+        private static void Travel(this DynamicFilterInfo group,
+            Action<DynamicFilterInfo, DynamicQueryCondition> conditionAction
         )
         {
-            if (!group.Conditions.IsNullOrEmpty())
+            if (group.Condition != null)
             {
-                foreach (var condition in group.Conditions)
-                {
-                    conditionAction(group, condition);
-                }
+                conditionAction(group, group.Condition);
             }
 
             if (!group.Groups.IsNullOrEmpty())
@@ -52,16 +51,13 @@ namespace Paas.Pioneer.Domain.Shared.Extensions
             }
         }
 
-        private static string GenerateWhereClause(DynamicQueryGroup group, ref int index)
+        private static string GenerateWhereClause(DynamicFilterInfo group, ref int index)
         {
             var lstConditions = new List<string>();
 
-            if (!group.Conditions.IsNullOrEmpty())
+            if (group.Condition != null)
             {
-                foreach (var condition in group.Conditions)
-                {
-                    lstConditions.Add(ConvertToCondition(condition, index++));
-                }
+                lstConditions.Add(ConvertToCondition(group.Condition, index++));
             }
 
             if (!group.Groups.IsNullOrEmpty())
@@ -112,7 +108,7 @@ namespace Paas.Pioneer.Domain.Shared.Extensions
 
         private static string GetLeft(DynamicQueryCondition condition)
         {
-            return condition.FieldName;
+            return condition.Field;
         }
 
         private static string GetRight(int index)

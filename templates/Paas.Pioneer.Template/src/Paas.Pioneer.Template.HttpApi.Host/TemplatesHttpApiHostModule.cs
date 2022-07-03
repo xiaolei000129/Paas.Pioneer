@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Paas.Pioneer.AutoWrapper;
+using Paas.Pioneer.Domain.Shared;
 using Paas.Pioneer.Domain.Shared.Auth;
 using Paas.Pioneer.Knife4jUI.Swagger;
 using Paas.Pioneer.Middleware.Middleware.Extensions;

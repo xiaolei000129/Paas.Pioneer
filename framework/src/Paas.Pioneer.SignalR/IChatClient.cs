@@ -1,4 +1,5 @@
 ﻿using Paas.Pioneer.SignalR.Model;
+using System.Threading.Tasks;
 
 namespace Paas.Pioneer.SignalR
 {

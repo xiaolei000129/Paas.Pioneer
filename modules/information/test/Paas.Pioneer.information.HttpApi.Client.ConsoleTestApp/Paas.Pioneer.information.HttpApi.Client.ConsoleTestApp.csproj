@@ -18,13 +18,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Volo.Abp.Http.Client.IdentityModel" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.Http.Client.IdentityModel" Version="5.3.1" />
 		<ProjectReference Include="..\..\src\Paas.Pioneer.Information.HttpApi.Client\Paas.Pioneer.Information.HttpApi.Client.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Http.Polly" Version="6.0.4" />
+		<PackageReference Include="Microsoft.Extensions.Http.Polly" Version="6.0.6" />
 	</ItemGroup>
 
 </Project>

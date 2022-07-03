@@ -1,15 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<PackageType>Paas.Pioneer.Admin.Core.HttpApi</PackageType>
-		<PackageId>Paas.Pioneer.Admin.Core.HttpApi</PackageId>
 		<Title>Paas.Pioneer.Admin.Core.HttpApi</Title>
 		<Authors>Paas.Pioneer</Authors>
 		<Description>Paas.Pioneer.Admin.Core.HttpApi</Description>
 		<TargetFramework>net6.0</TargetFramework>
-		<IncludeBuildOutput>true</IncludeBuildOutput>
-		<NoWarn>$(NoWarn);NU5128</NoWarn>
 		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -18,11 +13,11 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Paas.Pioneer.Admin.Core.Application.Contracts\Paas.Pioneer.Admin.Core.Application.Contracts.csproj" />
-		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.2.6" />
+		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.3.5" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="5.3.1" />
 	</ItemGroup>
 
 </Project>

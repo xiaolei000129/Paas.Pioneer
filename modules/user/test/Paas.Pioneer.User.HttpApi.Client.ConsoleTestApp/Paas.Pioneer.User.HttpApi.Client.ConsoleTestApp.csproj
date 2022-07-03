@@ -18,7 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Volo.Abp.Http.Client.IdentityModel" Version="5.3.0" />
+		<PackageReference Include="Volo.Abp.Http.Client.IdentityModel" Version="5.3.1" />
 		<ProjectReference Include="..\..\src\Paas.Pioneer.User.HttpApi.Client\Paas.Pioneer.User.HttpApi.Client.csproj" />
 	</ItemGroup>
 

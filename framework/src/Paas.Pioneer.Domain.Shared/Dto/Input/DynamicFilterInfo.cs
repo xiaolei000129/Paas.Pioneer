@@ -5,9 +5,9 @@ using System.Collections.Generic;
 namespace Paas.Pioneer.Domain.Shared.Dto.Input
 {
     public class DynamicFilterInfo
-	{
-		public GroupType Type { get; set; }
-		public List<DynamicQueryGroup> Groups { get; set; }
-		public List<DynamicQueryCondition> Conditions { get; set; }
-	}
+    {
+        public GroupType Type { get; set; }
+        public List<DynamicFilterInfo> Groups { get; set; }
+        public DynamicQueryCondition Condition { get; set; }
+    }
 }

@@ -13,6 +13,7 @@ using Paas.Pioneer.Admin.Core.Application;
 using Paas.Pioneer.Admin.Core.Domain.Shared.MultiTenancy;
 using Paas.Pioneer.Admin.Core.EntityFrameworkCore.EntityFrameworkCore;
 using Paas.Pioneer.AutoWrapper;
+using Paas.Pioneer.Domain.Shared;
 using Paas.Pioneer.Domain.Shared.Auth;
 using Paas.Pioneer.Knife4jUI.Swagger;
 using Paas.Pioneer.Middleware.Middleware.Extensions;

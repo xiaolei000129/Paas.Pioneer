@@ -5,9 +5,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Volo.Abp.TestBase" Version="5.3.0" />
-		<PackageReference Include="Volo.Abp.Autofac" Version="5.3.0" />
-		<PackageReference Include="Volo.Abp.Authorization" Version="5.3.0" />
+		<PackageReference Include="Volo.Abp.TestBase" Version="5.3.1" />
+		<PackageReference Include="Volo.Abp.Autofac" Version="5.3.1" />
+		<PackageReference Include="Volo.Abp.Authorization" Version="5.3.1" />
 		<ProjectReference Include="..\..\src\Paas.Pioneer.Message.Domain\Paas.Pioneer.Message.Domain.csproj" />
 	</ItemGroup>
 

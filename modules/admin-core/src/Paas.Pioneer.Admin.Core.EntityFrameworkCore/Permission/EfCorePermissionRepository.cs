@@ -6,12 +6,10 @@ using Paas.Pioneer.Admin.Core.Domain.TenantPermission;
 using Paas.Pioneer.Admin.Core.Domain.UserRole;
 using Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions;
 using Paas.Pioneer.Admin.Core.EntityFrameworkCore.EntityFrameworkCore;
-using Paas.Pioneer.Domain.Shared.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Security;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.EntityFrameworkCore;
@@ -21,21 +19,18 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.Permission
 {
     public class EfCorePermissionRepository : BaseExtensionsRepository<Ad_PermissionEntity>, IPermissionRepository
     {
-        private readonly IRepository<Ad_PermissionEntity, Guid> _permissionRepository;
         private readonly IRepository<Ad_RolePermissionEntity, Guid> _rolePermissionRepository;
         private readonly IRepository<Ad_UserRoleEntity, Guid> _userRoleRepository;
         private readonly IRepository<Ad_TenantPermissionEntity, Guid> _tenantRoleRepository;
         private readonly ICurrentUser _currentUser;
 
         public EfCorePermissionRepository(IDbContextProvider<AdminsDbContext> dbContextProvider,
-            IRepository<Ad_PermissionEntity, Guid> permissionRepository,
             IRepository<Ad_RolePermissionEntity, Guid> rolePermissionRepository,
             IRepository<Ad_UserRoleEntity, Guid> userRoleRepository,
             IRepository<Ad_TenantPermissionEntity, Guid> tenantRoleRepository,
             ICurrentUser currentUser)
             : base(dbContextProvider)
         {
-            _permissionRepository = permissionRepository;
             _rolePermissionRepository = rolePermissionRepository;
             _userRoleRepository = userRoleRepository;
             _tenantRoleRepository = tenantRoleRepository;
@@ -44,7 +39,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.Permission
 
         public async Task<IEnumerable<string>> GetPermissionsCodeListAsync(Guid? userId, bool isTenant)
         {
-            var permissionQueryable = await _permissionRepository.GetQueryableAsync();
+            var permissionQueryable = await GetQueryableAsync();
             var userRoleQueryable = await _userRoleRepository.GetQueryableAsync();
             var rolePermissionQueryable = await _rolePermissionRepository.GetQueryableAsync();
             var tenantRoleQueryable = await _tenantRoleRepository.GetQueryableAsync();
@@ -71,7 +66,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.Permission
 
         public async Task<IEnumerable<Ad_PermissionEntity>> GetPermissionsMenuAsync(Guid? userId, bool isTenant)
         {
-            var permissionQueryable = await _permissionRepository.GetQueryableAsync();
+            var permissionQueryable = await this.GetQueryableAsync();
             var userRoleQueryable = await _userRoleRepository.GetQueryableAsync();
             var rolePermissionQueryable = await _rolePermissionRepository.GetQueryableAsync();
             var tenantRoleQueryable = await _tenantRoleRepository.GetQueryableAsync();

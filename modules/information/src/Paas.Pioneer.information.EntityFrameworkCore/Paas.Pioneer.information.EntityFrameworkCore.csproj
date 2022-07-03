@@ -13,12 +13,12 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Paas.Pioneer.Information.Domain\Paas.Pioneer.Information.Domain.csproj" />
-		<PackageReference Include="Volo.Abp.EntityFrameworkCore.MySQL" Version="5.2.1" />
-		<PackageReference Include="Volo.Abp.TenantManagement.EntityFrameworkCore" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.EntityFrameworkCore.MySQL" Version="5.3.1" />
+		<PackageReference Include="Volo.Abp.TenantManagement.EntityFrameworkCore" Version="5.3.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.6">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 			<PrivateAssets>compile; build; native; contentfiles; analyzers; buildtransitive</PrivateAssets>
 		</PackageReference>

@@ -18,16 +18,14 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.User
     {
         private readonly IRepository<Ad_UserRoleEntity, Guid> _userRoleRepository;
         private readonly IRepository<Ad_RoleEntity, Guid> _roleRepository;
-        private readonly IRepository<Ad_UserEntity, Guid> _userRepository;
         public EfCoreUserRepository(IDbContextProvider<AdminsDbContext> dbContextProvider,
             IRepository<Ad_UserRoleEntity, Guid> userRoleRepository,
-            IRepository<Ad_RoleEntity, Guid> roleRepository,
-            IRepository<Ad_UserEntity, Guid> userRepository)
+            IRepository<Ad_RoleEntity, Guid> roleRepository
+            )
             : base(dbContextProvider)
         {
             _userRoleRepository = userRoleRepository;
             _roleRepository = roleRepository;
-            _userRepository = userRepository;
         }
 
         /// <summary>
@@ -37,7 +35,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.User
         /// <returns></returns>
         public async Task<IEnumerable<Guid>> GetUserIdListByTenantIdAsync(Guid TenantId)
         {
-            var userQueryable = await _userRepository.GetQueryableAsync();
+            var userQueryable = await GetQueryableAsync();
             var userIdList = await userQueryable.AsNoTracking()
                  .Where(p => p.TenantId == TenantId)
                  .Select(p => p.Id).ToListAsync();
