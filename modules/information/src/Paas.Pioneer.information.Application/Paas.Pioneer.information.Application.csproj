@@ -1,13 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<PackageType>Paas.Pioneer.Information.Application</PackageType>
-		<PackageId>Paas.Pioneer.Information.Application</PackageId>
 		<Title>Paas.Pioneer.Information.Application</Title>
 		<Authors>Paas.Pioneer</Authors>
 		<Description>Paas.Pioneer.Information.Application</Description>
 		<TargetFramework>net6.0</TargetFramework>
-		<IncludeBuildOutput>true</IncludeBuildOutput>
-		<NoWarn>$(NoWarn);NU5128</NoWarn>
 		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 	</PropertyGroup>
 
@@ -18,7 +14,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Volo.Abp.TenantManagement.Application" Version="5.3.1" />
-		<PackageReference Include="Paas.Pioneer.Admin.Core.HttpApi.Client" Version="5.2.7" />
+		<PackageReference Include="Paas.Pioneer.Admin.Core.HttpApi.Client" Version="5.3.5" />
 	</ItemGroup>
 
 </Project>

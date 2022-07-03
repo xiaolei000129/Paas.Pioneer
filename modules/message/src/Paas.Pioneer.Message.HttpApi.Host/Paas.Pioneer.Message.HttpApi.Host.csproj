@@ -1,13 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 	<PropertyGroup>
-		<PackageType>Paas.Pioneer.Message.HttpApi.Host</PackageType>
-		<PackageId>Paas.Pioneer.Message.HttpApi.Host</PackageId>
 		<Title>Paas.Pioneer.Message.HttpApi.Host</Title>
 		<Authors>Paas.Pioneer</Authors>
 		<Description>Paas.Pioneer.Message.HttpApi.Host</Description>
 		<TargetFramework>net6.0</TargetFramework>
-		<IncludeBuildOutput>true</IncludeBuildOutput>
-		<NoWarn>$(NoWarn);NU5128</NoWarn>
 		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 		<PreserveCompilationReferences>true</PreserveCompilationReferences>
 		<UserSecretsId>Paas.Pioneer.Messages-4681b4fd-151f-4221-84a4-929d86723e4c</UserSecretsId>
