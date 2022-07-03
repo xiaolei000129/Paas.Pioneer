@@ -18,17 +18,14 @@ namespace Paas.Pioneer.Information.EntityFrameworkCore.Slideshow
 {
     public class EfCoreSlideshowRepository : BaseExtensionsRepository<Information_SlideshowEntity>, ISlideshowRepository
     {
-        private readonly IRepository<Information_SlideshowEntity> _slideshowRepository;
-        public EfCoreSlideshowRepository(IDbContextProvider<InformationsDbContext> dbContextProvider,
-            IRepository<Information_SlideshowEntity> slideshowRepository)
+        public EfCoreSlideshowRepository(IDbContextProvider<InformationsDbContext> dbContextProvider)
             : base(dbContextProvider)
         {
-            _slideshowRepository = slideshowRepository;
         }
 
         public async Task<Page<GetSlideshowPageListOutput>> GetPageListAsync(PageInput<GetSlideshowPageListInput> input)
         {
-            var slideshowQueryable = await _slideshowRepository.GetQueryableAsync();
+            var slideshowQueryable = await GetQueryableAsync();
             var data = from slideshow in slideshowQueryable.WhereDynamicFilter(input.DynamicFilter)
                        select new GetSlideshowPageListOutput
                        {

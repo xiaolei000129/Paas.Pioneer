@@ -17,17 +17,14 @@ namespace Paas.Pioneer.Information.EntityFrameworkCore.News
 {
     public class EfCoreNewsRepository : BaseExtensionsRepository<Information_NewsEntity>, INewsRepository
     {
-        private readonly IRepository<Information_NewsEntity> _newsRepository;
-        public EfCoreNewsRepository(IDbContextProvider<InformationsDbContext> dbContextProvider,
-            IRepository<Information_NewsEntity> newsRepository)
+        public EfCoreNewsRepository(IDbContextProvider<InformationsDbContext> dbContextProvider)
             : base(dbContextProvider)
         {
-            _newsRepository = newsRepository;
         }
 
         public async Task<Page<GetNewsPageListOutput>> GetPageListAsync(PageInput<GetNewsPageListInput> input)
         {
-            var newsQueryable = await _newsRepository.GetQueryableAsync();
+            var newsQueryable = await GetQueryableAsync();
             var data = from news in newsQueryable.WhereDynamicFilter(input.DynamicFilter)
                        select new GetNewsPageListOutput
                        {

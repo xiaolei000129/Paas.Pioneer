@@ -18,17 +18,14 @@ namespace Paas.Pioneer.Information.EntityFrameworkCore.Grid
 {
     public class EfCoreGridRepository : BaseExtensionsRepository<Information_GridEntity>, IGridRepository
     {
-        private readonly IRepository<Information_GridEntity> _gridRepository;
-        public EfCoreGridRepository(IDbContextProvider<InformationsDbContext> dbContextProvider,
-            IRepository<Information_GridEntity> gridRepository)
+        public EfCoreGridRepository(IDbContextProvider<InformationsDbContext> dbContextProvider)
             : base(dbContextProvider)
         {
-            _gridRepository = gridRepository;
         }
 
         public async Task<Page<GetGridPageListOutput>> GetPageListAsync(PageInput<GetGridPageListInput> input)
         {
-            var gridQueryable = await _gridRepository.GetQueryableAsync();
+            var gridQueryable = await GetQueryableAsync();
             var data = from grid in gridQueryable.WhereDynamicFilter(input.DynamicFilter)
                        select new GetGridPageListOutput
                        {
