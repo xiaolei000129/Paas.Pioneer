@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<Title>Paas.Pioneer.WeChat.Application.Contracts</Title>
+		<Authors>Paas.Pioneer</Authors>
+		<Description>Paas.Pioneer.WeChat.Application.Contracts</Description>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Paas.Pioneer.WeChat.Domain.Shared\Paas.Pioneer.WeChat.Domain.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Volo.Abp.ObjectExtending" Version="5.3.1" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Application.Contracts" Version="5.3.1" />
+	</ItemGroup>
+
+</Project>

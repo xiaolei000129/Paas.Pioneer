@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<Title>Paas.Pioneer.WeChat.HttpApi.Host</Title>
+		<Authors>Paas.Pioneer</Authors>
+		<Description>Paas.Pioneer.WeChat.HttpApi.Host</Description>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<PreserveCompilationReferences>true</PreserveCompilationReferences>
+		<UserSecretsId>Paas.Pioneer.WeChats-4681b4fd-151f-4221-84a4-929d86723e4c</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Remove="Configs\appconfig.json" />
+		<Content Remove="Configs\dbconfig.json" />
+		<Content Remove="Configs\jwtconfig.json" />
+		<Content Remove="Configs\uploadconfig.json" />
+		<Content Remove="NLog.config" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Volo.Abp.AspNetCore.MultiTenancy" Version="5.3.1" />
+		<PackageReference Include="Volo.Abp.Autofac" Version="5.3.1" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="5.3.1" />
+		<PackageReference Include="Paas.Pioneer.Knife4jUI.Swagger" Version="5.3.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Paas.Pioneer.WeChat.Application\Paas.Pioneer.WeChat.Application.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.WeChat.EntityFrameworkCore\Paas.Pioneer.WeChat.EntityFrameworkCore.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.WeChat.HttpApi\Paas.Pioneer.WeChat.HttpApi.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="Configs\appconfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="Configs\dbconfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="Configs\jwtconfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="Configs\uploadconfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="NLog.config">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+</Project>

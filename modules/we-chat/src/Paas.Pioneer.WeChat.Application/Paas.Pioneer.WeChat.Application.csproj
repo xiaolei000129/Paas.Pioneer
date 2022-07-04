@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<Title>Paas.Pioneer.WeChat.Application</Title>
+		<Authors>Paas.Pioneer</Authors>
+		<Description>Paas.Pioneer.WeChat.Application</Description>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Paas.Pioneer.WeChat.Application.Contracts\Paas.Pioneer.WeChat.Application.Contracts.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.WeChat.Domain\Paas.Pioneer.WeChat.Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="EasyAbp.Abp.WeChat.MiniProgram" Version="1.9.3" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Application" Version="5.3.1" />
+	</ItemGroup>
+
+</Project>

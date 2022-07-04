@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Paas.Pioneer.WeChat.EntityFrameworkCore\Paas.Pioneer.WeChat.EntityFrameworkCore.csproj" />
+		<ProjectReference Include="..\Paas.Pioneer.WeChat.TestBase\Paas.Pioneer.WeChat.TestBase.csproj" />
+		<PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="5.3.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+	</ItemGroup>
+
+</Project>
