@@ -32,12 +32,12 @@ namespace Paas.Pioneer.User.Domain.Shared
                 options.Resources
                     .Add<MiniProgramsResource>("en")
                     .AddBaseTypes(typeof(MiniProgramsResource))
-                    .AddVirtualJson("/EasyAbp/WeChatManagement/MiniPrograms/Localization");
+                    .AddVirtualJson("/Localization");
             });
 
             Configure<AbpExceptionLocalizationOptions>(options =>
             {
-                options.MapCodeNamespace("EasyAbp.WeChatManagement.MiniPrograms", typeof(MiniProgramsResource));
+                options.MapCodeNamespace("Paas.Pioneer.User.Domain.Shared.Localization", typeof(MiniProgramsResource));
             });
         }
     }

@@ -1,8 +1,5 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Paas.Pioneer.User.Application.Contracts.Identity;
-using Paas.Pioneer.User.Application.Contracts.Identity.Dtos;
-using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 
 namespace Paas.Pioneer.User.HttpApi.Controllers.Identity

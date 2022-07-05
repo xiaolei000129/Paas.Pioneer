@@ -3,18 +3,17 @@ using Paas.Pioneer.User.EntityFrameworkCore.EntityFrameworkCore;
 using Volo.Abp.Autofac;
 using Volo.Abp.Modularity;
 
-namespace Paas.Pioneer.User.DbMigrator
+namespace Paas.Pioneer.User.DbMigrator;
+
+[DependsOn(
+    typeof(AbpAutofacModule),
+    typeof(UsersEntityFrameworkCoreModule),
+    typeof(UsersApplicationContractsModule)
+    )]
+public class UsersDbMigratorModule : AbpModule
 {
-    [DependsOn(
-        typeof(AbpAutofacModule),
-        typeof(UsersEntityFrameworkCoreModule),
-        typeof(UsersApplicationContractsModule)
-        )]
-    public class UsersDbMigratorModule : AbpModule
+    public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        public override void ConfigureServices(ServiceConfigurationContext context)
-        {
-           
-        }
+       
     }
 }

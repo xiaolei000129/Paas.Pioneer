@@ -1,19 +1,18 @@
-﻿namespace Paas.Pioneer.User.Domain.Shared.UserInfos
+﻿namespace Paas.Pioneer.User.Domain.Shared.UserInfos;
+
+public interface IUserInfo
 {
-    public interface IUserInfo
-    {
-        string NickName { get; }
+    string NickName { get; }
 
-        byte Gender { get; }
+    byte Gender { get; }
 
-        string Language { get; }
+    string Language { get; }
 
-        string City { get; }
+    string City { get; }
 
-        string Province { get; }
+    string Province { get; }
 
-        string Country { get; }
+    string Country { get; }
 
-        string AvatarUrl { get; }
-    }
+    string AvatarUrl { get; }
 }

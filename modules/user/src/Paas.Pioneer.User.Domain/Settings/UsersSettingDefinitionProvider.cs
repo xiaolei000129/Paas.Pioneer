@@ -1,13 +1,12 @@
 ﻿using Volo.Abp.Settings;
 
-namespace Paas.Pioneer.User.Domain.Settings
+namespace Paas.Pioneer.User.Domain.Settings;
+
+public class UsersSettingDefinitionProvider : SettingDefinitionProvider
 {
-    public class UsersSettingDefinitionProvider : SettingDefinitionProvider
+    public override void Define(ISettingDefinitionContext context)
     {
-        public override void Define(ISettingDefinitionContext context)
-        {
-            //Define your own settings here. Example:
-            //context.Add(new SettingDefinition(UsersSettings.MySetting1));
-        }
+        //Define your own settings here. Example:
+        //context.Add(new SettingDefinition(UsersSettings.MySetting1));
     }
 }

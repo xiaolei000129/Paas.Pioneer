@@ -4,21 +4,20 @@ using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 using Volo.Abp.TenantManagement;
 
-namespace Paas.Pioneer.User.Application
+namespace Paas.Pioneer.User.Application;
+
+[DependsOn(
+    typeof(UsersDomainModule),
+    typeof(UsersApplicationContractsModule),
+    typeof(AbpTenantManagementApplicationModule)
+    )]
+public class UsersApplicationModule : AbpModule
 {
-    [DependsOn(
-        typeof(UsersDomainModule),
-        typeof(UsersApplicationContractsModule),
-        typeof(AbpTenantManagementApplicationModule)
-        )]
-    public class UsersApplicationModule : AbpModule
+    public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        public override void ConfigureServices(ServiceConfigurationContext context)
+        Configure<AbpAutoMapperOptions>(options =>
         {
-            Configure<AbpAutoMapperOptions>(options =>
-            {
-                options.AddMaps<UsersApplicationModule>();
-            });
-        }
+            options.AddMaps<UsersApplicationModule>();
+        });
     }
 }
