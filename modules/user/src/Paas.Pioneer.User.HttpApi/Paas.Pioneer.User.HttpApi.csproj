@@ -16,8 +16,4 @@
 		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="5.3.1" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="Controllers\" />
-	</ItemGroup>
-
 </Project>

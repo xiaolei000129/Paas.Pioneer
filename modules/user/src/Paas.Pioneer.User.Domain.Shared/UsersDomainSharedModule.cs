@@ -1,4 +1,7 @@
 ﻿using Paas.Pioneer.Redis;
+using Paas.Pioneer.User.Domain.Shared.Localization;
+using Volo.Abp.Localization;
+using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Modularity;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.VirtualFileSystem;
@@ -22,6 +25,19 @@ namespace Paas.Pioneer.User.Domain.Shared
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
                 options.FileSets.AddEmbedded<UsersDomainSharedModule>();
+            });
+
+            Configure<AbpLocalizationOptions>(options =>
+            {
+                options.Resources
+                    .Add<MiniProgramsResource>("en")
+                    .AddBaseTypes(typeof(MiniProgramsResource))
+                    .AddVirtualJson("/EasyAbp/WeChatManagement/MiniPrograms/Localization");
+            });
+
+            Configure<AbpExceptionLocalizationOptions>(options =>
+            {
+                options.MapCodeNamespace("EasyAbp.WeChatManagement.MiniPrograms", typeof(MiniProgramsResource));
             });
         }
     }

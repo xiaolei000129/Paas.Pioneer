@@ -10,7 +10,7 @@ using Volo.Abp;
 using Volo.Abp.Domain.Entities;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
 
-namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
+namespace Paas.Pioneer.User.Domain.BaseExtensions
 {
     public interface IBaseExtensionRepository<TEntity> where TEntity : Entity<Guid>, ISoftDelete
     {
@@ -20,7 +20,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
         /// <param name="expression"></param>
         /// <returns></returns>
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression,
-            CancellationToken cancellationToken = default(CancellationToken));
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 真实删除
@@ -29,7 +29,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<bool> HardDeleteAsync(Expression<Func<TEntity, bool>> expression,
-            CancellationToken cancellationToken = default(CancellationToken));
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取单个
@@ -38,7 +38,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取单个
@@ -48,7 +48,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
                     Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取列表数据
@@ -62,7 +62,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
                     Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取列表数据
@@ -75,7 +75,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
                     Expression<Func<TEntity, bool>> expression = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取列表数据
@@ -89,7 +89,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
                     Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取列表数据
@@ -106,7 +106,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
                     Expression<Func<TEntity, TResult>> selector = default,
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取分页数据
@@ -121,7 +121,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
                     PageInput<TPageInput> input = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取分页数据
@@ -135,7 +135,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     PageInput<TPageInput> input = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取分页数据
@@ -153,7 +153,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     PageInput<TPageInput> input = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取分页数据
@@ -170,7 +170,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = default,
                     PageInput<TPageInput> input = default,
                     bool isTracking = false,
-                    CancellationToken cancellationToken = default(CancellationToken));
+                    CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 批量更新,忽略指定属性
@@ -179,7 +179,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
         /// <param name="ignorePropertys">忽略属性</param>
         /// <returns></returns>
         Task BatchIgnoreUpdateAsync(IEnumerable<TEntity> entitys,
-            CancellationToken cancellationToken = default(CancellationToken),
+            CancellationToken cancellationToken = default,
             params Expression<Func<TEntity, object>>[] ignorePropertys);
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
         /// <param name="ignorePropertys">忽略属性</param>
         /// <returns></returns>
         Task IgnoreUpdateAsync(TEntity entity,
-            CancellationToken cancellationToken = default(CancellationToken),
+            CancellationToken cancellationToken = default,
             params Expression<Func<TEntity, object>>[] ignorePropertys);
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
         /// <param name="includePropertys">包含属性</param>
         /// <returns></returns>
         Task BatchIncludeUpdateAsync(IEnumerable<TEntity> entitys,
-            CancellationToken cancellationToken = default(CancellationToken),
+            CancellationToken cancellationToken = default,
             params Expression<Func<TEntity, object>>[] includePropertys);
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Paas.Pioneer.Admin.Core.Domain.BaseExtensions
         /// <param name="includePropertys">包含属性</param>
         /// <returns></returns>
         Task IncludeUpdateAsync(TEntity entity,
-            CancellationToken cancellationToken = default(CancellationToken),
+            CancellationToken cancellationToken = default,
             params Expression<Func<TEntity, object>>[] includePropertys);
     }
 }
