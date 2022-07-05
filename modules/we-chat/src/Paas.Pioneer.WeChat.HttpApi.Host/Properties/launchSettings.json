@@ -3,7 +3,7 @@
     "Paas.Pioneer.WeChat.HttpApi.Host": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:44338",
+      "applicationUrl": "http://localhost:9304",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

@@ -1,4 +1,6 @@
-﻿namespace Paas.Pioneer.Admin.Core.HttpApi.Client.ServiceProxies
+﻿using Paas.Pioneer.WeChat.HttpApi.Client;
+
+namespace Paas.Pioneer.WeChat.HttpApi.Client.ServiceProxies
 {
     public interface ITestServiceProxy : IRefitServiceProxy
     {

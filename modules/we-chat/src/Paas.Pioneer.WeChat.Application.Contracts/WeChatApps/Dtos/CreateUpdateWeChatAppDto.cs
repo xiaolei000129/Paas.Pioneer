@@ -1,4 +1,4 @@
-using Paas.Pioneer.WeChat.Domain.Shared.Common.WeChatApps;
+using Paas.Pioneer.WeChat.Domain.Shared.WeChatApps;
 using System;
 
 namespace Paas.Pioneer.WeChat.Application.Contracts.WeChatApps.Dtos

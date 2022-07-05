@@ -1,46 +1,98 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using JetBrains.Annotations;
-using Paas.Pioneer.WeChat.Domain.Shared.Common.WeChatApps;
-using Volo.Abp.Domain.Entities.Auditing;
-using Volo.Abp.MultiTenancy;
+using Microsoft.EntityFrameworkCore;
+using Paas.Pioneer.Domain;
+using Paas.Pioneer.WeChat.Domain.Shared.WeChatApps;
 
 namespace Paas.Pioneer.WeChat.Domain.WeChatApps
 {
-    public class WeChatApp : FullAuditedAggregateRoot<Guid>, IMultiTenant
+    /// <summary>
+    /// 微信App
+    /// </summary>
+    [Comment("数据字典")]
+    [Table("WeChat_App")]
+    [Index(nameof(AppId), Name = "IDX_AppId")]
+    [Index(nameof(Name), Name = "IDX_Name")]
+    public class WeChatApp : BaseEntity
     {
-        public virtual Guid? TenantId { get; protected set; }
+        /// <summary>
+        /// 微信组件Id
+        /// </summary>
+        [Comment("微信组件Id")]
+        [Column("WeChatComponentId", TypeName = "char(36)")]
+        public virtual Guid? WeChatComponentId { get; set; }
 
-        public virtual WeChatAppType Type { get; protected set; }
+        /// <summary>
+        /// 微信app类型
+        /// </summary>
+        [Comment("微信app类型")]
+        [Column("Type", TypeName = "int")]
+        public virtual WeChatAppType Type { get; set; }
 
-        public virtual Guid? WeChatComponentId { get; protected set; }
-
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [Comment("名称")]
+        [Column("Name", TypeName = "varchar(50)")]
         [NotNull]
-        public virtual string Name { get; protected set; }
+        public virtual string Name { get; set; }
 
+        /// <summary>
+        /// 显示名称
+        /// </summary>
+        [Comment("显示名称")]
+        [Column("DisplayName", TypeName = "varchar(50)")]
         [NotNull]
-        public virtual string DisplayName { get; protected set; }
+        public virtual string DisplayName { get; set; }
 
+        /// <summary>
+        /// 开放Id或者名称
+        /// </summary>
+        [Comment("开放Id或者名称")]
+        [Column("OpenAppIdOrName", TypeName = "varchar(50)")]
         [NotNull]
-        public virtual string OpenAppIdOrName { get; protected set; }
+        public virtual string OpenAppIdOrName { get; set; }
 
+        /// <summary>
+        /// 微信AppId
+        /// </summary>
+        [Comment("微信AppId")]
+        [Column("AppId", TypeName = "varchar(50)")]
         [NotNull]
-        public virtual string AppId { get; protected set; }
+        public virtual string AppId { get; set; }
 
         /// <summary>
         /// AppSecret 为空时，需提供开放平台 WeChatComponentId
         /// </summary>
+        [Comment("App密钥")]
+        [Column("AppSecret", TypeName = "varchar(150)")]
         [CanBeNull]
-        public virtual string AppSecret { get; protected set; }
+        public virtual string AppSecret { get; set; }
 
+        /// <summary>
+        /// 微信Token
+        /// </summary>
+        [Comment("微信Token")]
+        [Column("Token", TypeName = "varchar(500)")]
         [CanBeNull]
-        public virtual string Token { get; protected set; }
+        public virtual string Token { get; set; }
 
+        /// <summary>
+        /// 微信密钥
+        /// </summary>
+        [Comment("微信密钥")]
+        [Column("EncodingAesKey", TypeName = "varchar(500)")]
         [CanBeNull]
-        public virtual string EncodingAesKey { get; protected set; }
+        public virtual string EncodingAesKey { get; set; }
 
-        public virtual bool IsStatic { get; protected set; }
+        /// <summary>
+        /// 是否静态
+        /// </summary>
+        [Comment("是否静态")]
+        public virtual bool IsStatic { get; set; }
 
-        protected WeChatApp()
+        public WeChatApp()
         {
         }
 
@@ -56,7 +108,7 @@ namespace Paas.Pioneer.WeChat.Domain.WeChatApps
             [CanBeNull] string appSecret,
             [CanBeNull] string token,
             [CanBeNull] string encodingAesKey,
-            bool isStatic) : base(id)
+            bool isStatic)
         {
             TenantId = tenantId;
             Type = type;

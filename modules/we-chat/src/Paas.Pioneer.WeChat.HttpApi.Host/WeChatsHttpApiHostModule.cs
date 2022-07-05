@@ -123,7 +123,7 @@ namespace Paas.Pioneer.WeChat.HttpApi.Host
             app.UseJwtTokenMiddleware();
 
             // ¶à×â»§
-            if (MultiTenancyConsts.IsEnabled)
+            if (!MultiTenancyConsts.IsEnabled)
             {
                 app.UseMultiTenancy();
             }

@@ -113,6 +113,17 @@ namespace Paas.Pioneer.AutoWrapper.Base
                     return;
                 }
 
+                // 系统错误
+                if (context.Response.StatusCode == Status500InternalServerError)
+                {
+                    context.Response.StatusCode = Status500InternalServerError;
+                    var errorBody = JObject.Parse(bodyAsText)?.
+                        SelectToken("error.message")?.
+                        ToString();
+                    await awm.HandleErrorRequestAsync(context, errorBody, context.Response.StatusCode);
+                    return;
+                }
+
                 if (context.Response.StatusCode != Status304NotModified || context.Response.StatusCode != Status204NoContent)
                 {
                     if (!_options.IsApiOnly
@@ -143,7 +154,7 @@ namespace Paas.Pioneer.AutoWrapper.Base
                 }
 
             }
-            catch (Exception exception)
+            catch
             {
                 throw;
             }

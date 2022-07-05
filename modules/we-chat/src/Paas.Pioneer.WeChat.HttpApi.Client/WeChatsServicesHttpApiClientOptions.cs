@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 
-namespace Paas.Pioneer.Admin.Core.HttpApi.Client
+namespace Paas.Pioneer.WeChat.HttpApi.Client
 {
     public class WeChatsServicesHttpApiClientOptions
     {

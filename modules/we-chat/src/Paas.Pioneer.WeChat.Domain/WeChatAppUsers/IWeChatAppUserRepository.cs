@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Paas.Pioneer.WeChat.Domain.Shared.Common.WeChatApps;
+using Paas.Pioneer.WeChat.Domain.Shared.WeChatApps;
 using Volo.Abp.Domain.Repositories;
 
 namespace Paas.Pioneer.WeChat.Domain.WeChatAppUsers

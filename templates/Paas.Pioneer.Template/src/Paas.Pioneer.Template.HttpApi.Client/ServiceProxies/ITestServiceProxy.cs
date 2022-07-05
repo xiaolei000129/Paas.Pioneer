@@ -1,4 +1,6 @@
-﻿namespace Paas.Pioneer.Admin.Core.HttpApi.Client.ServiceProxies
+﻿using Paas.Pioneer.Template.HttpApi.Client;
+
+namespace Paas.Pioneer.Template.HttpApi.Client.ServiceProxies
 {
     public interface ITestServiceProxy : IRefitServiceProxy
     {

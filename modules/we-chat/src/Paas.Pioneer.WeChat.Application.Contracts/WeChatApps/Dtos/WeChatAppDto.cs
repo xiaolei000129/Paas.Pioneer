@@ -1,4 +1,4 @@
-using Paas.Pioneer.WeChat.Domain.Shared.Common.WeChatApps;
+using Paas.Pioneer.WeChat.Domain.Shared.WeChatApps;
 using System;
 using Volo.Abp.Application.Dtos;
 

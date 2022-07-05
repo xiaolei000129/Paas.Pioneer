@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Paas.Pioneer.Admin.Core.HttpApi.Client;
 using Paas.Pioneer.WeChat.Application.Contracts;
 using Refit;
 using System;

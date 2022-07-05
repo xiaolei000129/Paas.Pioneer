@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Paas.Pioneer.Admin.Core.HttpApi.Client;
 using Paas.Pioneer.Template.Application.Contracts;
 using Refit;
 using System;

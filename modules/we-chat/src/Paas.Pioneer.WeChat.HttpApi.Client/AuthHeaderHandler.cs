@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
 
-namespace Paas.Pioneer.Admin.Core.HttpApi.Client
+namespace Paas.Pioneer.WeChat.HttpApi.Client
 {
     public class AuthHeaderHandler : DelegatingHandler, ITransientDependency
     {

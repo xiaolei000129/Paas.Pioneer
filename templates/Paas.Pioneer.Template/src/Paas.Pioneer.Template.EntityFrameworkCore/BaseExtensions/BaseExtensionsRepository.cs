@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Paas.Pioneer.Admin.Core.Domain.BaseExtensions;
 using Paas.Pioneer.Domain.Shared.Dto.Input;
 using Paas.Pioneer.Domain.Shared.Extensions;
 using System;
@@ -18,8 +17,9 @@ using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using Paas.Pioneer.Domain.Shared.Dto.Output;
 using Paas.Pioneer.Template.EntityFrameworkCore.EntityFrameworkCore;
+using Paas.Pioneer.Template.Domain.BaseExtensions;
 
-namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
+namespace Paas.Pioneer.Template.EntityFrameworkCore.BaseExtensions
 {
     public class BaseExtensionsRepository<TEntity> : EfCoreRepository<TemplatesDbContext, TEntity, Guid>, IBaseExtensionRepository<TEntity> where TEntity : Entity<Guid>, ISoftDelete
     {
@@ -45,7 +45,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             Func<IQueryable<TEntity>,
             IOrderedQueryable<TEntity>> order = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var dbSet = await BuilderQueryable(isTracking);
 
@@ -68,7 +68,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             Expression<Func<TEntity, TResult>> selector,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var dbSet = await BuilderQueryable(isTracking);
 
@@ -91,7 +91,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             Expression<Func<TEntity, TResult>> selector = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var dbSet = await BuilderQueryable(isTracking);
 
@@ -117,7 +117,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             Expression<Func<TEntity, bool>> expression,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var dbSet = await BuilderQueryable(isTracking);
 
@@ -145,7 +145,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             Func<IQueryable<TEntity>,
             IOrderedQueryable<TEntity>> order,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var dbSet = await BuilderQueryable(isTracking);
 
@@ -175,7 +175,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             Expression<Func<TEntity, TResult>> selector,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var dbSet = await BuilderQueryable(isTracking);
             if (expression != null)
@@ -208,7 +208,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             IOrderedQueryable<TEntity>> order = null,
             PageInput<TPageInput> input = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             IQueryable<TEntity> query = (await BuilderQueryable(isTracking))
              .WhereDynamicFilter(input.DynamicFilter);
@@ -239,7 +239,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order = null,
             PageInput<TPageInput> input = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             IQueryable<TEntity> query = (await BuilderQueryable(isTracking))
              .WhereDynamicFilter(input.DynamicFilter);
@@ -276,7 +276,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             IOrderedQueryable<TEntity>> order = null,
             PageInput<TPageInput> input = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             IQueryable<TEntity> query = (await BuilderQueryable(isTracking))
              .WhereDynamicFilter(input.DynamicFilter);
@@ -312,7 +312,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
             IOrderedQueryable<TEntity>> order = null,
             PageInput<TPageInput> input = null,
             bool isTracking = false,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             IQueryable<TEntity> query = (await BuilderQueryable(isTracking))
              .WhereDynamicFilter(input.DynamicFilter);
@@ -341,7 +341,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
         /// <param name="ignorePropertys">忽略属性</param>
         /// <returns></returns>
         public async Task BatchIgnoreUpdateAsync(IEnumerable<TEntity> entitys,
-            CancellationToken cancellationToken = default(CancellationToken),
+            CancellationToken cancellationToken = default,
             params Expression<Func<TEntity, object>>[] ignorePropertys)
         {
             var tDbContext = await GetDbContextAsync();
@@ -364,7 +364,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
         /// <param name="ignorePropertys">忽略属性</param>
         /// <returns></returns>
         public async Task IgnoreUpdateAsync(TEntity entity,
-                        CancellationToken cancellationToken = default(CancellationToken),
+                        CancellationToken cancellationToken = default,
                         params Expression<Func<TEntity, object>>[] ignorePropertys)
         {
             var tDbContext = await _dbContextProvider.GetDbContextAsync();
@@ -387,7 +387,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
         /// <param name="includePropertys">包含属性</param>
         /// <returns></returns>
         public async Task BatchIncludeUpdateAsync(IEnumerable<TEntity> entitys,
-            CancellationToken cancellationToken = default(CancellationToken),
+            CancellationToken cancellationToken = default,
             params Expression<Func<TEntity, object>>[] includePropertys)
         {
             var tDbContext = await _dbContextProvider.GetDbContextAsync();
@@ -408,7 +408,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
         /// <param name="includePropertys">包含属性</param>
         /// <returns></returns>
         public async Task IncludeUpdateAsync(TEntity entity,
-                        CancellationToken cancellationToken = default(CancellationToken),
+                        CancellationToken cancellationToken = default,
                         params Expression<Func<TEntity, object>>[] includePropertys)
         {
             var tDbContext = await _dbContextProvider.GetDbContextAsync();
@@ -429,7 +429,7 @@ namespace Paas.Pioneer.Admin.Core.EntityFrameworkCore.BaseExtensions
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var dbSet = await GetDbSetAsync();
             return await dbSet.AnyAsync(expression, cancellationToken);
