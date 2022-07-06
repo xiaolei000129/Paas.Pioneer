@@ -17,4 +17,8 @@
 		<ProjectReference Include="..\Paas.Pioneer.Template.Domain.Shared\Paas.Pioneer.Template.Domain.Shared.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\framework\src\Paas.Pioneer.Domain\Paas.Pioneer.Domain.csproj" />
+	</ItemGroup>
+
 </Project>

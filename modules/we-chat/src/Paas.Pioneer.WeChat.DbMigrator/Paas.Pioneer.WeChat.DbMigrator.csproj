@@ -19,9 +19,12 @@
 
 	<ItemGroup>
 		<PackageReference Include="Volo.Abp.Autofac" Version="5.3.1" />
-		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.3.5" />
 		<ProjectReference Include="..\Paas.Pioneer.WeChat.Application.Contracts\Paas.Pioneer.WeChat.Application.Contracts.csproj" />
 		<ProjectReference Include="..\Paas.Pioneer.WeChat.EntityFrameworkCore\Paas.Pioneer.WeChat.EntityFrameworkCore.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\framework\src\Paas.Pioneer.Middleware\Paas.Pioneer.Middleware.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

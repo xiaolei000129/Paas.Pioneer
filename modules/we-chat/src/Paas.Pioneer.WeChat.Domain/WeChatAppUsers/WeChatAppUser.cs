@@ -7,9 +7,9 @@ using Volo.Abp.Timing;
 
 namespace Paas.Pioneer.WeChat.Domain.WeChatAppUsers;
 /// <summary>
-/// 微信App
+/// 微信AppUser
 /// </summary>
-[Comment("数据字典")]
+[Comment("微信AppUser")]
 [Table("WeChat_AppUser")]
 [Index(nameof(WeChatAppId), Name = "IDX_WeChatAppId")]
 [Index(nameof(UserId), Name = "IDX_UserId")]

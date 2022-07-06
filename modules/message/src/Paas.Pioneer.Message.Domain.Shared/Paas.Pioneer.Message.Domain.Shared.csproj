@@ -17,9 +17,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Paas.Pioneer.Domain.Shared" Version="5.3.5" />
-		<PackageReference Include="Paas.Pioneer.Redis" Version="5.3.5" />
-		<PackageReference Include="Paas.Pioneer.SignalR" Version="5.3.5" />
+		<ProjectReference Include="..\..\..\..\framework\src\Paas.Pioneer.Domain.Shared\Paas.Pioneer.Domain.Shared.csproj" />
+		<ProjectReference Include="..\..\..\..\framework\src\Paas.Pioneer.Redis\Paas.Pioneer.Redis.csproj" />
+		<ProjectReference Include="..\..\..\..\framework\src\Paas.Pioneer.SignalR\Paas.Pioneer.SignalR.csproj" />
 	</ItemGroup>
 
 </Project>

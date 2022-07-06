@@ -10,7 +10,7 @@ namespace Paas.Pioneer.WeChat.Domain.WeChatApps
     /// <summary>
     /// 微信App
     /// </summary>
-    [Comment("数据字典")]
+    [Comment("微信App")]
     [Table("WeChat_App")]
     [Index(nameof(AppId), Name = "IDX_AppId")]
     [Index(nameof(Name), Name = "IDX_Name")]

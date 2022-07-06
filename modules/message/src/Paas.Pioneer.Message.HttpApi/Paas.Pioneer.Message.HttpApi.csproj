@@ -8,12 +8,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Paas.Pioneer.Middleware" Version="5.3.5" />
 		<ProjectReference Include="..\Paas.Pioneer.Message.Application.Contracts\Paas.Pioneer.Message.Application.Contracts.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="5.3.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\framework\src\Paas.Pioneer.Middleware\Paas.Pioneer.Middleware.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
